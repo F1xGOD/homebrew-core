@@ -4,24 +4,24 @@ class Votca < Formula
   url "https://github.com/votca/votca/archive/refs/tags/v2025.1.tar.gz"
   sha256 "85b487d2b2a31f26869be422c98f816b95c88a4ab112ea4650cccd4c2706bdbf"
   license "Apache-2.0"
-  revision 2
+  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "9083467e1a30e21f131314a426f6654540d04db6687629018552ebcf1de529b2"
-    sha256 cellar: :any,                 arm64_sequoia: "82ca8b75d12568511c38bba54efd2bf120489431187a9704791d14f429ef2ba1"
-    sha256 cellar: :any,                 arm64_sonoma:  "8ded162b5fbf26c6f586a6f973d1661317d238fba21fc7fbad0d3e1de4179341"
-    sha256 cellar: :any,                 sonoma:        "49c3aef63077a07399971c5cda155542ec2cc6799231f74152e283022da9522a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "27cc5ddb6f732c334b6d6536fdc76dfbf1198a5405187b126b073721ac4a618f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dfecc869d913c683b8c37710fa4d5342e6e595873542fa0553c5d743304169db"
+    sha256 cellar: :any,                 arm64_tahoe:   "8ea2eec9085cfb8e8f8c964828081125904a2c2307ae570859446d8e371a0cd1"
+    sha256 cellar: :any,                 arm64_sequoia: "27c12a0e8e59974e9767d725ea90d55d3581d59361c2122396accee241bc58ec"
+    sha256 cellar: :any,                 arm64_sonoma:  "db7b0c744bb4e9f31b29060bd1329b7da560b5e05e2d49fbc4975840634031ac"
+    sha256 cellar: :any,                 sonoma:        "87c727bb540e8db157ecd161bd32b8d5770a12c9d847ef196021ebe14c921d3f"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "95f1fd91d2adac48f6d14ad03b818de5b73a76b5b7b0e63738c6575b5519a7a1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "db9c23d28cb952eb02b554b5d59ceb3c8a0c3abdd6ca536d8293684ee48f1f5e"
   end
 
   depends_on "cmake" => :build
   depends_on "pkgconf" => :build
   depends_on "python@3.14" => :build
   depends_on "boost"
-  depends_on "eigen"
+  depends_on "eigen" => :no_linkage
   depends_on "fftw"
-  # add gromacs dep back once it was built with clang
+  depends_on "gromacs"
   depends_on "hdf5"
   depends_on "libecpint"
   depends_on "libint"
@@ -45,7 +45,6 @@ class Votca < Formula
       "-DINSTALL_RC_FILES=OFF",
       "-DINSTALL_CSGAPPS=ON",
       "-DBUILD_XTP=ON",
-      "-DCMAKE_DISABLE_FIND_PACKAGE_GROMACS=ON",
       "-DENABLE_RPATH_INJECT=ON",
       "-DPYrdkit_FOUND=OFF",
     ]

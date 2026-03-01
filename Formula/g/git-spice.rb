@@ -1,20 +1,20 @@
 class GitSpice < Formula
   desc "Manage stacked Git branches"
   homepage "https://abhinav.github.io/git-spice/"
-  url "https://github.com/abhinav/git-spice/archive/refs/tags/v0.21.0.tar.gz"
-  sha256 "3ad2f1ba5423fde1f6a1a5f7e528ad56b1f2aa39ce592c32a75cadfebafe6987"
+  url "https://github.com/abhinav/git-spice/archive/refs/tags/v0.24.2.tar.gz"
+  sha256 "6605166dc47b179af0d3e9714dba83254b633e78d6b0bc2189592c5067b0ccf2"
   license "GPL-3.0-or-later"
   head "https://github.com/abhinav/git-spice.git", branch: "main"
 
   no_autobump! because: :bumped_by_upstream
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "f3f83281444405f4b4c9b8906510e82420818f1abf5a8e4363b7ed0e08f0aabe"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f3f83281444405f4b4c9b8906510e82420818f1abf5a8e4363b7ed0e08f0aabe"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f3f83281444405f4b4c9b8906510e82420818f1abf5a8e4363b7ed0e08f0aabe"
-    sha256 cellar: :any_skip_relocation, sonoma:        "06b34653e9eaf8c03adf92454539029c03f6cd20dc5795605035549ecc0f01af"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cb908400abaec723aa8970de1091fe2ed71d98e108f5c0a424510e8b4f252ebb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3927d7036a08685d9df626fbbd1b19a6845ba8a427d6e2b3421716f8f97c2300"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "377d48138de5d3a3d0957305cb1b52d83db9126d9d4ec3145e0fc883ba0cf96b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "377d48138de5d3a3d0957305cb1b52d83db9126d9d4ec3145e0fc883ba0cf96b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "377d48138de5d3a3d0957305cb1b52d83db9126d9d4ec3145e0fc883ba0cf96b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "9d655c0b65bf4d3a061f7b55ae16530585eca0fc8b5d45f00255ce1355b41a07"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "de2dbe8a6bde74014878969036a97710c9f7ae34b3fcddbe0edd3bfa91c2beaf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3a9ee526792a2ae72bf7d38728e2455d9843482481bfbe45a570ea2bb8b21c20"
   end
 
   depends_on "go" => :build
@@ -23,9 +23,22 @@ class GitSpice < Formula
 
   def install
     ldflags = "-s -w -X main._version=#{version}"
-    system "go", "build", *std_go_args(ldflags:, output: bin/"gs")
+    system "go", "build", *std_go_args(ldflags:, output: bin/"git-spice")
+    bin.install_symlink "git-spice" => "gs"
 
     generate_completions_from_executable(bin/"gs", "shell", "completion")
+    generate_completions_from_executable(bin/"git-spice", "shell", "completion")
+  end
+
+  def caveats
+    <<~EOS
+      The executable has been renamed to 'git-spice'.
+      To ease the transition, this release also symlinks 'gs' to 'git-spice'.
+      The symlink will be dropped in a future release.
+      If you prefer to use 'gs', add an alias to your shell configuration:
+
+        alias gs='git-spice'
+    EOS
   end
 
   test do
@@ -36,11 +49,11 @@ class GitSpice < Formula
     system "git", "add", "foo"
     system "git", "commit", "-m", "bar"
 
-    assert_match "main", shell_output("#{bin}/gs log long 2>&1")
+    assert_match "main", shell_output("#{bin}/git-spice log long 2>&1")
 
-    output = shell_output("#{bin}/gs branch create feat1 2>&1", 1)
+    output = shell_output("#{bin}/git-spice branch create feat1 2>&1", 1)
     assert_match "error: Terminal is dumb, but EDITOR unset", output
 
-    assert_match version.to_s, shell_output("#{bin}/gs --version")
+    assert_match version.to_s, shell_output("#{bin}/git-spice --version")
   end
 end

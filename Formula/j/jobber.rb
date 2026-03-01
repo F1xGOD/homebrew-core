@@ -6,8 +6,6 @@ class Jobber < Formula
   license "MIT"
   head "https://github.com/dshearer/jobber.git", branch: "master"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     rebuild 1
     sha256 arm64_tahoe:    "66a3ab3ca421877c8d2e587ede10bd67c4bfc8ac66df67822b68fd4ea2a67d05"
@@ -42,17 +40,15 @@ class Jobber < Formula
   end
 
   test do
-    (testpath/".jobber").write <<~EOS
+    (testpath/".jobber").write <<~YAML
       version: 1.4
       jobs:
         Test:
           cmd: 'echo "Hi!" > "#{testpath}/output"'
           time: '*'
-    EOS
+    YAML
 
-    fork do
-      exec libexec/"jobberrunner", "#{testpath}/.jobber"
-    end
+    spawn libexec/"jobberrunner", testpath/".jobber"
     sleep 3
 
     assert_match "Hi!", (testpath/"output").read

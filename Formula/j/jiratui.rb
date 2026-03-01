@@ -263,17 +263,12 @@ class Jiratui < Formula
   end
 
   def install
-    # hatch does not support a SOURCE_DATE_EPOCH before 1980.
-    # Remove after https://github.com/pypa/hatch/pull/1999 is released.
-    ENV["SOURCE_DATE_EPOCH"] = "1451574000"
-
     virtualenv_install_with_resources
 
     generate_completions_from_executable(bin/"jiratui", shell_parameter_format: :click)
   end
 
   test do
-    ENV["HOME"] = testpath
     assert_match version.to_s, shell_output("#{bin}/jiratui version")
     assert_match "#{testpath}/.config/jiratui/config.yaml", shell_output("#{bin}/jiratui config")
   end

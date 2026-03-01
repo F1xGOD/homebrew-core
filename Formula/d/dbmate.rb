@@ -1,27 +1,24 @@
 class Dbmate < Formula
   desc "Lightweight, framework-agnostic database migration tool"
   homepage "https://github.com/amacneil/dbmate"
-  url "https://github.com/amacneil/dbmate/archive/refs/tags/v2.28.0.tar.gz"
-  sha256 "129cb7f978e4316d6d02d2038eb346a94e1f988bcfb30a83aa99c6685c71d359"
+  url "https://github.com/amacneil/dbmate/archive/refs/tags/v2.31.0.tar.gz"
+  sha256 "2114824a1ee3972887ea89b97c6932becf91d612f687fd6b79c4dfce7cd12353"
   license "MIT"
   head "https://github.com/amacneil/dbmate.git", branch: "main"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "94d782af69a13dbcc25556ac48a5d2ea24f39bc8f97a2597ac5e47adef8f962f"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8c3fd4526ae0a3f19647d02d26344a6e0d51eedc58072ddf28362d1cb0799fc0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8b8c469c5164e9778c6fcae14ac12da99375b8164cd76131d2e44ceabc69ae74"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "25879f4d7bc0b90053f582e98665facca06e8bb5230326ba1c8c91be83660409"
-    sha256 cellar: :any_skip_relocation, sonoma:        "17a7a0033fdf4715bd0f7dcec07f8615c8e96ec1e5adeb31715c1966ccd35100"
-    sha256 cellar: :any_skip_relocation, ventura:       "9a183cc4e1a8a57584a405b83de7176fb2f4223ff49764f0b058fa54a8b49fd0"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "ef7b2a9b29cee7d6155613d801c09ab0842f610bbc845b35dc06f32a27197c8c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1ae1180123b5339d27719e6d0700f05830f4e3fd29c001bdedca1ff2e107f14f"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "96cf426eb57dc8de1664e30203cf141f24d6cee8d4c923265af4af2834f29c0a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4c3f6ef1fe172a760e6911ccfc00f5a41ea79128622c3d39beb4956c78bae5d6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f0993be52ddda20c8ebc7a82ec7cab9bdcd48280ca34b53a7f19a82d7efda105"
+    sha256 cellar: :any_skip_relocation, sonoma:        "09208d5bd0f5bfdd7a7feb1c618b36023490dd29a535f52d49aec22b7be6ec11"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "bd656f990aee371ff45033db980d64d0b78321531dbabf3974a208045c0fb158"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "829d639422d5e313b2d952ddcbc977056aec07342ae56b2ae552d03ee2d7cb98"
   end
 
   depends_on "go" => :build
 
   def install
+    ENV["CGO_ENABLED"] = "1"
     tags = %w[
       sqlite_omit_load_extension sqlite_json sqlite_fts5
     ]

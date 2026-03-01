@@ -4,13 +4,12 @@ class Unisonlang < Formula
   license "MIT"
 
   stable do
-    url "https://github.com/unisonweb/unison.git",
-        tag:      "release/1.0.1",
-        revision: "ee18126d68ef22a33559b6c74e508b977cbb4e2e"
+    url "https://github.com/unisonweb/unison/archive/refs/tags/release/1.1.1.tar.gz"
+    sha256 "8d7c59bcc0cf68e79f01e85df1a1d8b7c4ce6dd377c787d22af47468b3dcb870"
 
     resource "local-ui" do
-      url "https://github.com/unisonweb/unison-local-ui/archive/refs/tags/release/1.0.1.tar.gz"
-      sha256 "09f2106ee58d4d92ad7283372d7218f99cba331ab51aaeff7f215852897f8e30"
+      url "https://github.com/unisonweb/unison-local-ui/archive/refs/tags/release/1.1.1.tar.gz"
+      sha256 "81fcf13873d65e3fc95b69e0e1241c12c30d49c9a2f9a125ed75d55a450fa116"
 
       livecheck do
         formula :parent
@@ -24,12 +23,12 @@ class Unisonlang < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "5771008dbed2fe7d874ca2cdadf3471b4b94ecc38dc7c7fa1ae1c859d6a8b27d"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e2240a032b23f6bc48fc469b8625143eec03454c4e773fd5faf239f4b7cfed90"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "09c9b12820f1170849b667e0b78e0bfa96a2c18e3f4999263b442fd729c9a116"
-    sha256 cellar: :any_skip_relocation, sonoma:        "c3da7a8e781541fc90737c525e4fe6113b15157271e9efb68bd224ae101e6ec4"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "20abc0ea7a4604f5be4d615aa6ca6d651cae6f4a890b5bbce013c0b7ab737446"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "904e33dbbb6632899d028e19062989a60a2383b557fa56cdb939edfd906663cc"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "13c48be759782c4825e0ed69637220c00e0f17442893abecb96ba5833647d60a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "30e1adf291125750939b66512e06765a438574ec3112195977c060199635a24e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "faed6027b097526132d57915eef0d8969a2f77a1e69c32d86267507fce355859"
+    sha256 cellar: :any_skip_relocation, sonoma:        "c843ceeb47a15ad4c5a2c9682bd98acda719006b8593399e27f2b79e32c4b9e9"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "1071525f32dc9eedbb6ee6169d94cc2cc09d5326895b3d8847f0d1d4f413b9eb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cdf175afcc0ecb46a8155e72b10affe231ce7b6d986d35907b26f2736fe072f9"
   end
 
   head do
@@ -42,13 +41,16 @@ class Unisonlang < Formula
 
   depends_on "elm" => :build
   depends_on "elm-format" => :build
-  depends_on "ghc@9.6" => :build
+  depends_on "ghc@9.10" => :build
   depends_on "haskell-stack" => :build
   depends_on "node" => :build
 
   uses_from_macos "python" => :build
   uses_from_macos "xz" => :build
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     odie "local-ui resource needs to be updated" if build.stable? && version != resource("local-ui").version

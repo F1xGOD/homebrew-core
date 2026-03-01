@@ -1,10 +1,8 @@
 class Mapnik < Formula
   desc "Toolkit for developing mapping applications"
   homepage "https://mapnik.org/"
-  # needs submodules
-  url "https://github.com/mapnik/mapnik.git",
-      tag:      "v4.2.0",
-      revision: "b806a6c64994eca7ec5b991c2e81471d89b81b1c"
+  url "https://github.com/mapnik/mapnik/releases/download/v4.2.1/mapnik-v4.2.1.tar.bz2"
+  sha256 "5828695831cfac09b5d5e660c6c0747f0f447c7356b183b26fbed3e220456b33"
   license "LGPL-2.1-or-later"
   head "https://github.com/mapnik/mapnik.git", branch: "master"
 
@@ -14,12 +12,13 @@ class Mapnik < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "bd281e1f31f066cc8075673fa027dd132977273432cc131322906c191de810b5"
-    sha256 cellar: :any,                 arm64_sequoia: "92246218dd3f2e7d75e9d4a3e14442f5d758fe419239fd20ccc1ce0d71b57c29"
-    sha256 cellar: :any,                 arm64_sonoma:  "c472690d65e5479aa4c9e3837e778dc0e442c660818ff3db22f0f9e5fad7c05b"
-    sha256 cellar: :any,                 sonoma:        "2050c55c0cce24ca0240559f6cd7cd710662021b3902557b77dc7c2442dd9f03"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "0c7215f5d2b32df37cc4fc125cb0e9172a7698587dcfe06534fe4b9e7a5416ec"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "88245d1ed1fe12273415968a5b24716abcfdc33422cd981e3902e7dd4888fef3"
+    rebuild 1
+    sha256                               arm64_tahoe:   "a0e77dbc25136b76fb979d6f90517a6f1730a98cfb8112c5555f23cf0f6ab6f5"
+    sha256                               arm64_sequoia: "9a46c4ac818b301c0576eff83b5af0ce7e7f8b1bc12ba6c585c300c0ef0ccc31"
+    sha256                               arm64_sonoma:  "a08fd81a277282b9ad5fe19d3a7bb4ef4d944e9716288138dc690c995ae2039f"
+    sha256 cellar: :any,                 sonoma:        "7f64219e2fe9eace29ee064c77a79e1cb95498dff4b3460c8939a2e45e32917b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "9eaaed630c9f7c5cc37148a6bade7cbed83beabdbff25d8e447aacef965a40c2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3402fc10a7358b9a916a7821325c6bc07a294e963741c7b8c3b987917124cc27"
   end
 
   depends_on "cmake" => :build
@@ -42,7 +41,9 @@ class Mapnik < Formula
   depends_on "sqlite"
   depends_on "webp"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   conflicts_with "svg2png", because: "both install `svg2png` binaries"
 
@@ -51,7 +52,7 @@ class Mapnik < Formula
       -DBUILD_BENCHMARK:BOOL=OFF
       -DBUILD_DEMO_CPP:BOOL=OFF
       -DBUILD_DEMO_VIEWER:BOOL=OFF
-      -DCMAKE_INSTALL_RPATH:PATH=#{rpath}
+      -DCMAKE_INSTALL_RPATH:PATH=#{rpath};#{rpath(source: lib/"mapnik/input")}
       -DUSE_EXTERNAL_MAPBOX_PROTOZERO=ON
     ]
 

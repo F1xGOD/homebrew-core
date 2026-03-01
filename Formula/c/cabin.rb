@@ -4,17 +4,17 @@ class Cabin < Formula
   url "https://github.com/cabinpkg/cabin/archive/refs/tags/0.13.0.tar.gz"
   sha256 "f9115bb0566800beedb41106e00f44a7eaf1dea0fa6528281e31de5f80864177"
   license "Apache-2.0"
-  revision 2
+  revision 3
   head "https://github.com/cabinpkg/cabin.git", branch: "main"
 
   bottle do
     rebuild 1
-    sha256 cellar: :any,                 arm64_tahoe:   "63997b784c8c2f0debe6e8b2e109ebc069de502f1aca39beaa5e3f235bd6a4dd"
-    sha256 cellar: :any,                 arm64_sequoia: "9eb8f6169c50ea40094404df8ae7a6e06b4bed08521ed4670afe88236b10f5b3"
-    sha256 cellar: :any,                 arm64_sonoma:  "a4b9eb7c190cba254c3da8a093bfc96c7d104984dbce71a81d6269c7d9efafee"
-    sha256 cellar: :any,                 sonoma:        "0e0d7cb664e228d889350901e1b0b6c0e65f2a7b02172bcbc4bc8b74e23f63e8"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "bddf4b75ab7f5806cc37c8c8e57c072aa883ed7cb074c6e84b67273ef2d17e6c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fe70c20668f91cfb4fa803fa476fb5b77bfbc3c8cec91e7f370410e57735be4e"
+    sha256 cellar: :any,                 arm64_tahoe:   "ceb0df820b6831bad382ee05ec258c8170c9a4f6ed52faac9e42928bc3e99d10"
+    sha256 cellar: :any,                 arm64_sequoia: "4141bb5f2b68fe40ac121235ca06f81c0eb0b22bdeb00b9cb9c925eaa98a947f"
+    sha256 cellar: :any,                 arm64_sonoma:  "d3dcc5269af91e7a87c11ccb90ba7262e5f4a2d887dc9152ba6422fad66d9977"
+    sha256 cellar: :any,                 sonoma:        "20944f5509556bde7cfcbcab5829f30b62ea286b675bf06450e2676751dbbd17"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "21f009801cb40282ccb9374cffc72a5af2e2b4f7b1d9c204ad952cfffbf5167f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3b6308c79867c1290e4929b6e4ebf05b6b8cbd958f37fae619663ad954fb4fd8"
   end
 
   depends_on "mitama-cpp-result" => :build
@@ -22,12 +22,13 @@ class Cabin < Formula
   depends_on "pkgconf" => :build
   depends_on "toml11" => :build
 
-  depends_on "curl"
   depends_on "fmt"
   depends_on "libgit2"
   depends_on "pkgconf"
   depends_on "spdlog"
   depends_on "tbb"
+
+  uses_from_macos "curl", since: :monterey # >=7.79.1
 
   on_macos do
     depends_on "llvm" => :build if DevelopmentTools.clang_build_version <= 1499

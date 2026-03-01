@@ -1,21 +1,23 @@
 class Gitversion < Formula
   desc "Easy semantic versioning for projects using Git"
   homepage "https://gitversion.net/docs/"
-  url "https://github.com/GitTools/GitVersion/archive/refs/tags/6.5.0.tar.gz"
-  sha256 "28a3ee76ae3a4f7cd035e6f3b4d458bbcc82ea757fe91d6563e969416f66027f"
+  url "https://github.com/GitTools/GitVersion/archive/refs/tags/6.6.0.tar.gz"
+  sha256 "51f35533fff4d3dde0167b903a4234b4c492063415eb3e740c8b87c9555a696b"
   license "MIT"
 
   no_autobump! because: :bumped_by_upstream
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "f52db0fc4ce219eadce847fc615696550e18c3a7f891163a4318d2512043c326"
-    sha256 cellar: :any,                 arm64_sequoia: "9cf44b3860130862cdbc7eca12640169319f3d468f5063cad4f5100ee653ff32"
-    sha256 cellar: :any,                 arm64_sonoma:  "fe3371a0819227415ac80423ae97edcd57ec8ef67f6bb52cc039a12a9c0a0da0"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "57f7c2dcd3f478941eb63c563366d0b00c8e5798a0542058b923e50340a0b575"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "08a1e2b8d1da9dec483ba02748783f86f4e6fffcb97d69288aa313012b04d959"
+    sha256 cellar: :any,                 arm64_tahoe:   "fe59b7e11dd63f56dcc65321daede76adb71cd05c0d707922e83efaaf394e637"
+    sha256 cellar: :any,                 arm64_sequoia: "657b6236e4608e629a04cc4858c854f8342856696bd6a0361f8323a9e9080a3a"
+    sha256 cellar: :any,                 arm64_sonoma:  "29fe2851ca638961ebf950441d248641a130f56eb1122e35920a8008c5ffbda2"
+    sha256 cellar: :any,                 sonoma:        "1ce35e6402de57622f9fd367e765fa60280edb182e728006fce4f6d34683c075"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "518958dd8f395c8a07b043cc7f3e6d88d3bccda42a3c6ba0ace0dfbe09773e77"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "72f5ac7d942bea01562ebf0eb2ff9393a0ed9f117376331ed6a266b32882a0da"
   end
 
   depends_on "dotnet"
+  depends_on "openssl@3"
 
   def install
     ENV["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1"
@@ -37,6 +39,8 @@ class Gitversion < Formula
     File.rename("global.json", "global.json.ignored")
     system "dotnet", "publish", "src/GitVersion.App/GitVersion.App.csproj", *args
     env = { DOTNET_ROOT: "${DOTNET_ROOT:-#{dotnet.opt_libexec}}" }
+    # Ensure OpenSSL is available for cryptography operations on Linux
+    env["LD_LIBRARY_PATH"] = "#{Formula["openssl"].opt_lib}:$LD_LIBRARY_PATH" if OS.linux?
     (bin/"gitversion").write_env_script libexec/"gitversion", env
   end
 

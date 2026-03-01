@@ -4,20 +4,20 @@ class Garble < Formula
   url "https://github.com/burrowers/garble/archive/refs/tags/v0.15.0.tar.gz"
   sha256 "b429b24dafa851a25bbeca635db33eb4162b8e3109fb234a2c8e7780a837b958"
   license "BSD-3-Clause"
-  revision 5
+  revision 7
   head "https://github.com/burrowers/garble.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "2316f3c47356373f8a21cc3e81a07227f9a1f3e35d9acd77d6b2da2817417b54"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2316f3c47356373f8a21cc3e81a07227f9a1f3e35d9acd77d6b2da2817417b54"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2316f3c47356373f8a21cc3e81a07227f9a1f3e35d9acd77d6b2da2817417b54"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7f80442d06943458ffd8d914aed55637acd34083e958d9e9b9cd509721880f0c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c886c2d9a825fe4ce5659d267cfe7056e6a834bf0d47b91e34a8ac105e3df068"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1127204df224fcbc59bde24d2d38deae1e37d96ec51d9d6eb661ffe046c00d6a"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a2fcd004e1636ef65692d3b863a99740624ebc3d4b2e33270410754a92d9350c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a2fcd004e1636ef65692d3b863a99740624ebc3d4b2e33270410754a92d9350c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a2fcd004e1636ef65692d3b863a99740624ebc3d4b2e33270410754a92d9350c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a8bc50c5301d346303be7648bb978338393198c2c5898c979f7ceb0cd2663683"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "cd2a115ce808d6b7e052dfe8f885f319695b4b9b99ae30c6ffdca441bbcb20b8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "902170d36e85bf17896979c2248fed20f2ba435bd2716051be2c5ddd44ed57f4"
   end
 
-  depends_on "go" => [:build, :test]
+  # unpin go when the release is supporting Go 1.26, fixing https://github.com/burrowers/garble/issues/990
+  depends_on "go@1.25" => [:build, :test]
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w")
@@ -33,6 +33,8 @@ class Garble < Formula
           fmt.Println("Hello World")
       }
     GO
+
+    ENV.prepend_path "PATH", Formula["go@1.25"].opt_libexec/"bin" # for keg_only go 1.25 binary
 
     # `garble` breaks our git shim by clearing the environment.
     # Remove once git is no longer needed. See caveats:

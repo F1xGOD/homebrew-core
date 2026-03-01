@@ -1,18 +1,18 @@
 class Treemd < Formula
   desc "TUI and CLI dual pane markdown viewer"
   homepage "https://github.com/epistates/treemd"
-  url "https://github.com/Epistates/treemd/archive/refs/tags/v0.5.4.tar.gz"
-  sha256 "4f559a8d4ee9abc306db3bfa0e3ba57aff88784f107113d4ba6188e6339f7941"
+  url "https://github.com/Epistates/treemd/archive/refs/tags/v0.5.7.tar.gz"
+  sha256 "500726be513e8f6e007e87523a627c49c1c53bbc97894c692e8b085ba69df3cd"
   license "MIT"
   head "https://github.com/epistates/treemd.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "65726ab794ea442d15518c18f7adf3460be805fd7f89fd7ef577e48fe7c1d26c"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "056fc9e2d038f1732d7b416d23c348ed24cbd33f05a953d23d2063d9f71149f6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e581b680c3228bd403f14357c584ce01a16d375a089d385c46df13e35164f4a2"
-    sha256 cellar: :any_skip_relocation, sonoma:        "cd20780881fc7bcf878da32afdba0b81ac87e8f0d9406df8e1349b48588b786c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "71167dcb885c7b655c1d4bd18e14d378c90bebe157fca371b6edf1a22b78ee34"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "314f7747fbe47990d2a29465ae55b72c8259fde11bd208dc1edd7ca50186e848"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "cbfe64b7485afcbf8d7a03284c4718be5e0a3412a6bee3b84edf4c457773feee"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c732758cec7097f1f0b4e45c246b797cf02569eb9cef1ba0d7ea9aab496b04c7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9e0db638180a742e6faed5fa90607894c15520acdfba71452f7c38b0c7bea7c8"
+    sha256 cellar: :any_skip_relocation, sonoma:        "7f0e6f4d412013f3e5c221bcbd70db6601cebd4b88d932f89aeff598bbe4d473"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "46a300ef2113c004abe3754334d3081ca7324efc52e66d4b792456722c616320"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a6b2ee3968bd71d9d5db8888f4828a4ea09fc64f0d49c907f1480ee3681855b6"
   end
 
   depends_on "rust" => :build
@@ -35,7 +35,7 @@ class Treemd < Formula
         r, _w, pid = PTY.spawn("#{bin}/treemd #{testpath}/test.md > #{output_log}")
         r.winsize = [80, 43]
       end
-      sleep 1
+      sleep 3
       assert_match "treemd - test.md - 1 headings", output_log.read
     ensure
       Process.kill("TERM", pid)

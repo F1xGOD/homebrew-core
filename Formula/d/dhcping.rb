@@ -1,8 +1,8 @@
 class Dhcping < Formula
   desc "Perform a dhcp-request to check whether a dhcp-server is running"
   homepage "http://www.mavetju.org/unix/general.php"
-  url "http://www.mavetju.org/download/dhcping-1.2.tar.gz"
-  mirror "https://deb.debian.org/debian/pool/main/d/dhcping/dhcping_1.2.orig.tar.gz"
+  url "https://deb.debian.org/debian/pool/main/d/dhcping/dhcping_1.2.orig.tar.gz"
+  mirror "http://www.mavetju.org/download/dhcping-1.2.tar.gz"
   sha256 "32ef86959b0bdce4b33d4b2b216eee7148f7de7037ced81b2116210bc7d3646a"
   license "BSD-2-Clause"
 
@@ -10,8 +10,6 @@ class Dhcping < Formula
     url :homepage
     regex(/href=.*?dhcping[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
-
-  no_autobump! because: :requires_manual_review
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "508383a636e12497a54b8c5ee9732aaa9e3128e988fead007b84a79e871ff040"

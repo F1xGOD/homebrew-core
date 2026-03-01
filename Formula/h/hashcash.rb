@@ -1,7 +1,8 @@
 class Hashcash < Formula
   desc "Proof-of-work algorithm to counter denial-of-service (DoS) attacks"
   homepage "http://hashcash.org"
-  url "http://hashcash.org/source/hashcash-1.22.tgz"
+  url "https://deb.debian.org/debian/pool/main/h/hashcash/hashcash_1.22.orig.tar.gz"
+  mirror "http://hashcash.org/source/hashcash-1.22.tgz"
   sha256 "0192f12d41ce4848e60384398c5ff83579b55710601c7bffe6c88bc56b547896"
   license any_of: [:public_domain, "BSD-3-Clause", "LGPL-2.1-only", "GPL-2.0-only"]
   revision 1
@@ -10,8 +11,6 @@ class Hashcash < Formula
     url "http://hashcash.org/source/"
     regex(/href=.*?hashcash[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
-
-  no_autobump! because: :requires_manual_review
 
   bottle do
     sha256 cellar: :any,                 arm64_tahoe:    "4f0504fa7b4b3ae51ffb3163090b4b4309557b5327cac38f203fdf11dfb8e026"

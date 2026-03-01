@@ -5,8 +5,6 @@ class Gaul < Formula
   sha256 "7aabb5c1c218911054164c3fca4f5c5f0b9c8d9bab8b2273f48a3ff573da6570"
   license "GPL-2.0-or-later"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     sha256 cellar: :any,                 arm64_tahoe:    "e6d6c2c5f3c790afcff2232f8d2dc371a425fdedc42aa52a33daf94b0816439e"
     sha256 cellar: :any,                 arm64_sequoia:  "f6ef6f6e6711082dd49cae45e516aa9f8fdf0f2942ff4224f6c30d9e75976dcc"
@@ -35,5 +33,16 @@ class Gaul < Formula
     system "autoreconf", "--force", "--verbose", "--install"
     system "./configure", "--disable-g", *std_configure_args
     system "make", "install"
+  end
+
+  test do
+    resource "gaul-examples" do
+      url "https://downloads.sourceforge.net/project/gaul/gaul-examples/0.1849/gaul-examples-0.1849-0.tar.bz2"
+      sha256 "f4f59a0d676b0d58ba068424dfcb2c1715ff9aeaa940cab2daebff323274594c"
+    end
+    testpath.install resource("gaul-examples")
+
+    system ENV.cc, "src/struggle.c", "-o", "test", "-L#{lib}", "-lgaul_util", "-lgaul"
+    assert_match "The solution with seed = 49 was:\nWhen w^ yeil^ct%on%this strsggln,", shell_output("./test")
   end
 end

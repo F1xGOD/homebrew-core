@@ -1,55 +1,43 @@
 class Bear < Formula
   desc "Generate compilation database for clang tooling"
   homepage "https://github.com/rizsotto/Bear"
-  url "https://github.com/rizsotto/Bear/archive/refs/tags/3.1.6.tar.gz"
-  sha256 "99cd891eec6e89b734d7cafe0e623dd8c2f27d8cbf3ee9bc4807e69e5c8fb55c"
+  url "https://github.com/rizsotto/Bear/archive/refs/tags/4.0.4.tar.gz"
+  sha256 "373007f2d7b322d5e1d3dd4c4759b181f0e9b045151f2f5c629537341b9d2167"
   license "GPL-3.0-or-later"
-  revision 15
   head "https://github.com/rizsotto/Bear.git", branch: "master"
 
   bottle do
-    sha256 arm64_tahoe:   "f7b1e00ac4c2948a24c54955d254938b9a3ae8af47a477df4bb6badae9f14f39"
-    sha256 arm64_sequoia: "121bcd357125ab7002a4cbb8411e9ff6b2ce9ecc1a359e69ed37c601205a48d9"
-    sha256 arm64_sonoma:  "5ef89d2d97ef43dacfb7d3e439eeb4fdf1f1adc9d13e19a2dc0ba5c4571f4371"
-    sha256 sonoma:        "c0aed585dbbceb78a37af319bd74be9c58a9de6eb59e79d8c7d8d72d5b22d7eb"
-    sha256 arm64_linux:   "edd556206477844c1555d63a5d976ef7ad29ecc3c3e3f2980958fb84de534cd5"
-    sha256 x86_64_linux:  "0489f2c3ba1362f7858dfa31c3e79ce65c073fc268cea0d9bd9ee6d5e3cde8b3"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "dff39fe2a75cdaa8f208bcb88add9374cfeb94099f9b1e4a9277c8aa462a9e60"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "831aba7478d6c4d08a82f624e6fb03d564282223fd9703ca0e9248931781d836"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "953e42741dc3bdeea94afae5469993a9f9d817284a986da7b41187e3f81effdd"
+    sha256 cellar: :any_skip_relocation, sonoma:        "424136238384167d6140333113688d865f4f1d1d0a7c475c2602cef2b333b57d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "2acf72c5b7ecfbacf3173f7ccc7d54da6f3c36761ece9dc611aa2ccd419bad54"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7694330edf9b1182a4111328927632191bf892f537d23a9d053819c991a4093d"
   end
 
-  depends_on "cmake" => :build
   depends_on "pkgconf" => :build
-  depends_on "abseil"
-  depends_on "fmt"
-  depends_on "grpc"
-  depends_on "nlohmann-json"
-  depends_on "protobuf"
-  depends_on "spdlog"
+  depends_on "rust" => :build
 
-  uses_from_macos "llvm" => :test
-
-  on_macos do
-    depends_on "llvm" if DevelopmentTools.clang_build_version <= 1100
-  end
-
-  fails_with :clang do
-    build 1100
-    cause <<~EOS
-      Undefined symbols for architecture x86_64:
-        "std::__1::__fs::filesystem::__current_path(std::__1::error_code*)"
-    EOS
+  on_linux do
+    depends_on "lld" => :build
+    depends_on "llvm" => :test
   end
 
   def install
-    ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
+    # Patch build.rs to use Homebrew's libexec path instead of /usr/local/libexec
+    inreplace "bear/build.rs" do |s|
+      s.gsub! "/usr/local/libexec/bear/$LIB", "#{libexec}/$LIB"
+      s.gsub! "/usr/local/libexec/bear", libexec/"bin"
+    end
 
-    args = %w[
-      -DENABLE_UNIT_TESTS=OFF
-      -DENABLE_FUNC_TESTS=OFF
-    ]
+    system "cargo", "install", *std_cargo_args(path: "intercept-wrapper", root: libexec)
+    system "cargo", "install", *std_cargo_args(path: "bear")
 
-    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
-    system "cmake", "--build", "build"
-    system "cmake", "--install", "build"
+    if OS.linux?
+      ENV.append_to_rustflags "-C link-arg=-fuse-ld=lld"
+      system "cargo", "build", "--release", "--lib", "--manifest-path=intercept-preload/Cargo.toml"
+      (libexec/"lib").install "target/release/libexec.so"
+    end
   end
 
   test do

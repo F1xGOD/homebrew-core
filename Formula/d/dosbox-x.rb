@@ -1,8 +1,8 @@
 class DosboxX < Formula
   desc "DOSBox with accurate emulation and wide testing"
   homepage "https://dosbox-x.com/"
-  url "https://github.com/joncampbell123/dosbox-x/archive/refs/tags/dosbox-x-v2025.12.01.tar.gz"
-  sha256 "1777a5ff5ee214e2eb524740cee4b3299e87041ea7f9d8471b71d8003de210f1"
+  url "https://github.com/joncampbell123/dosbox-x/archive/refs/tags/dosbox-x-v2026.01.02.tar.gz"
+  sha256 "191e5de64f19b26f5a78a05b70e3216d62f3eaf2d0495f6258a12213a3d691c9"
   license "GPL-2.0-or-later"
   version_scheme 1
   head "https://github.com/joncampbell123/dosbox-x.git", branch: "master"
@@ -19,12 +19,13 @@ class DosboxX < Formula
   end
 
   bottle do
-    sha256                               arm64_tahoe:   "890f79e8da608a79afd358d735cbec9939b1c21aff472fa64e83ecb3bdec0ad5"
-    sha256                               arm64_sequoia: "202fedb32623c9f2a3721770529e5799ecfbf0e86bc2f180f01814a6413b3366"
-    sha256                               arm64_sonoma:  "55eab25dba882282b9732af1bceb02970a820d80935e7444179f510a0bd57ad6"
-    sha256                               sonoma:        "69a76fe894d0fd0748ec37f53576b0051111c07911ab4e858b33ac1006a6a1a9"
-    sha256                               arm64_linux:   "bf79960c82005408647f8f49eaba6a4d5d2d301d55198f49ce72e13bde6871b3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0926875272c6b112db4bc32aa20c8b589eb1a81fbffa0620666c0df6c2102223"
+    rebuild 1
+    sha256                               arm64_tahoe:   "46a81649179f13aeb4dbe640364bdfe030a938cc3525ea6c9a98b1f8acaad069"
+    sha256                               arm64_sequoia: "ad154d6eb85d59de2963c61e115e23100a9760636e574712b3dc74d83f5d9cfd"
+    sha256                               arm64_sonoma:  "8104828bb93561629545c04e39343df59126e8097994aa09f45362be9f20dec5"
+    sha256                               sonoma:        "975161e502be78f6a728b5eddbf51b40223ed0e3bdcaad650f187cfbd32194c9"
+    sha256                               arm64_linux:   "4e42f23a5aa402cd7a2c12d5838a87f308115d247c86f24ae592c61f7a5f24b2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b5b373764af3cd9384c20e4db2a91de894c21044b47751c8795f7f629540a789"
   end
 
   depends_on "autoconf" => :build
@@ -38,7 +39,6 @@ class DosboxX < Formula
   depends_on "sdl2"
 
   uses_from_macos "ncurses"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "gettext"
@@ -49,6 +49,7 @@ class DosboxX < Formula
     depends_on "alsa-lib"
     depends_on "libx11"
     depends_on "libxrandr"
+    depends_on "zlib-ng-compat"
   end
 
   def install

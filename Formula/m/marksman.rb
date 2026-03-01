@@ -1,27 +1,30 @@
 class Marksman < Formula
   desc "Language Server Protocol for Markdown"
   homepage "https://github.com/artempyanykh/marksman"
-  url "https://github.com/artempyanykh/marksman/archive/refs/tags/2025-12-13.tar.gz"
-  sha256 "7dcfb73538690d16950aa43a78aa58c1c144548851797e6088d3e76cd8a3f2ba"
+  url "https://github.com/artempyanykh/marksman/archive/refs/tags/2026-02-08.tar.gz"
+  sha256 "a3ba5f8ef5be5d7ede2ec5ae9f303d2d776f476734ff66254be8e6df0e0f090e"
   license "MIT"
   head "https://github.com/artempyanykh/marksman.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "8f3b1ded7394ecf60b8f983a7b193cc9238fbe990417fb0042e5665181735b5d"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9ef7f4825ba61c2b03ba99df7fafea0d5d734962dee2f0d045d493a4283e6cd6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a5b6b6c483db7f39e01a4549370ede29ae8b8c1012ce2ac7aeb58ea2eb0d553e"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "8354ec0cacf7045a5a7089f0ae1dce2f0820f5e4a5319de81eafb68a00a839fc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "61ea482c5ee1ea3806cc72053a63e1bde0033d21af843dff723a0b2bc76b150a"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "da4817971f267aaa10093ffe12e568b6e1ba29021c794d66086d9a6956d958c6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "438ee8a52c1fc8556cfe210d9c63366306d9fa5bd517fe22f2926d63c3241fd2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e10962409dc514362c16d9effcb22c38ccd7c2bf481a3652b745097a057305b1"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "0e02dd83e9db94a0092a8007187a0cc10202bfce5fa657dcd3c7b5a2db01c394"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9d7dc81a783f1866894aaaa40d440034da2230c09389c74a4411697ea9293990"
   end
 
-  depends_on "dotnet"
+  depends_on "dotnet@9"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     ENV["DOTNET_CLI_TELEMETRY_OPTOUT"] = "true"
 
-    dotnet = Formula["dotnet"]
+    dotnet = Formula["dotnet@9"]
     args = %W[
       --configuration Release
       --framework net#{dotnet.version.major_minor}

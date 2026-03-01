@@ -1,9 +1,11 @@
 class Groonga < Formula
   desc "Fulltext search engine and column store"
   homepage "https://groonga.org/"
-  url "https://github.com/groonga/groonga/releases/download/v15.2.1/groonga-15.2.1.tar.gz"
-  sha256 "77d9aa56e33c0986bbec6ddd2ee897aba6c347cff45fce988f2708145e0c9d77"
+  url "https://github.com/groonga/groonga/releases/download/v16.0.0/groonga-16.0.0.tar.gz"
+  sha256 "e8cec40d59c848617912d988c69ca67445c19fd2d8fcb5b6080eded2df89d545"
   license "LGPL-2.1-or-later"
+  revision 1
+  head "https://github.com/groonga/groonga.git", branch: "main"
 
   livecheck do
     url :homepage
@@ -11,33 +13,28 @@ class Groonga < Formula
   end
 
   bottle do
-    sha256 arm64_tahoe:   "2a5b2010f64cf1bacd1e0c3133e7cc390205978cc170742c8f432c800130be4e"
-    sha256 arm64_sequoia: "f906ff3c39376fefe3be3cceb52f8f212f96042dfe59840380f76fb9570b5e42"
-    sha256 arm64_sonoma:  "d72f1a1c995aa2ae91bb2397b9fd3edc78386e223d7ee7e35b79a66a2371981c"
-    sha256 sonoma:        "918c2ae1d9b69619986d6c4c025f89d246419e4490bae6f98760e6e1e7054bec"
-    sha256 arm64_linux:   "539c8cdcca98669610a715666e8d3ad937f61d627ab95d66d1a5960bf0dd7b98"
-    sha256 x86_64_linux:  "c35747420293fa0c96f9a5e668bc156312d20259c7030cf67f4b0c9edec3306b"
-  end
-
-  head do
-    url "https://github.com/groonga/groonga.git", branch: "main"
-    depends_on "autoconf" => :build
-    depends_on "automake" => :build
-    depends_on "libtool" => :build
+    sha256 arm64_tahoe:   "7910a742eb29d2d570423205b3aacd0abc396276d6215c0f811f3e38d0f46714"
+    sha256 arm64_sequoia: "5795febcb34f83e6240adf67cbc328776f0c85177dd034c41b81e7c2a1056005"
+    sha256 arm64_sonoma:  "10d42b2a81b4c3df9d49725fad36bdd75f8644d553da6bbaed91991ac73f1f11"
+    sha256 sonoma:        "2b488a31fe2550ccaac8501b78c52d52ab32f6355d34355af724f768252807fd"
+    sha256 arm64_linux:   "c31791814bce7fe99918d95d8a1b9406eaeb6d0de2538ac79bd5a8544874f690"
+    sha256 x86_64_linux:  "785265fa1be880554dcc9587daa48652897cff9baf7752c99b9d3c774bf13e79"
   end
 
   depends_on "cmake" => :build
   depends_on "pkgconf" => :build
+  depends_on "lz4"
   depends_on "mecab"
-  depends_on "mecab-ipadic"
+  depends_on "mecab-ipadic" => :no_linkage
   depends_on "msgpack"
-  depends_on "openssl@3"
+  depends_on "onigmo"
+  depends_on "simdjson"
+  depends_on "zstd"
 
-  uses_from_macos "libxcrypt"
-  uses_from_macos "zlib"
+  uses_from_macos "libedit"
 
   on_linux do
-    depends_on "glib"
+    depends_on "zlib-ng-compat"
   end
 
   link_overwrite "lib/groonga/plugins/normalizers/"
@@ -50,27 +47,45 @@ class Groonga < Formula
   end
 
   def install
-    args = %w[
-      --disable-zeromq
-      --disable-apache-arrow
-      --with-luajit=no
-      --with-ssl
-      --with-zlib
-      --without-libstemmer
-      --with-mecab
+    # Removed bundled libraries but keep files needed by build scripts even when unused
+    rm_r(Dir["vendor/*"] - ["vendor/CMakeLists.txt", "vendor/mecab", "vendor/mruby", "vendor/plugins"])
+
+    # Explicitly disable features to avoid opportunistic linkage from superenv CMAKE_PREFIX_PATH.
+    # Also set FETCHCONTENT_FULLY_DISCONNECTED=ON to avoid fallback to fetching bundled copies.
+    args = %W[
+      -DCMAKE_INSTALL_LOCALSTATEDIR=#{var}
+      -DCMAKE_INSTALL_RPATH=#{rpath};#{rpath(source: lib/"groonga/plugins/functions")}
+      -DCMAKE_INSTALL_SYSCONFDIR=#{etc}
+      -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+      -DGRN_WITH_BASE64=no
+      -DGRN_WITH_BUNDLED_ONIGMO=OFF
+      -DGRN_WITH_CURL=no
+      -DGRN_WITH_FAISS=no
+      -DGRN_WITH_H3=no
+      -DGRN_WITH_KYTEA=no
+      -DGRN_WITH_LIBEDIT=system
+      -DGRN_WITH_LLAMA_CPP=no
+      -DGRN_WITH_LIBSTEMMER=no
+      -DGRN_WITH_LZ4=system
+      -DGRN_WITH_MECAB=yes
+      -DGRN_WITH_MESSAGE_PACK=system
+      -DGRN_WITH_SIMDJSON=system
+      -DGRN_WITH_XSIMD=no
+      -DGRN_WITH_XXHASH=no
+      -DGRN_WITH_ZEROMQ=no
+      -DGRN_WITH_ZLIB=yes
+      -DGRN_WITH_ZSTD=system
+      -DGroongalz4_FIND_QUIETLY=ON
     ]
 
-    system "./autogen.sh" if build.head?
-
-    mkdir "builddir" do
-      system "../configure", *args, *std_configure_args
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "_build", *args, *std_cmake_args
+    system "cmake", "--build", "_build"
+    system "cmake", "--install", "_build"
 
     resource("groonga-normalizer-mysql").stage do
-      ENV.prepend_path "PATH", bin
-      ENV.prepend_path "PKG_CONFIG_PATH", lib/"pkgconfig"
-      system "cmake", "-S", ".", "-B", "_build", *std_cmake_args
+      args = ["-DCMAKE_INSTALL_RPATH=#{rpath(source: lib/"groonga/plugins/normalizers")}"]
+
+      system "cmake", "-S", ".", "-B", "_build", *args, *std_cmake_args
       system "cmake", "--build", "_build"
       system "cmake", "--install", "_build"
     end

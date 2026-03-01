@@ -3,24 +3,25 @@ class Vunnel < Formula
 
   desc "Tool for collecting vulnerability data from various sources"
   homepage "https://github.com/anchore/vunnel"
-  url "https://files.pythonhosted.org/packages/9e/38/65eed32df533518eab923d9cd5bab7a182e5405ccd1061ee9a81493d0306/vunnel-0.46.2.tar.gz"
-  sha256 "06769ffb653bc05d51933e471bc4757c90af6682837d6ef708fd52a41e44e777"
+  url "https://files.pythonhosted.org/packages/3b/ca/db3a354e216b237a2ef895e2e354da0cf250398c25859487b726d329177e/vunnel-0.55.1.tar.gz"
+  sha256 "f7722e317e2c65195500ef8dfe94eb30c1b97518c49c11f7446d8b8d5b960857"
   license "Apache-2.0"
   head "https://github.com/anchore/vunnel.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "5250036108859c9d3d1595fed27c5b648f787b06e6783779441c02d9536daa5c"
-    sha256 cellar: :any,                 arm64_sequoia: "1f904cd219457cd8bdb83541c5682cf5493592dcb2f3c8aa5bc6464ffd0286cd"
-    sha256 cellar: :any,                 arm64_sonoma:  "35bc279928d5b00c88808f48281169065e6c66f400c4e653a8c285829c3f2f7a"
-    sha256 cellar: :any,                 sonoma:        "4a3675fdd74ed9f0873722da75443e02d748fbda7f21ab9d810de15897ee34ab"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "dc02417a572ae5ae903da9fb97775f8bb7ea91951555de2202c4378bbc6ba747"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "491025de39b8e4b8d59f2d5ff9b4990534c3ae333e3cfa12607cab81320df751"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "ee32fb242a74fe369a828256e569c3591b6f49dc1d0d73f9b7feaa38fe331d2d"
+    sha256 cellar: :any,                 arm64_sequoia: "9b1a15f138c2c69540d24b3a177082d45d9e1601076bba670d7c7ec438d1d9e6"
+    sha256 cellar: :any,                 arm64_sonoma:  "791739507fbbce771cdd80a970f0f689eee6b287a62abc6a5ff69f05c9afc1b0"
+    sha256 cellar: :any,                 sonoma:        "a748af84d70b5a6215631701aeacc2e3c4d0f356ca8a23e2aa55c196ed528697"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "987af1c7cab1da0c1c756ee19e8ee739cf476b3f88749cc7d8df912d2a7de966"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4c0d970977a5b7d3b47d0e37c8a970cc43027cd451917fd7d6ba299477ee7bb4"
   end
 
   depends_on "rust" => :build
   depends_on "certifi" => :no_linkage
   depends_on "libyaml"
-  depends_on "python@3.13" # requires-python = "<3.14,>=3.13", https://github.com/anchore/vunnel/issues/952
+  depends_on "python@3.14"
   depends_on "rpds-py" => :no_linkage
 
   uses_from_macos "libxml2", since: :ventura
@@ -43,11 +44,6 @@ class Vunnel < Formula
     sha256 "12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a"
   end
 
-  resource "click-default-group" do
-    url "https://files.pythonhosted.org/packages/1d/ce/edb087fb53de63dad3b36408ca30368f438738098e668b78c87f93cd41df/click_default_group-1.2.4.tar.gz"
-    sha256 "eb3f3c99ec0d456ca6cd2a7f08f7d4e91771bef51b01bdd9580cc6450fe1251e"
-  end
-
   resource "colorlog" do
     url "https://files.pythonhosted.org/packages/a2/61/f083b5ac52e505dfc1c624eafbf8c7589a0d7f32daa398d2e7590efa5fda/colorlog-6.10.1.tar.gz"
     sha256 "eb4ae5cb65fe7fec7773c2306061a8e63e02efc2c72eba9d27b0fa23c94f1321"
@@ -63,24 +59,14 @@ class Vunnel < Formula
     sha256 "1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"
   end
 
-  resource "docformatter" do
-    url "https://files.pythonhosted.org/packages/f7/05/812faba28882695291c7dc61e64249081ee6394c9459987a6ce599c10ef5/docformatter-1.5.0.tar.gz"
-    sha256 "9dc71659d3b853c3018cd7b2ec34d5d054370128e12b79ee655498cb339cc711"
-  end
-
-  resource "greenlet" do
-    url "https://files.pythonhosted.org/packages/c7/e5/40dbda2736893e3e53d25838e0f19a2b417dfc122b9989c91918db30b5d3/greenlet-3.3.0.tar.gz"
-    sha256 "a82bb225a4e9e4d653dd2fb7b8b2d36e4fb25bc0165422a11e48b88e9e6f78fb"
-  end
-
   resource "idna" do
     url "https://files.pythonhosted.org/packages/6f/6d/0703ccc57f3a7233505399edb88de3cbd678da106337b9fcde432b65ed60/idna-3.11.tar.gz"
     sha256 "795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"
   end
 
   resource "ijson" do
-    url "https://files.pythonhosted.org/packages/d0/12/3116e1d5752aa9d480eb58ae4b348d38c1aeaf792c5fbca22e44c27d4bf1/ijson-2.6.1.tar.gz"
-    sha256 "75ebc60b23abfb1c97f475ab5d07a5ed725ad4bd1f58513d8b258c21f02703d0"
+    url "https://files.pythonhosted.org/packages/2d/30/7ab4b9e88e7946f6beef419f74edcc541df3ea562c7882257b4eaa82417d/ijson-3.4.0.post0.tar.gz"
+    sha256 "9aa02dc70bb245670a6ca7fba737b992aeeb4895360980622f7e568dbf23e41e"
   end
 
   resource "importlib-metadata" do
@@ -104,8 +90,8 @@ class Vunnel < Formula
   end
 
   resource "jsonschema" do
-    url "https://files.pythonhosted.org/packages/74/69/f7185de793a29082a9f3c7728268ffb31cb5095131a9c139a74078e27336/jsonschema-4.25.1.tar.gz"
-    sha256 "e4a9655ce0da0c0b67a085847e00a3a51449e1157f4f75e9fb5aa545e122eb85"
+    url "https://files.pythonhosted.org/packages/b3/fc/e067678238fa451312d4c62bf6e6cf5ec56375422aee02f9cb5f909b3047/jsonschema-4.26.0.tar.gz"
+    sha256 "0c26707e2efad8aa1bfc5b7ce170f3fccc2e4918ff85989ba9ffa9facb2be326"
   end
 
   resource "jsonschema-specifications" do
@@ -124,8 +110,8 @@ class Vunnel < Formula
   end
 
   resource "mashumaro" do
-    url "https://files.pythonhosted.org/packages/f8/67/c4e235256baf6837106d2620c7123eb1e5786c704c7f7d7fa488ad6afc61/mashumaro-3.17.tar.gz"
-    sha256 "de1d8b1faffee58969c7f97e35963a92480a38d4c9858e92e0721efec12258ed"
+    url "https://files.pythonhosted.org/packages/64/3d/0f1bf475109a816c2a31a8b424750911343f0bce304827a5255df167547e/mashumaro-3.20.tar.gz"
+    sha256 "af4573f14ae61be3fbc3a473158ddfc1420f345410385809fd782e0d79e9215c"
   end
 
   resource "mergedeep" do
@@ -134,13 +120,13 @@ class Vunnel < Formula
   end
 
   resource "oras" do
-    url "https://files.pythonhosted.org/packages/c3/78/16f3847ef31a3b1410c401712336a9c5d90fa97c3cc1f4bacd9dcfced9b7/oras-0.2.38.tar.gz"
-    sha256 "58482f78275cb5cc9fdf135248ca878a19204428a51bd3a1ca24c32714d35341"
+    url "https://files.pythonhosted.org/packages/bb/a9/9f5c54c31093773929bf717b0fa1dfe80f6245182477994fdd514bb5d98d/oras-0.2.40.tar.gz"
+    sha256 "72cc9ea4a89085909b39d7a55338f76cbf9179bd5f41904b27c8e4ed4f3da8e2"
   end
 
   resource "orjson" do
-    url "https://files.pythonhosted.org/packages/04/b8/333fdb27840f3bf04022d21b654a35f58e15407183aeb16f3b41aa053446/orjson-3.11.5.tar.gz"
-    sha256 "82393ab47b4fe44ffd0a7659fa9cfaacc717eb617c93cde83795f14af5c2e9d5"
+    url "https://files.pythonhosted.org/packages/53/45/b268004f745ede84e5798b48ee12b05129d19235d0e15267aa57dcdb400b/orjson-3.11.7.tar.gz"
+    sha256 "9b1a67243945819ce55d24a30b59d6a168e86220452d2c96f4d1f093e71c0c49"
   end
 
   resource "packageurl-python" do
@@ -149,8 +135,8 @@ class Vunnel < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
   end
 
   resource "pluggy" do
@@ -193,19 +179,19 @@ class Vunnel < Formula
     sha256 "dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf"
   end
 
+  resource "ruff" do
+    url "https://files.pythonhosted.org/packages/04/dc/4e6ac71b511b141cf626357a3946679abeba4cf67bc7cc5a17920f31e10d/ruff-0.15.1.tar.gz"
+    sha256 "c590fe13fb57c97141ae975c03a1aedb3d3156030cabd740d6ff0b0d601e203f"
+  end
+
   resource "six" do
     url "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
     sha256 "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"
   end
 
   resource "sqlalchemy" do
-    url "https://files.pythonhosted.org/packages/be/f9/5e4491e5ccf42f5d9cfc663741d261b3e6e1683ae7812114e7636409fcc6/sqlalchemy-2.0.45.tar.gz"
-    sha256 "1632a4bda8d2d25703fdad6363058d882541bdaaee0e5e3ddfa0cd3229efce88"
-  end
-
-  resource "tomli" do
-    url "https://files.pythonhosted.org/packages/52/ed/3f73f72945444548f33eba9a87fc7a6e969915e7b1acc8260b30e1f76a2f/tomli-2.3.0.tar.gz"
-    sha256 "64be704a875d2a59753d80ee8a533c3fe183e3f06807ff7dc2232938ccb01549"
+    url "https://files.pythonhosted.org/packages/06/aa/9ce0f3e7a9829ead5c8ce549392f33a12c4555a6c0609bb27d882e9c7ddf/sqlalchemy-2.0.46.tar.gz"
+    sha256 "cf36851ee7219c170bb0793dbc3da3e80c582e04a5437bc601bfe8c85c9216d7"
   end
 
   resource "toposort" do
@@ -218,26 +204,14 @@ class Vunnel < Formula
     sha256 "0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"
   end
 
-  resource "untokenize" do
-    url "https://files.pythonhosted.org/packages/f7/46/e7cea8159199096e1df52da20a57a6665da80c37fb8aeb848a3e47442c32/untokenize-0.1.1.tar.gz"
-    sha256 "3865dbbbb8efb4bb5eaa72f1be7f3e0be00ea8b7f125c69cbd1f5fda926f37a2"
-
-    # Fix to support Python 3.14
-    # PR ref: https://github.com/myint/untokenize/pull/5
-    patch do
-      url "https://github.com/myint/untokenize/commit/46cf0233fe18097398f5692f9caf3d2e5d94eb14.patch?full_index=1"
-      sha256 "fa7cafaba2d606cb45d763d828a2a7a6a2532b39593bd82ac122dfe7df8145ef"
-    end
-  end
-
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "xsdata" do
-    url "https://files.pythonhosted.org/packages/20/13/0de81fd3e39c1c45125e5b79f8731f32b0a6d7556959a9a1aa87bcc43624/xsdata-22.12.tar.gz"
-    sha256 "a3d5f1b7b6fff8c916f7825c836ea285a4e7d3f3a94dcbbed0e63ba15dc94466"
+    url "https://files.pythonhosted.org/packages/2f/c9/71e9e8eac669091fd434ed494d806c8cc37614aecb34ce4c62c283f99abf/xsdata-26.2.tar.gz"
+    sha256 "c631af71aaa75734f8ce92a08fcf8389d905dee2aab0b5032c9032e9071009a6"
   end
 
   resource "xxhash" do
@@ -251,20 +225,11 @@ class Vunnel < Formula
   end
 
   resource "zstandard" do
-    url "https://files.pythonhosted.org/packages/ed/f6/2ac0287b442160a89d726b17a9184a4c615bb5237db763791a7fd16d9df1/zstandard-0.23.0.tar.gz"
-    sha256 "b2d8c62d08e7255f68f7a740bae85b3c9b8e5466baa9cbf7f57f1cde0ac6bc09"
+    url "https://files.pythonhosted.org/packages/fd/aa/3e0508d5a5dd96529cdc5a97011299056e14c6505b678fd58938792794b1/zstandard-0.25.0.tar.gz"
+    sha256 "7713e1179d162cf5c7906da876ec2ccb9c3a9dcbdffef0cc7f70c3667a205f0b"
   end
 
   def install
-    # hatch does not support a SOURCE_DATE_EPOCH before 1980.
-    # Remove after https://github.com/pypa/hatch/pull/1999 is released.
-    ENV["SOURCE_DATE_EPOCH"] = "1451574000"
-
-    # Fix compilation of ijson native extensions, note:
-    # This would not be needed if latest ijson version is used upstream, but there are reasons it is
-    # currently held back: https://github.com/anchore/vunnel/pull/103
-    ENV.append_to_cflags "-Wno-implicit-function-declaration" if DevelopmentTools.clang_build_version >= 1403
-
     virtualenv_install_with_resources
 
     generate_completions_from_executable(bin/"vunnel", shell_parameter_format: :click)

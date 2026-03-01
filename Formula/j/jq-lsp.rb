@@ -1,18 +1,18 @@
 class JqLsp < Formula
   desc "Jq language server"
   homepage "https://github.com/wader/jq-lsp"
-  url "https://github.com/wader/jq-lsp/archive/refs/tags/v0.1.15.tar.gz"
-  sha256 "34a693262ca1df0375701847962c43043ab4a2dd720ed637ce8f73d34243db97"
+  url "https://github.com/wader/jq-lsp/archive/refs/tags/v0.1.17.tar.gz"
+  sha256 "899cd2dcd4838d21bab1d84f687cb4a907e0fce7702990dac342b9b6fd88b5a2"
   license "MIT"
   head "https://github.com/wader/jq-lsp.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "115478691dfbe74b6be6e80bdab1af763aeae7b488f21a2af2f17ee79419035f"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "115478691dfbe74b6be6e80bdab1af763aeae7b488f21a2af2f17ee79419035f"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "115478691dfbe74b6be6e80bdab1af763aeae7b488f21a2af2f17ee79419035f"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e1e445a4064ce44be225fc606c2fcff75917feeed398f02a5b9ee5d125a5028d"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "bbf7411589b3489a6efc411cb4eede66c46280d70b8794cd4d5b9c97edc4a176"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7f62f9d9aec3e138c6c4bed4654b9c104636b31eff1a8c0d664c8585b5fc0293"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "47061ca69bab6c5e7f237e325b3fb2cbc65a0c5ce8c1bbbb23d8be1e360f1522"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "47061ca69bab6c5e7f237e325b3fb2cbc65a0c5ce8c1bbbb23d8be1e360f1522"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "47061ca69bab6c5e7f237e325b3fb2cbc65a0c5ce8c1bbbb23d8be1e360f1522"
+    sha256 cellar: :any_skip_relocation, sonoma:        "767cab6e7d0b1bad5d5123f2349fb6a2d9b11592e8d0df2b7f7694354d007d11"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "2e7b0cb9205d7951db329ce637008f3b0dfeeb3b589318d7c0c7670c4ff36869"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "91ad43fb3ff4ebc8e333e0253ffceeedb37b26f9f6da1d31fc1c719dd9a67322"
   end
 
   depends_on "go" => :build
@@ -24,14 +24,26 @@ class JqLsp < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/jq-lsp --version")
 
-    expected = JSON.parse(<<~JSON)
+    require "open3"
+
+    json = <<~JSON
       {
-        "name": "jq-lsp",
-        "version": "#{version}"
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "processId": 88075,
+          "rootUri": null,
+          "capabilities": {},
+          "trace": "verbose",
+          "workspaceFolders": null
+        }
       }
     JSON
-    query = ".config | {name: .name, version: .version}"
 
-    assert_equal expected, JSON.parse(shell_output("#{bin}/jq-lsp --query '#{query}'"))
+    Open3.popen3(bin/"jq-lsp") do |stdin, stdout|
+      stdin.write "Content-Length: #{json.size}\r\n\r\n#{json}"
+      assert_match(/^Content-Length: \d+/i, stdout.readline)
+    end
   end
 end

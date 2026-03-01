@@ -6,15 +6,16 @@ class MagicWormhole < Formula
   url "https://files.pythonhosted.org/packages/65/34/08813891da57999cf953e9c553193c900ff363c4cdfdd48a74f65536a883/magic_wormhole-0.22.0.tar.gz"
   sha256 "52a3ae2f0c56d0d4cd52188e50f10d2fe14bfd46e287dd50b72e7f7e851434ac"
   license "MIT"
+  revision 2
   head "https://github.com/magic-wormhole/magic-wormhole.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "8226a6515129b2f273eca3b7d206e376defde125526347a864a08604d158cd90"
-    sha256 cellar: :any,                 arm64_sequoia: "76aa4222820bac4c3a5562361e84ae6f127bc572cf8d1dbadfb409980f2b08c9"
-    sha256 cellar: :any,                 arm64_sonoma:  "8a973f2c71b2d0c0773fe5f6ca98324c093d6090fc06d88ba76f4a33435c94a5"
-    sha256 cellar: :any,                 sonoma:        "2ebbebef63bc2f30fe9568f4731f72d25bf9a874ef390af62793be94708c3306"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c60fbba3c893821e67c88fdd1a732e577fbf0e33d469fb897774154da983f62f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bdb1d31a63b10eff6970483960e46a8ca1a2302ec2f2755f9e149d363bf91bde"
+    sha256 cellar: :any,                 arm64_tahoe:   "d2ae33ca6b2113347b8f95de5aed75a8bfa3236c42c1f44e3e780de118133b44"
+    sha256 cellar: :any,                 arm64_sequoia: "71ebfde8f24a1ffa94b2128da6089566cea4462f7196cbf49e26eb79b9ddc364"
+    sha256 cellar: :any,                 arm64_sonoma:  "0208033bded696b69237718c27a29c54d185fcd7de7c7e38c8da399efea9b18b"
+    sha256 cellar: :any,                 sonoma:        "57cf66739ea200bae6df8a60d96211149609896f4d9067b7106e890b7453f83f"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d8ce94be24f5a808524bdd42edbabcacb13f0eea44ca595cbbc6c2fab3a7499f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ff4ab689766dc42c6a56db643a98914892ab8245f8efcd5ff6b9f3c7422d447c"
   end
 
   depends_on "cryptography" => :no_linkage
@@ -76,8 +77,8 @@ class MagicWormhole < Formula
   end
 
   resource "iterable-io" do
-    url "https://files.pythonhosted.org/packages/40/be/27d59b5c1d74ecbd26c1142f84b61d6cb04f0d0337697149645f34406b2d/iterable-io-1.0.0.tar.gz"
-    sha256 "fb9e1b739587a9ba0d5c60a3e1eb71246761583bc9f18b3c35bb112b44b18c3c"
+    url "https://files.pythonhosted.org/packages/9e/ad/cc53869e3357520033e3ab9a7d6043045bcdd666da427583678efdbb446e/iterable_io-1.0.1.tar.gz"
+    sha256 "55db222c5914097a8508dc722f8db6112f636a04a8acb94ee6589d9b14bd4bb7"
   end
 
   resource "msgpack" do
@@ -96,8 +97,8 @@ class MagicWormhole < Formula
   end
 
   resource "pyasn1" do
-    url "https://files.pythonhosted.org/packages/ba/e9/01f1a64245b89f039897cb0130016d79f77d52669aae6ee7b159a6c4c018/pyasn1-0.6.1.tar.gz"
-    sha256 "6f580d2bdd84365380830acf45550f2511469f673cb4a5ae3857a3170128b034"
+    url "https://files.pythonhosted.org/packages/fe/b6/6e630dff89739fcd427e3f72b3d905ce0acb85a45d4ec3e2678718a3487f/pyasn1-0.6.2.tar.gz"
+    sha256 "9b59a2b25ba7e4f8197db7686c09fb33e658b98339fadb826e9512629017833b"
   end
 
   resource "pyasn1-modules" do
@@ -106,8 +107,8 @@ class MagicWormhole < Formula
   end
 
   resource "pynacl" do
-    url "https://files.pythonhosted.org/packages/b2/46/aeca065d227e2265125aea590c9c47fbf5786128c9400ee0eb7c88931f06/pynacl-1.6.1.tar.gz"
-    sha256 "8d361dac0309f2b6ad33b349a56cd163c98430d409fa503b10b70b3ad66eaa1d"
+    url "https://files.pythonhosted.org/packages/d9/9a/4019b524b03a13438637b11538c82781a5eda427394380381af8f04f467a/pynacl-1.6.2.tar.gz"
+    sha256 "018494d6d696ae03c7e656e5e74cdfd8ea1326962cc401bcf018f1ed8436811c"
   end
 
   resource "pyopenssl" do
@@ -166,8 +167,8 @@ class MagicWormhole < Formula
   end
 
   resource "zope-interface" do
-    url "https://files.pythonhosted.org/packages/71/c9/5ec8679a04d37c797d343f650c51ad67d178f0001c363e44b6ac5f97a9da/zope_interface-8.1.1.tar.gz"
-    sha256 "51b10e6e8e238d719636a401f44f1e366146912407b58453936b781a19be19ec"
+    url "https://files.pythonhosted.org/packages/86/a4/77daa5ba398996d16bb43fc721599d27d03eae68fe3c799de1963c72e228/zope_interface-8.2.tar.gz"
+    sha256 "afb20c371a601d261b4f6edb53c3c418c249db1a9717b0baafc9a9bb39ba1224"
   end
 
   def install

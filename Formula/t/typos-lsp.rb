@@ -1,8 +1,8 @@
 class TyposLsp < Formula
   desc "Language Server for typos-cli"
   homepage "https://github.com/tekumara/typos-lsp"
-  url "https://github.com/tekumara/typos-lsp/archive/refs/tags/v0.1.46.tar.gz"
-  sha256 "3a1068e9bb6457e85b28ded1378a5500360f26f8921ae0033c0c49c13e71880d"
+  url "https://github.com/tekumara/typos-lsp/archive/refs/tags/v0.1.50.tar.gz"
+  sha256 "6a71fcb9836eae286d08b5a7c5bc2f4dd278eb9d5bf7031ba585315a1714b666"
   license "MIT"
 
   livecheck do
@@ -11,12 +11,12 @@ class TyposLsp < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "3a5430bd286df90f3141c004e7301604cd9838773f6839a785cded618cc216b8"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6b7fd885b7aa70195986410f6452fc8a7fb1d2f6b0c61d42b0467bb49cdd3f26"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7060698a553cb63c57774446104e46e0570ee097aedfbc3af66801a8973ce4a1"
-    sha256 cellar: :any_skip_relocation, sonoma:        "2e2826c004fabea9b1a4e751d83d1fde572e6c68a39b55d245c6adf0a2586dbe"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "a4c24b9604f29a6b2e0db34c0ef464e77bdcbe5b8b4fa2aa00e1882d787072b3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e158d9f64558b877adfef17da4749ad0e3bbf7b01ed894c3a146788ec25d5186"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "9113ebe6aaf348618c19199ed469220877583a8a86299f60f201e99e80c98a42"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "92e9c1ebbffd1d75131f000a6309be3865a8c0059f36514682d0ca908f4dc336"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "452ff4ec777fcb0b8a47fc8b66c9020e355e3e9055df7ea4697c57534a5e7752"
+    sha256 cellar: :any_skip_relocation, sonoma:        "531b181daa82a5b5c82772268bc5db6909fd8c6dc791032faaac2641c1465c73"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "1a0bf2fc3b1f9620c1119b0a7e046af7d0a3a4dcbeff925cfe6afb854a4069ab"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ac8ff42d892d755e74d87b61d53cd02083a95d8bf0d5ef46237c0493b7df92cd"
   end
 
   depends_on "rust" => :build

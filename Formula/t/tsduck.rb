@@ -1,8 +1,8 @@
 class Tsduck < Formula
   desc "MPEG Transport Stream Toolkit"
   homepage "https://tsduck.io/"
-  url "https://github.com/tsduck/tsduck/archive/refs/tags/v3.42-4421.tar.gz"
-  sha256 "4e8549967b25cbdc247c27297ef8bfa84a27f291553849fd721680c675822ec5"
+  url "https://github.com/tsduck/tsduck/archive/refs/tags/v3.43-4549.tar.gz"
+  sha256 "a3399661d21e0d965dfef3750d4af7da61eb2924e7b48ee3edaae194ffa5203c"
   license "BSD-2-Clause"
   head "https://github.com/tsduck/tsduck.git", branch: "master"
 
@@ -16,21 +16,17 @@ class Tsduck < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_tahoe:   "5b623289b58ad333bbfb279db9871defd305d2811f219130d2868cfe86673851"
-    sha256 cellar: :any,                 arm64_sequoia: "9327703566706a7077885bf1ed22c933cd4d82146e34f186c7b0eb5bff6add8e"
-    sha256 cellar: :any,                 arm64_sonoma:  "8bedbd9dd8951b291c9556a957fd241102b0cfd418bd8ae3d893b9dc48e4c182"
-    sha256 cellar: :any,                 arm64_ventura: "b9f894857c6bb01b382100d2451d475499e7d9ec5fa5d337d376a4a6ed17afd3"
-    sha256 cellar: :any,                 sonoma:        "f45c7372512d9d368a4f2fbb5d1ec5e50d25d211f92922ed09f7b55b1c4067ac"
-    sha256 cellar: :any,                 ventura:       "2abd61849397bf5683de519900ad7b4ae3a236eb63ca1b4040c094722db4d5ac"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "95b6392d75893200f3ab0fa324a449c7f2f1e1f646ee0e3f434161d5239c21d7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b603e585148b9d84984bb05e5bbfabf212396b6e1233c94fe9eabba7ff9fbee1"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_tahoe:   "9689e7dc782eb2d4ba6a37c4892785031972c51a06f299221ad7a354b1273c77"
+    sha256 cellar: :any,                 arm64_sequoia: "5a5302c71734043a23f3b908f36c39ce83bfd8c5606775af2ea90e5ec7c2e73a"
+    sha256 cellar: :any,                 arm64_sonoma:  "ddc3a7443f8580ab045ac0a938b236bbe5dc76cf818a19c0491c2e0d7f2e0f22"
+    sha256 cellar: :any,                 sonoma:        "d91a66cdad84c2a14af8e36c40d63544e965fb37869684b8c9745cf00589b732"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "af4c880922c1767a187fda85b0f620aa98fb64d7652183df5ad52ab93cc7fe3f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a0c3336e614147bf079ce1c5feb71c03a3757488d0b43dd3e675f9f23ee972a5"
   end
 
   depends_on "asciidoctor" => :build
   depends_on "dos2unix" => :build
-  depends_on "gnu-sed" => :build
-  depends_on "grep" => :build
   depends_on "openjdk" => :build
   depends_on "qpdf" => :build
   depends_on "librist"
@@ -42,12 +38,15 @@ class Tsduck < Formula
   uses_from_macos "curl"
   uses_from_macos "libedit"
   uses_from_macos "pcsc-lite"
-  uses_from_macos "zlib"
 
   on_macos do
-    depends_on "bash" => :build
+    depends_on "gnu-sed" => :build
     depends_on "llvm" => :build if DevelopmentTools.clang_build_version <= 1599
-    depends_on "make" => :build
+    depends_on "make" => :build # needs make 4+
+  end
+
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   # Needs clang 16
@@ -56,10 +55,19 @@ class Tsduck < Formula
     cause "Requires full C++20 support"
   end
 
+  # Add sys/time.h header
+  # PR ref: https://github.com/tsduck/tsduck/pull/1689
+  patch do
+    url "https://github.com/tsduck/tsduck/commit/c46fd301f31be8c9aa00ce6d6e21c4e4c6bfc1cf.patch?full_index=1"
+    sha256 "c20a1989f2fb528c5326e088beac78cae438c9ea00a93c4b6d04400df7b4ff77"
+  end
+
   def install
     if OS.linux?
       ENV["LINUXBREW"] = "true"
       ENV["VATEK_CFLAGS"] = "-I#{Formula["libvatek"].opt_include}/vatek"
+    else
+      ENV["LDFLAGS_EXTRA"] = "-Wl,-rpath,#{rpath(source: lib/"tsduck")}"
     end
     system "gmake", "NOGITHUB=1", "NOTEST=1"
     ENV.deparallelize

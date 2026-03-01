@@ -1,8 +1,8 @@
 class Librdkafka < Formula
   desc "Apache Kafka C/C++ library"
   homepage "https://github.com/confluentinc/librdkafka"
-  url "https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.12.1.tar.gz"
-  sha256 "ec103fa05cb0f251e375f6ea0b6112cfc9d0acd977dc5b69fdc54242ba38a16f"
+  url "https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.13.0.tar.gz"
+  sha256 "3bd351601d8ebcbc99b9a1316cae1b83b00edbcf9411c34287edf1791c507600"
   license "BSD-2-Clause"
   head "https://github.com/confluentinc/librdkafka.git", branch: "master"
 
@@ -12,12 +12,13 @@ class Librdkafka < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "0c91c7a4a6c7e4f45b8cd4d54a435e36e6ec96c4781f0ec8c12ab1f8120bdcb1"
-    sha256 cellar: :any,                 arm64_sequoia: "166433b0f5b245f42396d5edf0b2fdc31e4b6d2f3396c46f573b9a30c7f259c8"
-    sha256 cellar: :any,                 arm64_sonoma:  "982fa0b3ef63fa414eca97f3c322830ec9d3974c22d431273fd32e108524bb04"
-    sha256 cellar: :any,                 sonoma:        "ac9114e91affcfa254f1fbe4f423ebf2974123e022590411a9990ee5d21cf6cc"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "901c8fbadf514fb7fb0cede1732e69f5fd32bd319f559aa5f233f09fb631c986"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1e867d8e1ec8e8f3863bb169c40562605540ec029a252ce7456729eeff0b210d"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "ef4ed6a6b8703b96f1c1cff9b37a7fd9fd04aec3b84a99a970592901da5fde8d"
+    sha256 cellar: :any,                 arm64_sequoia: "2f92c7d40926bcd61bc07b3f203501b47dc4251022349f91e07b8724fd897a3a"
+    sha256 cellar: :any,                 arm64_sonoma:  "630d6b598109306eb4443d3be91a31730fad218cf23379fb6dd10eb61cd1e19b"
+    sha256 cellar: :any,                 sonoma:        "b51d0131288d7786d316d109d716945c56f6f9e0a0b7b8cdce5c558d3d1d0840"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "9660ccc2351c20768bc5c021a33e9adcedcea5a7e0341dd1c41057ab5dff5965"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5be2944c5b1c1c8b9c6f649d8e0b0cc2cdd62b65ef0f1b04d07b3ca893fceea4"
   end
 
   depends_on "pkgconf" => :build
@@ -29,7 +30,10 @@ class Librdkafka < Formula
   uses_from_macos "python" => :build
   uses_from_macos "curl"
   uses_from_macos "cyrus-sasl"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     system "./configure", "--prefix=#{prefix}"

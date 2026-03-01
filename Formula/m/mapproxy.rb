@@ -6,15 +6,15 @@ class Mapproxy < Formula
   url "https://files.pythonhosted.org/packages/7d/5e/972a52a0b3f646a53dd3e8a552256a649548b8fb84b4fbb1b43b90de86ea/mapproxy-6.0.1.tar.gz"
   sha256 "aada98e509b8b0b99eb3f9f97bebf5f284711bd1bfae46e8e6f2b296581bc677"
   license "Apache-2.0"
-  revision 2
+  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "ca7d704d34e42aa9063ed0a09387eb4d2c72d0387930303e091efa48fe076c45"
-    sha256 cellar: :any,                 arm64_sequoia: "be989960e81323826b17086f814ec1112305358f710e2ce91d564913b335987c"
-    sha256 cellar: :any,                 arm64_sonoma:  "1b86ee6941dfc9ef09dfaec3cca068d0c8e690bd91d9fe1ae31b92576abf4aa9"
-    sha256 cellar: :any,                 sonoma:        "adead010807a92f384eb42497788a49c8aafe2ab41e600e2830669a1ade85151"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "e692a79aaccd1b55188198e513ea9ca5aceab963cdce82fc6bfdc5668baeb4e4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "72b01756ff2c769baee189ba0e3855604d5c404b32d98c7fcf5971b2fdaa749c"
+    sha256 cellar: :any,                 arm64_tahoe:   "fff1075146f7b05b42e2e62ef7b3b89289ebf5b1a2d252e62988d1a70a2abd67"
+    sha256 cellar: :any,                 arm64_sequoia: "a4e92fa4fbb459f869441ba6eff8b58519fbfb225ea23c5615f360753ea44295"
+    sha256 cellar: :any,                 arm64_sonoma:  "ef4deede0e7dc309491f9d10223017be0a1afefa0ed71861abf9b3e8b429a7de"
+    sha256 cellar: :any,                 sonoma:        "2ef17b0c91eb0f771938d6b4d8f865a0c69a7180cf9dddf56f0f082d06cb59d0"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "fe1503a8a7d6478f5c6d0df12fda9163900f0aa49152c2514189f9fce9397f53"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "14440b9b2be116fe0c01f93874d0c3ed5ccd88c47aa6316b71d7e3cb14a73c56"
   end
 
   depends_on "pkgconf" => :build
@@ -44,8 +44,8 @@ class Mapproxy < Formula
   end
 
   resource "babel" do
-    url "https://files.pythonhosted.org/packages/7d/6b/d52e42361e1aa00709585ecc30b3f9684b3ab62530771402248b1b1d6240/babel-2.17.0.tar.gz"
-    sha256 "0c54cffb19f690cdcc52a3b50bcbf71e07a808d1c80d549f2459b9d2cf0afb9d"
+    url "https://files.pythonhosted.org/packages/7d/b2/51899539b6ceeeb420d40ed3cd4b7a40519404f9baf3d4ac99dc413a834b/babel-2.18.0.tar.gz"
+    sha256 "b80b99a14bd085fcacfa15c9165f651fbb3406e66cc603abf11c5750937c992d"
   end
 
   resource "future" do
@@ -59,8 +59,8 @@ class Mapproxy < Formula
   end
 
   resource "jsonschema" do
-    url "https://files.pythonhosted.org/packages/74/69/f7185de793a29082a9f3c7728268ffb31cb5095131a9c139a74078e27336/jsonschema-4.25.1.tar.gz"
-    sha256 "e4a9655ce0da0c0b67a085847e00a3a51449e1157f4f75e9fb5aa545e122eb85"
+    url "https://files.pythonhosted.org/packages/b3/fc/e067678238fa451312d4c62bf6e6cf5ec56375422aee02f9cb5f909b3047/jsonschema-4.26.0.tar.gz"
+    sha256 "0c26707e2efad8aa1bfc5b7ce170f3fccc2e4918ff85989ba9ffa9facb2be326"
   end
 
   resource "jsonschema-specifications" do
@@ -109,8 +109,8 @@ class Mapproxy < Formula
   end
 
   resource "werkzeug" do
-    url "https://files.pythonhosted.org/packages/45/ea/b0f8eeb287f8df9066e56e831c7824ac6bab645dd6c7a8f4b2d767944f9b/werkzeug-3.1.4.tar.gz"
-    sha256 "cd3cd98b1b92dc3b7b3995038826c68097dcb16f9baa63abe35f20eafeb9fe5e"
+    url "https://files.pythonhosted.org/packages/61/f1/ee81806690a87dab5f5653c1f146c92bc066d7f4cebc603ef88eb9e13957/werkzeug-3.1.6.tar.gz"
+    sha256 "210c6bede5a420a913956b4791a7f4d6843a43b6fcee4dfa08a65e93007d0d25"
   end
 
   def python3

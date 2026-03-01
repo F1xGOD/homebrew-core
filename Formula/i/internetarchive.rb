@@ -3,14 +3,13 @@ class Internetarchive < Formula
 
   desc "Python wrapper for the various Internet Archive APIs"
   homepage "https://github.com/jjjake/internetarchive"
-  url "https://files.pythonhosted.org/packages/09/30/e1195b511ce0a3c027c785790140c815c9fde73806470ac8774610c19346/internetarchive-5.7.1.tar.gz"
-  sha256 "f35e545c4925e1fc5f37bd83e59b8b72f79645129d0a32772a6d25fb5252d92a"
+  url "https://files.pythonhosted.org/packages/68/e6/594ecd2469fca16f92e9538c40c010c87cc1d5b166dea67d266b405b08e3/internetarchive-5.8.0.tar.gz"
+  sha256 "0dff14d51bafa3da587f32a8cb6478327e20c2d040a61fbfb4ad30d592062cc2"
   license "AGPL-3.0-or-later"
-  revision 1
   head "https://github.com/jjjake/internetarchive.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "b01105761039b27fe2c014820855c4ace82dbc113d66a0f7c0b823e3d807ba29"
+    sha256 cellar: :any_skip_relocation, all: "40c3daf98e9a6d65b2ae8f95c776f546acd2f86c8eb862d21098fc076893e462"
   end
 
   depends_on "certifi"
@@ -44,13 +43,13 @@ class Internetarchive < Formula
   end
 
   resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/a8/4b/29b4ef32e036bb34e4ab51796dd745cdba7ed47ad142a9f4a1eb8e0c744d/tqdm-4.67.1.tar.gz"
-    sha256 "f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2"
+    url "https://files.pythonhosted.org/packages/09/a9/6ba95a270c6f1fbcd8dac228323f2777d886cb206987444e4bce66338dd4/tqdm-4.67.3.tar.gz"
+    sha256 "7d825f03f89244ef73f1d4ce193cb1774a8179fd96f31d7e1dcde62092b960bb"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1c/43/554c2569b62f49350597348fc3ac70f786e3c32e7f19d266e19817812dd3/urllib3-2.6.0.tar.gz"
-    sha256 "cb9bcef5a4b345d5da5d145dc3e30834f58e8018828cbc724d30b4cb7d4d49f1"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   def install

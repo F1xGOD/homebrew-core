@@ -1,17 +1,17 @@
 class GeminiCli < Formula
   desc "Interact with Google Gemini AI models from the command-line"
   homepage "https://github.com/google-gemini/gemini-cli"
-  url "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.22.5.tgz"
-  sha256 "d727f1f08ff9441c67661a91a0be183e55a0e09a077bfaa58595167906df6861"
+  url "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.31.0.tgz"
+  sha256 "9a8fc0377c6c55ab28ed9fcffc2092cff9a40778365ac9c2d63d882125f60344"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "96002bd823f805450ff7e3bb61a97f36081836b11722310fcf31f8316841687a"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "96002bd823f805450ff7e3bb61a97f36081836b11722310fcf31f8316841687a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "96002bd823f805450ff7e3bb61a97f36081836b11722310fcf31f8316841687a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a035a14fbac63ac2df3a2c077278e38c48ab7ff056ef5ecc2710455c5564d5d4"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "117e24e78b9be6040db52a55d08ead42f9345dcb4bec36bbdaec322f897e5359"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "af897dff3455e8f5ea7f00a56475af1237263ad2e643fd3563dea9cccefe9f28"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "0e28015e15ffbdc97e49ff153079d4992051277e64de5e07ecbcc2be14e2de56"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0e28015e15ffbdc97e49ff153079d4992051277e64de5e07ecbcc2be14e2de56"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0e28015e15ffbdc97e49ff153079d4992051277e64de5e07ecbcc2be14e2de56"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b199f0eb11221dc2b007fe9a8eda1e75358f5e2a7d04a9fc314816cf053890cf"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "aff7b451a3bb45e93aecea8afccc913d049a79f4825a9af383f66e2d4cfb4521"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b361b512f49c0ee46692c12df74a99a3b2dd11ca410bcc0fed40c22fc1149bf5"
   end
 
   depends_on "node"
@@ -28,10 +28,12 @@ class GeminiCli < Formula
     os = OS.kernel_name.downcase
     arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
     node_modules = libexec/"lib/node_modules/@google/gemini-cli/node_modules"
-    (node_modules/"tree-sitter-bash/prebuilds").glob("*")
-                                               .each { |dir| rm_r(dir) if dir.basename.to_s != "#{os}-#{arch}" }
-    (node_modules/"node-pty/prebuilds").glob("*")
-                                       .each { |dir| rm_r(dir) if dir.basename.to_s != "#{os}-#{arch}" }
+    (node_modules/"tree-sitter-bash/prebuilds").glob("*").each do |dir|
+      rm_r(dir) if dir.basename.to_s != "#{os}-#{arch}"
+    end
+    (node_modules/"node-pty/prebuilds").glob("*").each do |dir|
+      rm_r(dir) if dir.basename.to_s != "#{os}-#{arch}"
+    end
 
     clipboardy_fallbacks_dir = libexec/"lib/node_modules/@google/#{name}/node_modules/clipboardy/fallbacks"
     rm_r(clipboardy_fallbacks_dir) # remove pre-built binaries

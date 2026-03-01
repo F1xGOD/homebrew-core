@@ -3,52 +3,43 @@ class Cppcms < Formula
 
   desc "Free High Performance Web Development Framework"
   homepage "http://cppcms.com/wikipp/en/page/main"
-  url "https://downloads.sourceforge.net/project/cppcms/cppcms/1.2.1/cppcms-1.2.1.tar.bz2"
-  sha256 "10fec7710409c949a229b9019ea065e25ff5687103037551b6f05716bf6cac52"
+  url "https://github.com/artyom-beilis/cppcms/archive/refs/tags/v2.0.1.tar.gz"
+  sha256 "4a7a2217b3fa59384650912a7000e016c308b4fa986a3d2562002691e5a9d6e7"
   license "MIT"
-  revision 1
-
-  livecheck do
-    url :stable
-    regex(%r{url=.*?/cppcms[._-]v?(\d+(?:\.\d+)+)\.t}i)
-  end
-
-  no_autobump! because: :requires_manual_review
 
   bottle do
-    rebuild 3
-    sha256 cellar: :any,                 arm64_tahoe:   "c67928d45ecdf779f5cbde1a74527f1f474063e8038fc6103222f6066c058ff8"
-    sha256 cellar: :any,                 arm64_sequoia: "b274decb22153c7de85e5fa491fe54493186b6b6258de506695aa6e725a3a1b5"
-    sha256 cellar: :any,                 arm64_sonoma:  "c81184c372aced3829c5dc2df3c748b19afe1522ca7b25195559ed4de6777ba0"
-    sha256 cellar: :any,                 sonoma:        "5afdc34fc8074dc1589f9d84f34fd7db0374c83fe57ddf69b8898898b8d524f2"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "a621276dcd5bf2942c3cbf70f4ccb2033603598b9cd0b69a04302f93a173c274"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf5e4745de3da3bc5794c0d8d36e434288d41627aca22209d837bf526dc81b9e"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "78fd3c8d81ce0b0feb720b7da8db1ebfdf00670dd7d4c133bfe22a2cfa2049a1"
+    sha256 cellar: :any,                 arm64_sequoia: "1ca0e2347ea05bdd0d8d91e38d2e5e48e0452ec14ff25751ae2665c36859b491"
+    sha256 cellar: :any,                 arm64_sonoma:  "5407fbfe3aaccbc61545b918f41d98529d51e5666de00146d4e73e01cd68cb2e"
+    sha256 cellar: :any,                 sonoma:        "509c45a58217091401a6afc4ab929fe65f6ece4e2db7268f0252842016cf1998"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "c93be15dcdb0cbf3ae83438c373f8fb407545a6622de1827d5fa4da934eac5b9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "086440ca1c958fb8a70d99ab91e81b56809e836f831b6959a0d24eac7a92d66b"
   end
 
   depends_on "cmake" => :build
   depends_on "openssl@3"
-  depends_on "pcre"
-  depends_on "python@3.14"
 
-  uses_from_macos "zlib"
+  uses_from_macos "python"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
+
+  # Backport support for CMake 4
+  patch do
+    url "https://github.com/artyom-beilis/cppcms/commit/92164714273bddfc032d930d3d89f78428110939.patch?full_index=1"
+    sha256 "7934a74f9b39d2108944895f826d960ee34d4b88f52f2482a683f15d395fd74a"
+  end
 
   def install
-    ENV.cxx11
-
-    # Look explicitly for python3 and ignore python2
-    inreplace "CMakeLists.txt", "find_program(PYTHON NAMES python2 python)", "find_program(PYTHON NAMES python3)"
-
-    # Adjust cppcms_tmpl_cc for Python 3 compatibility (and rewrite shebang to use brewed Python)
-    rewrite_shebang detected_python_shebang, "bin/cppcms_tmpl_cc"
-    inreplace "bin/cppcms_tmpl_cc" do |s|
-      s.gsub! "import StringIO", "import io"
-      s.gsub! "StringIO.StringIO()", "io.StringIO()"
-      s.gsub! "md5(header_define)", "md5(header_define.encode('utf-8'))"
-    end
+    rewrite_shebang detected_python_shebang(use_python_from_path: true), "bin/cppcms_tmpl_cc"
 
     system "cmake", "-S", ".", "-B", "build",
+                    "-DCMAKE_CXX_STANDARD=11",
                     "-DCMAKE_INSTALL_RPATH=#{rpath}",
-                    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+                    "-DDISABLE_PCRE=ON",
+                    "-DPYTHON=#{which("python3")}",
                     *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
@@ -115,8 +106,8 @@ class Cppcms < Formula
     system ENV.cxx, "hello.cpp", "-std=c++11", "-L#{lib}", "-lcppcms", "-o", "hello"
     pid = spawn "./hello", "-c", "config.json"
 
-    sleep 5 # grace time for server start
     begin
+      sleep 5 # grace time for server start
       assert_match "Hello World", shell_output("curl http://127.0.0.1:#{port}/hello")
     ensure
       Process.kill "SIGTERM", pid

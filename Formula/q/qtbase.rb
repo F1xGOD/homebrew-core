@@ -1,18 +1,16 @@
 class Qtbase < Formula
   desc "Cross-platform application and UI framework"
   homepage "https://www.qt.io/"
-  # TODO: add `preserve_rpath` DSL in Qt 6.11.0 to Qt formulae
-  url "https://download.qt.io/official_releases/qt/6.9/6.9.3/submodules/qtbase-everywhere-src-6.9.3.tar.xz"
-  mirror "https://qt.mirror.constant.com/archive/qt/6.9/6.9.3/submodules/qtbase-everywhere-src-6.9.3.tar.xz"
-  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.9/6.9.3/submodules/qtbase-everywhere-src-6.9.3.tar.xz"
-  sha256 "c5a1a2f660356ec081febfa782998ae5ddbc5925117e64f50e4be9cd45b8dc6e"
+  url "https://download.qt.io/official_releases/qt/6.10/6.10.2/submodules/qtbase-everywhere-src-6.10.2.tar.xz"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.10/6.10.2/submodules/qtbase-everywhere-src-6.10.2.tar.xz"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.10/6.10.2/submodules/qtbase-everywhere-src-6.10.2.tar.xz"
+  sha256 "aeb78d29291a2b5fd53cb55950f8f5065b4978c25fb1d77f627d695ab9adf21e"
   license all_of: [
     { any_of: ["LGPL-3.0-only", "GPL-2.0-only", "GPL-3.0-only"] },
     { "GPL-3.0-only" => { with: "Qt-GPL-exception-1.0" } }, # qmake
     "BSD-3-Clause", # *.cmake
     "GFDL-1.3-no-invariants-only", # *.qdoc
   ]
-  revision 1
   head "https://code.qt.io/qt/qtbase.git", branch: "dev"
 
   # The first-party website doesn't make version information readily available,
@@ -23,12 +21,12 @@ class Qtbase < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "b9f8ffd4f2abac1c54f89afb26adf2d3be187dce6caaa434211351b555273285"
-    sha256 cellar: :any,                 arm64_sequoia: "a28b7e5b848f4029964cf5492a64d0ef096b7923808cf1640b4537be91d5e4f0"
-    sha256 cellar: :any,                 arm64_sonoma:  "2f414757a9a2fc9e6c3e5da50b346b787d72b3b5079ffee44da55a48794b0b95"
-    sha256 cellar: :any,                 sonoma:        "b94062d2e51b6f217f7e53461ea5fc69ce72d1454a691268256a2cb4629a67d4"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "73c826688ec856f2ff8b5140bf5f81134e6b68dce81b34e337243dd45522fc6e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "142951b9b26a6a0082d9c2f4b8f531b529fe7eb5c2e53447e776d994808a5d56"
+    sha256 cellar: :any,                 arm64_tahoe:   "62b847653b08af0913e0c006497bb98b2015c7549cf954cd10b2c6851a670480"
+    sha256 cellar: :any,                 arm64_sequoia: "aa74bb3590fcf718fd54028dd1f6d41cac584d9c79c860f1f8dd904a2e3e1665"
+    sha256 cellar: :any,                 arm64_sonoma:  "d28e4d0bcae1b026b69ea2ddd21e996332813cf23e980f2b5970e6175837ce9f"
+    sha256 cellar: :any,                 sonoma:        "ac88078b92f4f028a0a51bf5ecc44b9113fb9ec7ceedc67ca0b382309c48b320"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "82d00be342ed225f61d4762da61a8c81c88211598b0f8b84c6240cd1e49f2eac"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b81bb0eaef4e7080afbb06223b371dbfbae5f479fd3395354d3affdbeead3da1"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -55,7 +53,6 @@ class Qtbase < Formula
   uses_from_macos "cups"
   uses_from_macos "krb5"
   uses_from_macos "sqlite"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "molten-vk" => :build
@@ -74,21 +71,16 @@ class Qtbase < Formula
     depends_on "mesa"
     depends_on "pango"
     depends_on "systemd"
+    depends_on "wayland"
     depends_on "xcb-util-cursor"
     depends_on "xcb-util-image"
     depends_on "xcb-util-keysyms"
     depends_on "xcb-util-renderutil"
     depends_on "xcb-util-wm"
+    depends_on "zlib-ng-compat"
 
     # https://github.com/orgs/Homebrew/discussions/6468#discussioncomment-14687372
     pour_bottle? only_if: :default_prefix
-  end
-
-  # Add framework directory to Cflags on macOS
-  # Ref: https://codereview.qt-project.org/c/qt/qtbase/+/682915
-  patch do
-    url "https://codereview.qt-project.org/changes/qt%2Fqtbase~682915/revisions/1/patch?zip"
-    sha256 "41fc97843c891cc8c5fe513acfc5779bb42a2ac417e6c931efee08ed5eb62201"
   end
 
   def install
@@ -206,21 +198,12 @@ class Qtbase < Formula
   end
 
   def caveats
-    s = <<~CAVEATS
+    <<~CAVEATS
       You can add Homebrew's Qt to QtCreator's "Qt Versions" in:
         Preferences > Qt Versions > Link with Qt...
       pressing "Choose..." and selecting as the Qt installation path:
         #{HOMEBREW_PREFIX}
     CAVEATS
-    on_macos do
-      s += <<~CAVEATS
-
-        We plan to build Qt 6.11 with the `@rpath`-prefixed install names preserved,
-        which may require adding an RPATH into non-QMake-built binaries. Please see:
-          https://github.com/Homebrew/brew/issues/15354
-      CAVEATS
-    end
-    s
   end
 
   test do
@@ -283,8 +266,11 @@ class Qtbase < Formula
       system "./test"
     end
 
-    flags = shell_output("pkgconf --cflags --libs Qt6#{modules.join(" Qt6")}").chomp.split
-    system ENV.cxx, "-std=c++17", "main.cpp", "-o", "test", *flags
+    # Test compiler and linker flags work separately
+    cflags = shell_output("pkgconf --cflags Qt6#{modules.join(" Qt6")}").chomp.split
+    ldflags = shell_output("pkgconf --libs Qt6#{modules.join(" Qt6")}").chomp.split
+    system ENV.cxx, "-std=c++17", "-c", "main.cpp", "-o", "main.o", *cflags
+    system ENV.cxx, "main.o", "-o", "test", *ldflags
     system "./test"
 
     # Check QT_INSTALL_PREFIX is HOMEBREW_PREFIX to support split formulae

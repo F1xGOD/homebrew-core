@@ -3,20 +3,20 @@ class KeeperCommander < Formula
 
   desc "Command-line and SDK interface to Keeper Password Manager"
   homepage "https://docs.keeper.io/en/privileged-access-manager/commander-cli/overview"
-  url "https://files.pythonhosted.org/packages/a2/00/b94749f9831c02d11df0ce5aa7d2a1d7c471cb92eb7b572986de7ec6fcfe/keepercommander-17.2.1.tar.gz"
-  sha256 "b9b7e92c4a129d77203f19e4ca43a03d32cc611bc990c8f93deb6512222639e0"
+  url "https://files.pythonhosted.org/packages/87/27/871d54a6fb910703aa72d07eaf11b5db1f0917f7529de663a5a0e20e387e/keepercommander-17.2.9.tar.gz"
+  sha256 "52aa30206fbd70df6f973ed2b4cc2c4017f84523816e9c42a76c2692fff6502e"
   license "MIT"
   head "https://github.com/Keeper-Security/Commander.git", branch: "master"
 
   no_autobump! because: "macOS resources cannot be updated on linux CI"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "ef78dba2c2b566edf45074a94eab8c6cc874cfcd69b717a9c663436ad405f290"
-    sha256 cellar: :any,                 arm64_sequoia: "c842f4c360b8429a01e0399aaf9eb0443d4501de60a0d133311d507cd997f8d3"
-    sha256 cellar: :any,                 arm64_sonoma:  "d45fda0e7820ba4490992044cc7edaad4306babce31b1ef18e7657eb094a17b5"
-    sha256 cellar: :any,                 sonoma:        "290a5657d9f46497be0dedc0bd8d0a5149c6fedf957544c6f9ccbd3872b86e0a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f25f3e76783d13fdc05612910e6ea1863d936dd6b54cbc0fb4eb6e20c9cf66d4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc7768117e49cc87f462d206ea1e5713ecd26fe15f5f88a036d0da2fc4e1f351"
+    sha256 cellar: :any,                 arm64_tahoe:   "34e543b257afd8f1b46275796802ded9f35297e316103b682471bfc776607529"
+    sha256 cellar: :any,                 arm64_sequoia: "8949e2dfda1c27f578b2809f9c5a3759049b88e62f1b77f736fb434421964a72"
+    sha256 cellar: :any,                 arm64_sonoma:  "2c44fe20a75da4b65c2eb22d5a950c460863b97d9df19f89c716fd7167737858"
+    sha256 cellar: :any,                 sonoma:        "1fde4b587680b571e88fb502c94dbd079c7dd3cf1f68b75353382a09084807fa"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "5acaa44a2cb9a5a08179af97ce6f4180d2d84af7d5e8e1c6cd56378aa160afdf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a040d0ba3fc663c677ad4f1d86487f2b0aa72b4b506a4f564be57e9ccd1f79d1"
   end
 
   depends_on "pkgconf" => :build
@@ -43,6 +43,11 @@ class KeeperCommander < Formula
     depends_on "openjpeg"
   end
 
+  fails_with :clang do
+    build 1699
+    cause "pyobjc-core uses `-fdisable-block-signature-string`"
+  end
+
   pypi_packages exclude_packages: %w[certifi cryptography pillow pydantic],
                 extra_packages:   %w[cbor2 pyobjc-framework-localauthentication]
 
@@ -62,8 +67,8 @@ class KeeperCommander < Formula
   end
 
   resource "cbor2" do
-    url "https://files.pythonhosted.org/packages/a2/b8/c0f6a7d46f816cb18b1fda61a2fe648abe16039f1ff93ea720a6e9fb3cee/cbor2-5.7.1.tar.gz"
-    sha256 "7a405a1d7c8230ee9acf240aad48ae947ef584e8af05f169f3c1bde8f01f8b71"
+    url "https://files.pythonhosted.org/packages/d9/8e/8b4fdde28e42ffcd741a37f4ffa9fb59cd4fe01625b544dfcfd9ccb54f01/cbor2-5.8.0.tar.gz"
+    sha256 "b19c35fcae9688ac01ef75bad5db27300c2537eb4ee00ed07e05d8456a0d4931"
   end
 
   resource "charset-normalizer" do
@@ -92,13 +97,13 @@ class KeeperCommander < Formula
   end
 
   resource "fido2" do
-    url "https://files.pythonhosted.org/packages/8d/b9/6ec8d8ec5715efc6ae39e8694bd48d57c189906f0628558f56688d0447b2/fido2-2.0.0.tar.gz"
-    sha256 "3061cd05e73b3a0ef6afc3b803d57c826aa2d6a9732d16abd7277361f58e7964"
+    url "https://files.pythonhosted.org/packages/e7/3c/c65377e48c144afca6b02c69f10c0fe936db556096a4e2c9798e2aa72db6/fido2-2.1.1.tar.gz"
+    sha256 "f1379f845870cc7fc64c7f07323c3ce41e8c96c37054e79e0acd5630b3fec5ac"
   end
 
   resource "flask" do
-    url "https://files.pythonhosted.org/packages/dc/6d/cfe3c0fcc5e477df242b98bfe186a4c34357b4847e87ecaef04507332dab/flask-3.1.2.tar.gz"
-    sha256 "bf656c15c80190ed628ad08cdfd3aaa35beb087855e2f494910aa3774cc4fd87"
+    url "https://files.pythonhosted.org/packages/26/00/35d85dcce6c57fdc871f3867d465d780f302a175ea360f62533f12b27e2b/flask-3.1.3.tar.gz"
+    sha256 "0ef0e52b8a9cd932855379197dd8f94047b359ca0a78695144304cb45f87c9eb"
   end
 
   resource "flask-limiter" do
@@ -112,18 +117,13 @@ class KeeperCommander < Formula
   end
 
   resource "fpdf2" do
-    url "https://files.pythonhosted.org/packages/e9/c0/784b130a28f4ed612e9aff26d1118e1f91005713dcd0a35e60b54d316b56/fpdf2-2.8.5.tar.gz"
-    sha256 "af4491ef2e0a5fe476f9d61362925658949c995f7e804438c0e81008f1550247"
+    url "https://files.pythonhosted.org/packages/74/3f/b23cf3a1943905645f44df95de8289770e69f85c9442abf89f93dc5c4a74/fpdf2-2.8.6.tar.gz"
+    sha256 "5132f26bbeee69a7ca6a292e4da1eb3241147b5aea9348b35e780ecd02bf5fc2"
   end
 
   resource "idna" do
     url "https://files.pythonhosted.org/packages/6f/6d/0703ccc57f3a7233505399edb88de3cbd678da106337b9fcde432b65ed60/idna-3.11.tar.gz"
     sha256 "795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"
-  end
-
-  resource "importlib-metadata" do
-    url "https://files.pythonhosted.org/packages/76/66/650a33bd90f786193e4de4b3ad86ea60b53c89b669a5c7be931fac31cdb0/importlib_metadata-8.7.0.tar.gz"
-    sha256 "d13b81ad223b890aa16c5471f2ac3056cf76c5f10f82d6f9292f0b415f389000"
   end
 
   resource "itsdangerous" do
@@ -142,23 +142,43 @@ class KeeperCommander < Formula
   end
 
   resource "keeper-pam-webrtc-rs" do
-    url "https://files.pythonhosted.org/packages/a6/1d/44e01ed1783bd22c0e2ad6f2f42114a22446b636f09d92cb463ad2dea50a/keeper_pam_webrtc_rs-1.2.0.tar.gz"
-    sha256 "b8dfd781902388870d8326279c0d571d0665ed9a877fa6543a95812ba2aa2628"
+    url "https://files.pythonhosted.org/packages/9d/fb/ac2754ae7a8c62860c4c42856e1a5f388cfe50dfe04809411872fa8ed4cb/keeper_pam_webrtc_rs-2.1.0.tar.gz"
+    sha256 "a786984256d9d846c3464b8418340f4b80ea1756b09d7af56f6bba81182ba68b"
   end
 
   resource "keeper-secrets-manager-core" do
-    url "https://files.pythonhosted.org/packages/3b/4c/21b0b9569f96fc450a894b31ea066f4073944781a031b2f1940901257d53/keeper_secrets_manager_core-17.0.0.tar.gz"
-    sha256 "f821d114b44ecd992870f4661d1daa5c50901d4abcc6d52c37926c372396d31c"
+    url "https://files.pythonhosted.org/packages/f7/17/aa4a49ac90497fdd23f1755dd884564835cfa8724a97f2da9ba2dcb392b7/keeper_secrets_manager_core-17.2.0.tar.gz"
+    sha256 "b9a6e0f078935577d09d0c401bd105d657933a9dc86336a7774a9273ae0c88b7"
   end
 
   resource "limits" do
-    url "https://files.pythonhosted.org/packages/bb/e5/c968d43a65128cd54fb685f257aafb90cd5e4e1c67d084a58f0e4cbed557/limits-5.6.0.tar.gz"
-    sha256 "807fac75755e73912e894fdd61e2838de574c5721876a19f7ab454ae1fffb4b5"
+    url "https://files.pythonhosted.org/packages/71/69/826a5d1f45426c68d8f6539f8d275c0e4fcaa57f0c017ec3100986558a41/limits-5.8.0.tar.gz"
+    sha256 "c9e0d74aed837e8f6f50d1fcebcf5fd8130957287206bc3799adaee5092655da"
+  end
+
+  resource "linkify-it-py" do
+    url "https://files.pythonhosted.org/packages/2a/ae/bb56c6828e4797ba5a4821eec7c43b8bf40f69cda4d4f5f8c8a2810ec96a/linkify-it-py-2.0.3.tar.gz"
+    sha256 "68cda27e162e9215c17d786649d1da0021a451bdc436ef9e0fa0ba5234b9b048"
+  end
+
+  resource "markdown-it-py" do
+    url "https://files.pythonhosted.org/packages/5b/f5/4ec618ed16cc4f8fb3b701563655a69816155e79e24a17b651541804721d/markdown_it_py-4.0.0.tar.gz"
+    sha256 "cb0a2b4aa34f932c007117b194e945bd74e0ec24133ceb5bac59009cda1cb9f3"
   end
 
   resource "markupsafe" do
     url "https://files.pythonhosted.org/packages/7e/99/7690b6d4034fffd95959cbe0c02de8deb3098cc577c67bb6a24fe5d7caa7/markupsafe-3.0.3.tar.gz"
     sha256 "722695808f4b6457b320fdc131280796bdceb04ab50fe1795cd540799ebe1698"
+  end
+
+  resource "mdit-py-plugins" do
+    url "https://files.pythonhosted.org/packages/b2/fd/a756d36c0bfba5f6e39a1cdbdbfdd448dc02692467d83816dff4592a1ebc/mdit_py_plugins-0.5.0.tar.gz"
+    sha256 "f4918cb50119f50446560513a8e311d574ff6aaed72606ddae6d35716fe809c6"
+  end
+
+  resource "mdurl" do
+    url "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz"
+    sha256 "bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"
   end
 
   resource "ordered-set" do
@@ -167,8 +187,13 @@ class KeeperCommander < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
+  end
+
+  resource "platformdirs" do
+    url "https://files.pythonhosted.org/packages/1b/04/fea538adf7dbbd6d186f551d595961e564a3b6715bdf276b477460858672/platformdirs-4.9.2.tar.gz"
+    sha256 "9a33809944b9db043ad67ca0db94b14bf452cc6aeaac46a88ea55b26e2e9d291"
   end
 
   resource "prompt-toolkit" do
@@ -177,18 +202,23 @@ class KeeperCommander < Formula
   end
 
   resource "protobuf" do
-    url "https://files.pythonhosted.org/packages/34/44/e49ecff446afeec9d1a66d6bbf9adc21e3c7cea7803a920ca3773379d4f6/protobuf-6.33.2.tar.gz"
-    sha256 "56dc370c91fbb8ac85bc13582c9e373569668a290aa2e66a590c2a0d35ddb9e4"
+    url "https://files.pythonhosted.org/packages/ba/25/7c72c307aafc96fa87062aa6291d9f7c94836e43214d43722e86037aac02/protobuf-6.33.5.tar.gz"
+    sha256 "6ddcac2a081f8b7b9642c09406bc6a4290128fce5f471cddd165960bb9119e5c"
   end
 
   resource "psutil" do
-    url "https://files.pythonhosted.org/packages/e1/88/bdd0a41e5857d5d703287598cbf08dad90aed56774ea52ae071bae9071b6/psutil-7.1.3.tar.gz"
-    sha256 "6c86281738d77335af7aec228328e944b30930899ea760ecf33a4dba66be5e74"
+    url "https://files.pythonhosted.org/packages/aa/c6/d1ddf4abb55e93cebc4f2ed8b5d6dbad109ecb8d63748dd2b20ab5e57ebe/psutil-7.2.2.tar.gz"
+    sha256 "0746f5f8d406af344fd547f1c8daa5f5c33dbc293bb8d6a16d80b4bb88f59372"
   end
 
   resource "pycryptodomex" do
     url "https://files.pythonhosted.org/packages/c9/85/e24bf90972a30b0fcd16c73009add1d7d7cd9140c2498a68252028899e41/pycryptodomex-3.23.0.tar.gz"
     sha256 "71909758f010c82bc99b0abf4ea12012c98962fbf0583c2164f8b84533c2e4da"
+  end
+
+  resource "pygments" do
+    url "https://files.pythonhosted.org/packages/b0/77/a5b8c569bf593b0140bde72ea885a803b82086995367bf2037de0159d924/pygments-2.19.2.tar.gz"
+    sha256 "636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887"
   end
 
   resource "pyngrok" do
@@ -236,39 +266,49 @@ class KeeperCommander < Formula
     sha256 "dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf"
   end
 
+  resource "rich" do
+    url "https://files.pythonhosted.org/packages/b3/c6/f3b320c27991c46f43ee9d856302c70dc2d0fb2dba4842ff739d5f46b393/rich-14.3.3.tar.gz"
+    sha256 "b8daa0b9e4eef54dd8cf7c86c03713f53241884e814f4e2f5fb342fe520f639b"
+  end
+
   resource "tabulate" do
     url "https://files.pythonhosted.org/packages/ec/fe/802052aecb21e3797b8f7902564ab6ea0d60ff8ca23952079064155d1ae1/tabulate-0.9.0.tar.gz"
     sha256 "0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"
   end
 
+  resource "textual" do
+    url "https://files.pythonhosted.org/packages/f7/08/1e1f705825359590ddfaeda57653bd518c4ff7a96bb2c3239ba1b6fc4c51/textual-8.0.0.tar.gz"
+    sha256 "ce48f83a3d686c0fac0e80bf9136e1f8851c653aa6a4502e43293a151df18809"
+  end
+
+  resource "uc-micro-py" do
+    url "https://files.pythonhosted.org/packages/91/7a/146a99696aee0609e3712f2b44c6274566bc368dfe8375191278045186b8/uc-micro-py-1.0.3.tar.gz"
+    sha256 "d321b92cff673ec58027c04015fcaa8bb1e005478643ff4a500882eaab88c48a"
+  end
+
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/24/30/6b0809f4510673dc723187aeaf24c7f5459922d01e2f794277a3dfb90345/wcwidth-0.2.14.tar.gz"
-    sha256 "4d478375d31bc5395a3c55c40ccdf3354688364cd61c4f6adacaa9215d0b3605"
+    url "https://files.pythonhosted.org/packages/35/a2/8e3becb46433538a38726c948d3399905a4c7cabd0df578ede5dc51f0ec2/wcwidth-0.6.0.tar.gz"
+    sha256 "cdc4e4262d6ef9a1a57e018384cbeb1208d8abbc64176027e2c2455c81313159"
   end
 
   resource "websockets" do
-    url "https://files.pythonhosted.org/packages/21/e6/26d09fab466b7ca9c7737474c52be4f76a40301b08362eb2dbc19dcc16c1/websockets-15.0.1.tar.gz"
-    sha256 "82544de02076bafba038ce055ee6412d68da13ab47f0c60cab827346de828dee"
+    url "https://files.pythonhosted.org/packages/04/24/4b2031d72e840ce4c1ccb255f693b15c334757fc50023e4db9537080b8c4/websockets-16.0.tar.gz"
+    sha256 "5f6261a5e56e8d5c42a4497b364ea24d94d9563e8fbd44e78ac40879c60179b5"
   end
 
   resource "werkzeug" do
-    url "https://files.pythonhosted.org/packages/45/ea/b0f8eeb287f8df9066e56e831c7824ac6bab645dd6c7a8f4b2d767944f9b/werkzeug-3.1.4.tar.gz"
-    sha256 "cd3cd98b1b92dc3b7b3995038826c68097dcb16f9baa63abe35f20eafeb9fe5e"
+    url "https://files.pythonhosted.org/packages/61/f1/ee81806690a87dab5f5653c1f146c92bc066d7f4cebc603ef88eb9e13957/werkzeug-3.1.6.tar.gz"
+    sha256 "210c6bede5a420a913956b4791a7f4d6843a43b6fcee4dfa08a65e93007d0d25"
   end
 
   resource "wrapt" do
-    url "https://files.pythonhosted.org/packages/49/2a/6de8a50cb435b7f42c46126cf1a54b2aab81784e74c8595c8e025e8f36d3/wrapt-2.0.1.tar.gz"
-    sha256 "9c9c635e78497cacb81e84f8b11b23e0aacac7a136e73b8e5b2109a1d9fc468f"
-  end
-
-  resource "zipp" do
-    url "https://files.pythonhosted.org/packages/e3/02/0f2892c661036d50ede074e376733dca2ae7c6eb617489437771209d4180/zipp-3.23.0.tar.gz"
-    sha256 "a07157588a12518c9d4034df3fbbee09c814741a33ff63c05fa29d26a2404166"
+    url "https://files.pythonhosted.org/packages/f7/37/ae31f40bec90de2f88d9597d0b5281e23ffe85b893a47ca5d9c05c63a4f6/wrapt-2.1.1.tar.gz"
+    sha256 "5fdcb09bf6db023d88f312bd0767594b414655d58090fc1c46b3414415f67fac"
   end
 
   def install
@@ -277,8 +317,6 @@ class KeeperCommander < Formula
     if OS.mac?
       # Help `pyobjc-framework-cocoa` pick correct SDK after removing -isysroot from Python formula
       ENV.append_to_cflags "-isysroot #{MacOS.sdk_path}"
-      # pyobjc-core uses "-fdisable-block-signature-string" introduced in clang 17
-      ENV.llvm_clang if DevelopmentTools.clang_build_version <= 1699
     else
       # `pyobjc-*` dependencies are only needed on macOS
       without += resources.filter_map { |r| r.name if r.name.start_with?("pyobjc") }

@@ -6,16 +6,17 @@ class ArcadeLearningEnvironment < Formula
   url "https://github.com/Farama-Foundation/Arcade-Learning-Environment/archive/refs/tags/v0.11.2.tar.gz"
   sha256 "d6ac9406690bb3533b37a99253bdfc59bc27779c5e1b6855c763d0b367bcbf96"
   license "GPL-2.0-only"
-  revision 2
+  revision 3
   head "https://github.com/Farama-Foundation/Arcade-Learning-Environment.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "20c6169c99eae1ec8c5b84f3aa476b3698aabe8e53fc55467df6c919f3d2a37c"
-    sha256 cellar: :any,                 arm64_sequoia: "90dd63ee68a79e84f56eea3b497d9aec024b85a688b61e478a21ccd9fda1fdbc"
-    sha256 cellar: :any,                 arm64_sonoma:  "2843789ab3abd613b3d7e362d77233e583f32e99e1d9621b3c8aca1db573feda"
-    sha256 cellar: :any,                 sonoma:        "109c69ebaef2cb4fe7c89891b2129ea6314802bc3e2ea7d72652b97bad0bc82c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "8c5a11b87cd65e6f331ecda5a1398f8188ee2839842d449fd7dc1193085d91fc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6f5589a69518c79a98c0d33ba3276055954516932f6c4d8c35ae74be8d5ed128"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "76355356efae81795ecaccb33fa80a2b4a4e91c2d9e3f41a38d857d0b3ad139b"
+    sha256 cellar: :any,                 arm64_sequoia: "0fab3be9388930353e91b7864ec6e63700e811c428c91d92052e4563c449cd1f"
+    sha256 cellar: :any,                 arm64_sonoma:  "17da271bcc589571ed4ede577c24429f1e536970c587f58b479dc898811e772c"
+    sha256 cellar: :any,                 sonoma:        "5434effd020431c4a6eeb795eff45fff2f7469ccd58d2b679367b4cf952a1f06"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e21960f3aa4002f7060e68a54b3d389c5988e56bc9b8f5d3218571324bc80cc8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "36d134126295238dbfaebbcdff48e0954ab769e11915df02c62f863eedcfb967"
   end
 
   depends_on "cmake" => :build
@@ -26,7 +27,9 @@ class ArcadeLearningEnvironment < Formula
   depends_on "python@3.14"
   depends_on "sdl2"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   pypi_packages exclude_packages: "numpy",
                 extra_packages:   "gymnasium"

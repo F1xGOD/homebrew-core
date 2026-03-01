@@ -1,17 +1,17 @@
 class McpToolbox < Formula
   desc "MCP server for databases"
   homepage "https://github.com/googleapis/genai-toolbox"
-  url "https://github.com/googleapis/genai-toolbox/archive/refs/tags/v0.24.0.tar.gz"
-  sha256 "8544b048dab7025d1c5adb1695d674c6cd59fd21b3a82ca4eda59fdfa41484ec"
+  url "https://github.com/googleapis/genai-toolbox/archive/refs/tags/v0.27.0.tar.gz"
+  sha256 "3d92b9a6514182ad3a58a855767b52c00fdd07816c92c76d555cc64c7a58d4ec"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "3637e011df07cdfe864e3e7b1ec12a516b0efca821019fc5c326993d9c374470"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d97c83acec0d71c3fd6873c970f0fdd3a3d23c35c09e2926babb48414c75bef7"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "828b4cbfeac13d3c1f33b9e17990840b47a08c4dc63c8eba8ffc269f4b98c536"
-    sha256 cellar: :any_skip_relocation, sonoma:        "6e60167be07b5051155dca6cf7f255d881b79d6fc9b06f94e6e33af552615aa7"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "d0a32e4454438f501249da1db087e4ab20385d94fc957a9b6d629b30d367f6c3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9afe9852625a3554a0dbe51c8de68560a287a9dfa598d3461153ec1cdd653c5b"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "0ac65c7bbdd802fd25bd21ab7a693ba85f50c522f04cbc32d84c6c9981e82736"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b9fed1c0c94c5e3e1aee35fbb99bc2f00af59694ed2f6a2ef9ccfbb1e8400ee1"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c2f8b95b4c3cbdd7dbbe617076df11f3ed33de740bd53bc030d140bd63bb74de"
+    sha256 cellar: :any_skip_relocation, sonoma:        "230a1f7356863f1aa9e7ce83928160c8b1be7b11fd340d61366ea0648d56262c"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b76ed7dd161e03db2474f4189f805e78d1234485bae0e63687abfcdd5112fb6b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3c0d4311d501b8fdd3d727a38e187b5272bb8d9c1935741a087757f1793b495e"
   end
 
   depends_on "go" => :build
@@ -39,11 +39,10 @@ class McpToolbox < Formula
     EOS
 
     port = free_port
-    pid = fork { exec bin/"toolbox", "--tools-file", testpath/"tools.yaml", "--port", port.to_s }
-
-    sleep 5
+    pid = spawn bin/"toolbox", "--tools-file", testpath/"tools.yaml", "--port", port.to_s
 
     begin
+      sleep 5
       output = shell_output("curl -s -i http://localhost:#{port} 2>&1")
       assert_match "HTTP/1.1 200 OK", output, "Expected HTTP/1.1 200 OK response"
     ensure

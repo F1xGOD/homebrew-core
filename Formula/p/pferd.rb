@@ -6,16 +6,15 @@ class Pferd < Formula
   url "https://files.pythonhosted.org/packages/2f/af/371337e0e06866d4efb36c1ab8e375736f1e2d7280544da130ef6687534b/pferd-3.8.3.tar.gz"
   sha256 "0f2c4e582a885b2a1a88b9a896cfd0932e8f25db60b252c0957a6ffdd2085763"
   license "MIT"
-  revision 1
+  revision 3
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "69fc04375a2c41af9fa191af0b32e8f35bced045559da84e6a78396d253ecbf5"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a96daa4603b03f560ea0e1aa0b004cba69cc2f4c844f76da490bade610cb53c2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fd64780ce8366429687de8859ba998186c98c4075a5cdc16efa7ae3da6fe5321"
-    sha256 cellar: :any_skip_relocation, sonoma:        "167fa6d08a29638edade7dc675c841790b630254eb9d09b55a2d3277cf30d66a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "7619ef8ef390396661f02e22ab19eed0ca537c285cf57a8235810ff6809fa464"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "86dc9af94296040ec53fde0e1d51d9abe3467842b8281ebae6bc40f4f6547a0d"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "2f4a957b1bafaacbd1f1dcac71bbc4e0f33a88cc467a83b75a4c35e870c3b598"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0e1b2360d5c14f84d5e625f8b0ae868a50751f062375f303470dfef9bf783c91"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9d3b3442bb3fd6b67f6cc7674a97bcb2b7466e961b4b2f439e17b4392c60938b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "7c94737cea56098da20bf1254a47bb0b754e6da1e582b31f4808f0a4eb75f0ff"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e070b0aff032e2b5ab00d461c029a241701146660acea26cb4ec2861c40ef98d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4d3be4ae9b5017dd4448787deb74124628af8f9b47bed7b034973714bd6076c7"
   end
 
   depends_on "certifi" => :no_linkage
@@ -31,8 +30,8 @@ class Pferd < Formula
   end
 
   resource "aiohttp" do
-    url "https://files.pythonhosted.org/packages/1c/ce/3b83ebba6b3207a7135e5fcaba49706f8a4b6008153b4e30540c982fae26/aiohttp-3.13.2.tar.gz"
-    sha256 "40176a52c186aefef6eb3cad2cdd30cd06e3afbe88fe8ab2af9c0b90f228daca"
+    url "https://files.pythonhosted.org/packages/50/42/32cf8e7704ceb4481406eb87161349abb46a57fee3f008ba9cb610968646/aiohttp-3.13.3.tar.gz"
+    sha256 "a949eee43d3782f2daae4f4a2819b2cb9b0c5d3b7f7a927067cc84dafdbb9f88"
   end
 
   resource "aiosignal" do
@@ -66,13 +65,13 @@ class Pferd < Formula
   end
 
   resource "jaraco-context" do
-    url "https://files.pythonhosted.org/packages/df/ad/f3777b81bf0b6e7bc7514a1656d3e637b2e8e15fab2ce3235730b3e7a4e6/jaraco_context-6.0.1.tar.gz"
-    sha256 "9bae4ea555cf0b14938dc0aee7c9f32ed303aa20a3b73e7dc80111628792d1b3"
+    url "https://files.pythonhosted.org/packages/cb/9c/a788f5bb29c61e456b8ee52ce76dbdd32fd72cd73dd67bc95f42c7a8d13c/jaraco_context-6.1.0.tar.gz"
+    sha256 "129a341b0a85a7db7879e22acd66902fda67882db771754574338898b2d5d86f"
   end
 
   resource "jaraco-functools" do
-    url "https://files.pythonhosted.org/packages/f7/ed/1aa2d585304ec07262e1a83a9889880701079dde796ac7b1d1826f40c63d/jaraco_functools-4.3.0.tar.gz"
-    sha256 "cfd13ad0dd2c47a3600b439ef72d8615d482cedcff1632930d6f28924d92f294"
+    url "https://files.pythonhosted.org/packages/0f/27/056e0638a86749374d6f57d0b0db39f29509cce9313cf91bdc0ac4d91084/jaraco_functools-4.4.0.tar.gz"
+    sha256 "da21933b0417b89515562656547a77b4931f98176eb173644c0d35032a33d6bb"
   end
 
   resource "jeepney" do
@@ -126,8 +125,8 @@ class Pferd < Formula
   end
 
   resource "soupsieve" do
-    url "https://files.pythonhosted.org/packages/6d/e6/21ccce3262dd4889aa3332e5a119a3491a95e8f60939870a3a035aabac0d/soupsieve-2.8.tar.gz"
-    sha256 "e2dd4a40a628cb5f28f6d4b0db8800b8f581b65bb380b97de22ba5ca8d72572f"
+    url "https://files.pythonhosted.org/packages/7b/ae/2d9c981590ed9999a0d91755b47fc74f74de286b0f5cee14c9269041e6c4/soupsieve-2.8.3.tar.gz"
+    sha256 "3267f1eeea4251fb42728b6dfb746edc9acaffc4a45b27e19450b676586e8349"
   end
 
   resource "typing-extensions" do

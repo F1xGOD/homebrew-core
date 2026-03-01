@@ -3,17 +3,17 @@ class Dolphie < Formula
 
   desc "Feature-rich top tool for monitoring MySQL"
   homepage "https://github.com/charles-001/dolphie"
-  url "https://files.pythonhosted.org/packages/16/1e/590744803ab53aa6a416db328764c2fe6e9615ad41f1a391bea1b4366fc4/dolphie-6.11.2.tar.gz"
-  sha256 "af203edb3efbecb0893209845d625f622ecd3f091ad2f57e0aaaadb4c00d3559"
+  url "https://files.pythonhosted.org/packages/55/d2/fd54516c7f96e792f85e9952cd8127bbe64999542fdb57f8459925d9ce67/dolphie-6.13.3.tar.gz"
+  sha256 "eb104e722b421b604bc47db0f0ffecf9ee65362e4181c8940b5ad1c282daade9"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "de7f0b8377b845274c39beca46fcc05359341581f82281ff3059d5f95bd57b7c"
-    sha256 cellar: :any,                 arm64_sequoia: "cf46b496c0637189f21a3f797284b1cf66f65b496589ae04b6d936c69d8a24fc"
-    sha256 cellar: :any,                 arm64_sonoma:  "5ab80e43f05f87bed588eceed3c28045e1295b4b5c8bd6b00fcfed039d344b96"
-    sha256 cellar: :any,                 sonoma:        "a1b80459291fc426086b7273a7be4566d29e6ff3e12a183218af7305141d229a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "ab5b8556fe0a4a0bce3e5456fc23cce6e8c797c4ce344174757c531afd2f6f66"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "15ee40b2df20eb020cdb6d3ecc476200d809535052d2e6a65cfd64f5c837db49"
+    sha256 cellar: :any,                 arm64_tahoe:   "dd21dbcd27d98a3b3cc275fadcd7195c0f1273102cd4c7daf191abb5a79334ab"
+    sha256 cellar: :any,                 arm64_sequoia: "184f19be0aa551724b72633bbe648b32141965f891b6fca390597d761d17b291"
+    sha256 cellar: :any,                 arm64_sonoma:  "3b0a88af3e36828828ad470300049e1dc23c1dcbc2ab8cd8693ce8fb276ce719"
+    sha256 cellar: :any,                 sonoma:        "b6f9027dd6cacf696e9369b22f6f4c854a22c3d00cc6edc17ce253b3814af597"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "a46aeb9619f439560d61b12f5be348fe6bb3f8351f4047754403480b9bd8bce5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "797f612681f6761aaa7b98842da670e41f28609976a67ea635572264448959e5"
   end
 
   depends_on "rust" => :build # for orjson
@@ -64,18 +64,18 @@ class Dolphie < Formula
   end
 
   resource "orjson" do
-    url "https://files.pythonhosted.org/packages/04/b8/333fdb27840f3bf04022d21b654a35f58e15407183aeb16f3b41aa053446/orjson-3.11.5.tar.gz"
-    sha256 "82393ab47b4fe44ffd0a7659fa9cfaacc717eb617c93cde83795f14af5c2e9d5"
+    url "https://files.pythonhosted.org/packages/53/45/b268004f745ede84e5798b48ee12b05129d19235d0e15267aa57dcdb400b/orjson-3.11.7.tar.gz"
+    sha256 "9b1a67243945819ce55d24a30b59d6a168e86220452d2c96f4d1f093e71c0c49"
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/cf/86/0248f086a84f01b37aaec0fa567b397df1a119f73c16f6c7a9aac73ea309/platformdirs-4.5.1.tar.gz"
-    sha256 "61d5cdcc6065745cdd94f0f878977f8de9437be93de97c1c12f853c9c0cdcbda"
+    url "https://files.pythonhosted.org/packages/1b/04/fea538adf7dbbd6d186f551d595961e564a3b6715bdf276b477460858672/platformdirs-4.9.2.tar.gz"
+    sha256 "9a33809944b9db043ad67ca0db94b14bf452cc6aeaac46a88ea55b26e2e9d291"
   end
 
   resource "plotext" do
@@ -84,8 +84,8 @@ class Dolphie < Formula
   end
 
   resource "psutil" do
-    url "https://files.pythonhosted.org/packages/e1/88/bdd0a41e5857d5d703287598cbf08dad90aed56774ea52ae071bae9071b6/psutil-7.1.3.tar.gz"
-    sha256 "6c86281738d77335af7aec228328e944b30930899ea760ecf33a4dba66be5e74"
+    url "https://files.pythonhosted.org/packages/aa/c6/d1ddf4abb55e93cebc4f2ed8b5d6dbad109ecb8d63748dd2b20ab5e57ebe/psutil-7.2.2.tar.gz"
+    sha256 "0746f5f8d406af344fd547f1c8daa5f5c33dbc293bb8d6a16d80b4bb88f59372"
   end
 
   resource "pygments" do
@@ -104,8 +104,8 @@ class Dolphie < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/fb/d2/8920e102050a0de7bfabeb4c4614a49248cf8d5d7a8d01885fbb24dc767a/rich-14.2.0.tar.gz"
-    sha256 "73ff50c7c0c1c77c8243079283f4edb376f0f6442433aecb8ce7e6d0b92d1fe4"
+    url "https://files.pythonhosted.org/packages/b3/c6/f3b320c27991c46f43ee9d856302c70dc2d0fb2dba4842ff739d5f46b393/rich-14.3.3.tar.gz"
+    sha256 "b8daa0b9e4eef54dd8cf7c86c03713f53241884e814f4e2f5fb342fe520f639b"
   end
 
   resource "sqlparse" do
@@ -114,8 +114,8 @@ class Dolphie < Formula
   end
 
   resource "textual" do
-    url "https://files.pythonhosted.org/packages/55/06/906f86bbc59ec7cd3fb424250e19ce670406d1f28e49e86c2221e9fd7ed2/textual-6.11.0.tar.gz"
-    sha256 "08237ebda0cfbbfd1a4e2fd3039882b35894a73994f6f0fcc12c5b0d78acf3cc"
+    url "https://files.pythonhosted.org/packages/f7/08/1e1f705825359590ddfaeda57653bd518c4ff7a96bb2c3239ba1b6fc4c51/textual-8.0.0.tar.gz"
+    sha256 "ce48f83a3d686c0fac0e80bf9136e1f8851c653aa6a4502e43293a151df18809"
   end
 
   resource "typing-extensions" do
@@ -129,8 +129,8 @@ class Dolphie < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "zstandard" do
@@ -139,10 +139,6 @@ class Dolphie < Formula
   end
 
   def install
-    # hatch does not support a SOURCE_DATE_EPOCH before 1980.
-    # Remove after https://github.com/pypa/hatch/pull/1999 is released.
-    ENV["SOURCE_DATE_EPOCH"] = "1451574000"
-
     virtualenv_install_with_resources
   end
 

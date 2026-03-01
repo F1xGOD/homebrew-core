@@ -1,19 +1,18 @@
 class OpentelemetryCpp < Formula
   desc "OpenTelemetry C++ Client"
   homepage "https://opentelemetry.io/"
-  url "https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v1.24.0.tar.gz"
-  sha256 "7b8e966affca1daf1906272f4d983631cad85fb6ea60fb6f55dcd1811a730604"
+  url "https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v1.25.0.tar.gz"
+  sha256 "a0c944a9de981fe1874b31d1fe44b830fc30ee030efa27ee23fc73012a3a13e9"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/open-telemetry/opentelemetry-cpp.git", branch: "main"
 
   bottle do
-    sha256               arm64_tahoe:   "faf52a14aa58161998cc3fc85498d24cc209501e217afd13d881800711642e33"
-    sha256               arm64_sequoia: "922c750694059731446d1512efa4914f7373342697dc3dd3062dec52918d76f3"
-    sha256               arm64_sonoma:  "d43a44157c777f4908ea67a78b10f8dec8d8a2db9e0aefa8b8338fd66325cad7"
-    sha256 cellar: :any, sonoma:        "3295767db871997ede5861733f22aa2296b430013c99a2ebece5a1b32930e4be"
-    sha256               arm64_linux:   "9b4961d3f07e0c7c06276c0415c58f2910e2a21698b2ee95fbb77b2b0f47a305"
-    sha256               x86_64_linux:  "a056c7e70fc03b1f0a7b8c3f0ef93ab98b85509c3451822984627d255cc05d06"
+    sha256               arm64_tahoe:   "29afce57327c914696faed0efbef5ef9421c412dbc6844c00147d947d1363312"
+    sha256               arm64_sequoia: "fec0f8ea41e010b7274e49144a52f204f35fb26404c26d24138b5f1598f4b6fb"
+    sha256               arm64_sonoma:  "a5fbda5569c10f6fa929916b1d43b9077185bf5d2bb941474f571371d337f60c"
+    sha256 cellar: :any, sonoma:        "953318303eaa02058f29be266ba21db98bad60918b44bf8583d2ad776c429aaf"
+    sha256               arm64_linux:   "a06e85e88918f51bae6d0001f137be120eebbc3589c8b754de0da735755fb00d"
+    sha256               x86_64_linux:  "28bbaf58cb336c73aefd592a0ef14cc5eb2ce3138f65c17cc41eabb1eeca9c35"
   end
 
   depends_on "cmake" => :build
@@ -48,11 +47,11 @@ class OpentelemetryCpp < Formula
                     "-DFETCHCONTENT_FULLY_DISCONNECTED=ON",
                     "-DFETCHCONTENT_TRY_FIND_PACKAGE_MODE=ALWAYS",
                     "-DOTELCPP_PROTO_PATH=#{buildpath}/opentelemetry-proto",
+                    "-DWITH_BENCHMARK=OFF",
                     "-DWITH_ELASTICSEARCH=ON",
                     "-DWITH_EXAMPLES=OFF",
                     "-DWITH_OTLP_GRPC=ON",
                     "-DWITH_OTLP_HTTP=ON",
-                    "-DWITH_ABSEIL=ON",
                     "-DWITH_PROMETHEUS=ON",
                     *std_cmake_args
     system "cmake", "--build", "build"

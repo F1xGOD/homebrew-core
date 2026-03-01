@@ -1,8 +1,8 @@
 class CargoC < Formula
   desc "Helper program to build and install c-like libraries"
   homepage "https://github.com/lu-zero/cargo-c"
-  url "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.10.19.tar.gz"
-  sha256 "4136fbb1c25b1afdf1aaf473d00e532b73bbe02c7c53cb44965aff41ed328d20"
+  url "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.10.20.tar.gz"
+  sha256 "9bdf7c10b44466a7c01dc4ed152da5031793cca9e0c8009d73223a32522cf2c3"
   license "MIT"
 
   livecheck do
@@ -11,12 +11,13 @@ class CargoC < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "a0fc12fa304e8f3d6e6da5f3b4102fece1ff805f74db598307c640166109d50d"
-    sha256 cellar: :any,                 arm64_sequoia: "6c90e4f41d655a3276220fb84e85dbcc43a90b44e5cdc80abf2176856996292d"
-    sha256 cellar: :any,                 arm64_sonoma:  "66fc6fe0919060b77b55e4c2093ea1706d9e4591aacfb729f70e6907e6d096ef"
-    sha256 cellar: :any,                 sonoma:        "77d52429fb9bd2ba4aacb661bde0f1f4a6f0381aba6bec7ae39470e6fc3a4649"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "08125d8735a2d7f3d5df6e84330f1d7dc7dd51354a0ea17fcad002b3dc7a86c6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "902de003eaeecd02ab357a49fc675de82846b09f270e93f8778cab37f53706a6"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "8681512c46461c387c5509d6634e20c685352b700ee1d3a3f7fd7f510ea2af69"
+    sha256 cellar: :any,                 arm64_sequoia: "62138b153f97787013a63243e8fa78c2acc46567644ccfe0fd10b0e49b284a58"
+    sha256 cellar: :any,                 arm64_sonoma:  "0b0679425b368b3017cd2ecb5792d19038d53db027a21e23481516b859f3d655"
+    sha256 cellar: :any,                 sonoma:        "d255268040c0d723ac2a1cbcc7185da717e445479f85b0abf5977f2f96ae3899"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "935cca7212c22017a699e5fb8fdecebd03c5990a19c94df869c5a91bb77bf242"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7228f50abd22ea3892e11bb518b07cca2e5fb39124541c4b69333404447798d0"
   end
 
   depends_on "pkgconf" => :build
@@ -29,7 +30,10 @@ class CargoC < Formula
   # this is a workaround to allow to build against system curl
   # see discussions in https://github.com/Homebrew/homebrew-core/pull/197727
   uses_from_macos "curl", since: :sonoma
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     ENV["LIBGIT2_NO_VENDOR"] = "1"

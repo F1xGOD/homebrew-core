@@ -1,8 +1,8 @@
 class ImapBackup < Formula
   desc "Backup GMail (or other IMAP) accounts to disk"
   homepage "https://github.com/joeyates/imap-backup"
-  url "https://github.com/joeyates/imap-backup/archive/refs/tags/v16.3.0.tar.gz"
-  sha256 "e854a7482f4dff1f1b666156880d75bd7c35ca596b48c4a261e17c73feefed7d"
+  url "https://github.com/joeyates/imap-backup/archive/refs/tags/v16.6.0.tar.gz"
+  sha256 "b224c2a2a2eefb6438f2da4a9954f7ae6d7b876b718f15629824b76e4e021e4d"
   license "MIT"
 
   livecheck do
@@ -11,10 +11,14 @@ class ImapBackup < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "a7198b56dde4b7d5695235a606144c8377735decd27e9b07715720f7749567b3"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "27032b92ee4a547f2ba88cf4b99934d61a372447eb354e5a3196c753064deb5f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "27032b92ee4a547f2ba88cf4b99934d61a372447eb354e5a3196c753064deb5f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "27032b92ee4a547f2ba88cf4b99934d61a372447eb354e5a3196c753064deb5f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "afeda25fe9409022479da559e368e397e3e08be45510c490ca50fe1d1893d0cd"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "baae0a0eeba4def6d8ee83f0e413d9135602c128a3a737047146604dc3b33771"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5f3c38aafbfc5172824709cb2c4f99d7777597dd05eb3c1a3156b2215e62a577"
   end
 
-  # Requires Ruby >= 2.7
   depends_on "ruby"
 
   def install

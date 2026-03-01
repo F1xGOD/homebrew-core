@@ -2,31 +2,19 @@ class Opencv < Formula
   desc "Open source computer vision library"
   homepage "https://opencv.org/"
   license "Apache-2.0"
-  revision 19
+  revision 3
 
   stable do
-    url "https://github.com/opencv/opencv/archive/refs/tags/4.12.0.tar.gz"
-    sha256 "44c106d5bb47efec04e531fd93008b3fcd1d27138985c5baf4eafac0e1ec9e9d"
+    url "https://github.com/opencv/opencv/archive/refs/tags/4.13.0.tar.gz"
+    sha256 "1d40ca017ea51c533cf9fd5cbde5b5fe7ae248291ddf2af99d4c17cf8e13017d"
 
     resource "contrib" do
-      url "https://github.com/opencv/opencv_contrib/archive/refs/tags/4.12.0.tar.gz"
-      sha256 "4197722b4c5ed42b476d42e29beb29a52b6b25c34ec7b4d589c3ae5145fee98e"
+      url "https://github.com/opencv/opencv_contrib/archive/refs/tags/4.13.0.tar.gz"
+      sha256 "1e0077a4fd2960a7d2f4c9e49d6ba7bb891cac2d1be36d7e8e47aa97a9d1039b"
 
       livecheck do
         formula :parent
       end
-    end
-
-    # Backport support for FFmpeg 8.0
-    patch do
-      url "https://github.com/opencv/opencv/commit/90c444abd387ffa70b2e72a34922903a2f0f4f5a.patch?full_index=1"
-      sha256 "5b662eea7b5de1dac3e06895c711955c9d1515d1202191b68594f4f9cfa23242"
-    end
-
-    # Backport support for eigen 5.0.0
-    patch do
-      url "https://github.com/opencv/opencv/commit/468de9b36740b3355f0d5cd8be2ce28b340df120.patch?full_index=1"
-      sha256 "b86ca3cf644a49ab7219348db2bc78497235df75ceef714d46fc80e9e80f2a06"
     end
   end
 
@@ -35,15 +23,14 @@ class Opencv < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 arm64_tahoe:   "77c66be0dc07971d34d302dd41b3d6d71b23cd5c23ddbf6ee7d19ebce56e3587"
-    sha256 arm64_sequoia: "b40ba53ca8a546c5f09dc428d8cfcd1db52872fcaade464ff7c0c11826a20600"
-    sha256 arm64_sonoma:  "72eb63442dae08eaedecbff5d3e9b39b77ee90ece7c33469e761804d5da6064b"
-    sha256 sonoma:        "805ee5e6b9f2e56a620456a276019049d5c6632db1fb8fbfb893145f1156828a"
-    sha256 arm64_linux:   "e8433ac6b9d66dbb01eec9d4161b17eb91e86b9342c29944e8d91aab74b15e43"
-    sha256 x86_64_linux:  "6e85d605250fbba1014bc7abc4b23589c6a3064b75f1b15a1c6e9212378f9d8d"
+    rebuild 1
+    sha256 arm64_tahoe:   "b389b86870c2e9732ddb357493035589945666e4065546bc3e610273bf88f008"
+    sha256 arm64_sequoia: "252a384d566f3781df2e3517eabe91a03f2cf372d5ade117ee43757f849990dd"
+    sha256 arm64_sonoma:  "a223315ca70b678fba04eeb40487480e82610d5503fb2ccb6830c05e11c77b96"
+    sha256 sonoma:        "e70f475c1d60ef8b3b68d832128bf48b2b540f604d9aa8ab0f86a7cfa002eac1"
+    sha256 arm64_linux:   "3cd0c38ad37d46e57172514e6d8e51d70e2dde4b613b5111fb1e366b8d87b86f"
+    sha256 x86_64_linux:  "12a205362ee78560b219409443be72c83d9e2d3e0379c40455aa1451f2de3a23"
   end
 
   head do
@@ -81,8 +68,6 @@ class Opencv < Formula
   depends_on "vtk"
   depends_on "webp"
 
-  uses_from_macos "zlib"
-
   on_macos do
     depends_on "glew"
     depends_on "imath"
@@ -94,6 +79,7 @@ class Opencv < Formula
     depends_on "gdk-pixbuf"
     depends_on "glib"
     depends_on "gtk+3"
+    depends_on "zlib-ng-compat"
   end
 
   def python3
@@ -167,7 +153,7 @@ class Opencv < Formula
         -DPROTOBUF_PROTOC_EXECUTABLE=#{Formula["protobuf"].bin}/protoc
         -DTIFF_LIBRARY=#{Formula["libtiff"].opt_lib}/libtiff.so
         -DWITH_V4L=OFF
-        -DZLIB_LIBRARY=#{Formula["zlib"].opt_lib}/libz.so
+        -DZLIB_LIBRARY=#{Formula["zlib-ng-compat"].opt_lib}/libz.so
       ]
     end
 

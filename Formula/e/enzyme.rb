@@ -1,18 +1,19 @@
 class Enzyme < Formula
   desc "High-performance automatic differentiation of LLVM"
   homepage "https://enzyme.mit.edu"
-  url "https://github.com/EnzymeAD/Enzyme/archive/refs/tags/v0.0.232.tar.gz"
-  sha256 "bdb28f9cf6f6bdfd8458e225d32040713f92e25371a417b8086b449697433ecc"
+  url "https://github.com/EnzymeAD/Enzyme/archive/refs/tags/v0.0.249.tar.gz"
+  sha256 "0842c14bd3953502bda6e8bdff22e94f3d49b042839f2ae5c3d502a7686ab969"
   license "Apache-2.0" => { with: "LLVM-exception" }
+  revision 1
   head "https://github.com/EnzymeAD/Enzyme.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "a50e466b0620abfc2d8a6ce0851c99ab4d3329959bc7249e651867a070858c3f"
-    sha256 cellar: :any,                 arm64_sequoia: "d18c2efc573ce72d6e56a6790934eebb629a8d6fbb6d9e0d3b862ae1ad9829a2"
-    sha256 cellar: :any,                 arm64_sonoma:  "dd1903086c8526c732da5d602efa515f341e79f8363ef944b1b6659c3ecd0d81"
-    sha256 cellar: :any,                 sonoma:        "a9ee7461d5fa8730d62bb1b5e392c455c46a5611098190a6d86b58973c6636d5"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cb64dec42e9d9ae247f76adf969eb80f507c0fdc1a761ab0c60910428c42e5fb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "99b0cf6270555c2e0d651cb10c6c1cd6817e2c5cc04610278de5a9c44408201f"
+    sha256 cellar: :any,                 arm64_tahoe:   "7c70941d1aa03eba0bd23b1023338b31f5fc41cbaee2d916be3273818c8b5b15"
+    sha256 cellar: :any,                 arm64_sequoia: "c459a1f0413fdb0f5d0af21f2df6be756dd792bd15680dab9326d2519569e1c4"
+    sha256 cellar: :any,                 arm64_sonoma:  "e82722cb35e92f77eafcf4166a34ef8c833d3e9f2ebef32dec2d856c097305e8"
+    sha256 cellar: :any,                 sonoma:        "cd3253f2ae95f21edcf479592a33cfe4ab9577c1f86859de4da3240966306ad6"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "7bee47e733bd4fe5a87335cdca295f0858b6bd1af4ba24e06c807b2fb07658c8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c7227e6a02c56eb2a91d7779e82db1fef6f0847a64c744904c1087d01514dfa4"
   end
 
   depends_on "cmake" => :build
@@ -40,16 +41,14 @@ class Enzyme < Formula
       }
       int main() {
         double i = 21.0;
-        printf("square(%.0f)=%.0f, dsquare(%.0f)=%.0f\\n", i, square(i), i, dsquare(i));
+        printf("square(%.0f)=%.0f, dsquare(%.0f)=%.0f", i, square(i), i, dsquare(i));
       }
     C
 
     ENV["CC"] = llvm.opt_bin/"clang"
 
-    system ENV.cc, testpath/"test.c",
-                        "-fplugin=#{lib/shared_library("ClangEnzyme-#{llvm.version.major}")}",
-                        "-O1", "-o", "test"
-
-    assert_equal "square(21)=441, dsquare(21)=42\n", shell_output("./test")
+    plugin = lib/shared_library("ClangEnzyme-#{llvm.version.major}")
+    system ENV.cc, "test.c", "-fplugin=#{plugin}", "-O1", "-o", "test"
+    assert_equal "square(21)=441, dsquare(21)=42", shell_output("./test")
   end
 end

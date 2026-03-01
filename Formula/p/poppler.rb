@@ -1,9 +1,11 @@
 class Poppler < Formula
   desc "PDF rendering library (based on the xpdf-3.0 code base)"
   homepage "https://poppler.freedesktop.org/"
-  url "https://poppler.freedesktop.org/poppler-25.12.0.tar.xz"
-  sha256 "c18b40eb36b1a0c5b86e29ca054bf0770304583da4f2cdd42fe86eca6a20de48"
+  url "https://poppler.freedesktop.org/poppler-26.02.0.tar.xz"
+  sha256 "dded8621f7b2f695c91063aab1558691c8418374cd583501e89ed39487e7ab77"
   license "GPL-2.0-only"
+  revision 1
+  compatibility_version 1
   head "https://gitlab.freedesktop.org/poppler/poppler.git", branch: "master"
 
   livecheck do
@@ -12,24 +14,23 @@ class Poppler < Formula
   end
 
   bottle do
-    sha256 arm64_tahoe:   "0a0fa9c290cfd239685c702a2e901639f8088c0c95ddd0fa62a72b0ae1b4f8d9"
-    sha256 arm64_sequoia: "9e8c2ecd0b8381d54d0107ad49dbe5d5bcda0d6050bcc5527e04570dc6f33a71"
-    sha256 arm64_sonoma:  "748ad1d382ea31409dbbcb3c7a8a69c1ee9fa81e2f916402d964e3dde19165d1"
-    sha256 sonoma:        "584dfd780a32e86eed44b2edc5a4c261c972b2902cb0ec35048c597701279cfa"
-    sha256 arm64_linux:   "1ebb7a2151adf8eb80b57f943f9badc50f272dcd164f7ee49ade052df5751563"
-    sha256 x86_64_linux:  "91b5ee0ee07d6b559d6c750c339d6278f34f56454b238556b6828b10cf2aea7b"
+    sha256 arm64_tahoe:   "97ea906fa3b4fd5a0b98b8762c41a1e9b12194f25b64bdbaa7bb239959b07b28"
+    sha256 arm64_sequoia: "d4cbf5ea2b8cceae9fc0580e4c41f8ba8ddcfb1f04b2da523e70720447b7171e"
+    sha256 arm64_sonoma:  "025187d9872c655fece1274db85a2cb0b8f1a9e6fb087cb602523ea55bacc74b"
+    sha256 sonoma:        "626a5bff735d2106176e7304ce9f2940ab4ece7f14d6ee064699ce0202a58249"
+    sha256 arm64_linux:   "4477bd6dfa5b3e9b17687e99fe4f5b8a8ba417d5aa7b3140328b4698f650d1b3"
+    sha256 x86_64_linux:  "343c9781cee96df6b37cbbbe2f9f93305343a2a49930fd15807aeff3c36eeaad"
   end
 
   depends_on "cmake" => :build
+  depends_on "gettext" => :build
   depends_on "gobject-introspection" => :build
   depends_on "pkgconf" => :build
 
   depends_on "cairo"
   depends_on "fontconfig"
   depends_on "freetype"
-  depends_on "gettext"
   depends_on "glib"
-  depends_on "gpgme"
   depends_on "gpgmepp"
   depends_on "jpeg-turbo"
   depends_on "libpng"
@@ -41,10 +42,15 @@ class Poppler < Formula
 
   uses_from_macos "gperf" => :build
   uses_from_macos "curl", since: :monterey # 7.68.0 required by poppler as of https://gitlab.freedesktop.org/poppler/poppler/-/commit/8646a6aa2cb60644b56dc6e6e3b3af30ba920245
-  uses_from_macos "zlib"
 
   on_macos do
+    depends_on "gettext"
+    depends_on "gpgme"
     depends_on "libassuan"
+  end
+
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   conflicts_with "pdftohtml", "pdf2image", "xpdf",
@@ -61,8 +67,6 @@ class Poppler < Formula
   end
 
   def install
-    ENV.cxx11
-
     args = std_cmake_args + %W[
       -DBUILD_GTK_TESTS=OFF
       -DENABLE_BOOST=OFF

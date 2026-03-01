@@ -1,9 +1,10 @@
 class Libarchive < Formula
   desc "Multi-format archive and compression library"
   homepage "https://www.libarchive.org"
-  url "https://www.libarchive.org/downloads/libarchive-3.8.4.tar.xz"
-  sha256 "c7b847b57feacf5e182f4d14dd6cae545ac6843d55cb725f58e107cdf1c9ad73"
+  url "https://www.libarchive.org/downloads/libarchive-3.8.5.tar.xz"
+  sha256 "d68068e74beee3a0ec0dd04aee9037d5757fcc651591a6dcf1b6d542fb15a703"
   license "BSD-2-Clause"
+  revision 1
 
   livecheck do
     url :homepage
@@ -11,12 +12,12 @@ class Libarchive < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "962f0d32692bffb1f2124d87afd4c710178a64afb99f529f905266dcd76aa4c8"
-    sha256 cellar: :any,                 arm64_sequoia: "851cc0b5f65fcbd0998e40b2a8929675f9d929253ad759a3824369b2e9852936"
-    sha256 cellar: :any,                 arm64_sonoma:  "1d0dc0839e689b5bc67fcdba5e73bbd38354068e08d0f676e7ed368d9851c88c"
-    sha256 cellar: :any,                 sonoma:        "62c839af1bd97dd11f5697d7719d34b6318866726ec63a314ff50f275e26e514"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b2d5d7b1b40ddf36754cc9beca5c140a7796d1cb8e65cec63fb3efe3b4c680ff"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f650dff84d68c370b356e3c89488ab6002b877f0fc08da5f9fe6d3fcbd3b868d"
+    sha256 cellar: :any,                 arm64_tahoe:   "c9c26bdbfd989e14ed9645fafec72ccb5c845a443c9c73d57f47301f7a21bd46"
+    sha256 cellar: :any,                 arm64_sequoia: "9845f54ebf8b829bfd12710755157065f94d5cdf2ffca43390e709925e40c582"
+    sha256 cellar: :any,                 arm64_sonoma:  "b8e283c5e59aad4c2cbd7d46187c8229e3d5fa1d61b43096f1f5730c6b04127e"
+    sha256 cellar: :any,                 sonoma:        "0f2e24f6e29c8ad74326778eea1070fe4c5a5c0c285117a3e8f6a4b5707e5d76"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "533902d9205b221993cf665772eae44e2a33424d2f0a2ff13b17769fc922a202"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "61c83e124381f5e889f5a1ca8bbb6cf73fbfd82b81628f2bf8bd39849f7fadac"
   end
 
   keg_only :provided_by_macos
@@ -28,16 +29,20 @@ class Libarchive < Formula
 
   uses_from_macos "bzip2"
   uses_from_macos "expat"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
-    system "./configure", *std_configure_args,
-           "--without-lzo2",    # Use lzop binary instead of lzo2 due to GPL
-           "--without-nettle",  # xar hashing option but GPLv3
-           "--without-xml2",    # xar hashing option but tricky dependencies
-           "--without-openssl", # mtree hashing now possible without OpenSSL
-           "--with-expat"       # best xar hashing option
-
+    args = [
+      "--without-lzo2",    # Use lzop binary instead of lzo2 due to GPL
+      "--without-nettle",  # xar hashing option but GPLv3
+      "--without-xml2",    # xar hashing option but tricky dependencies
+      "--without-openssl", # mtree hashing now possible without OpenSSL
+      "--with-expat",      # best xar hashing option
+    ]
+    system "./configure", *args, *std_configure_args
     system "make", "install"
 
     # Avoid hardcoding Cellar paths in dependents.

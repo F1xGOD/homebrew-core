@@ -1,19 +1,18 @@
 class Opa < Formula
   desc "Open source, general-purpose policy engine"
   homepage "https://www.openpolicyagent.org"
-  url "https://github.com/open-policy-agent/opa/archive/refs/tags/v1.12.1.tar.gz"
-  sha256 "52dbb092c56102fff61bb920d441e8b4f578f504ed087008015a9ae577d03caa"
+  url "https://github.com/open-policy-agent/opa/archive/refs/tags/v1.14.0.tar.gz"
+  sha256 "6d6fc004896d50d693efdf560f639fc28a980e6898b87b504ee14e7965d97f8f"
   license "Apache-2.0"
   head "https://github.com/open-policy-agent/opa.git", branch: "main"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "9c0dcfaa5029d42a22e211fc4cdf98134e7bf3866b3c05ec7112115d01d86aab"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f9156d2c516824f6541640cb4118845455cea8af58c04e06c180f42234a3bcdf"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "08a93195a4d84d717a30689a3e55cfc0243e105fae3b62ca841dc7f38fa5b477"
-    sha256 cellar: :any_skip_relocation, sonoma:        "404324d1c44e9fe6ddbb7f427cc96efde09094732b02d80265bdd57af9f48bbe"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "a83f75bf24f71e0197abb674bf9445dd23501c8b94a94a729188ce0ba2b102c4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2dd4496e16a2137e1069dda901eb62b0f02fd9afb2737515f10477d92c7b4aff"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "bc8e6ac89d69e44c6ec24eccac955ba50ef61d575614367225e9dca9afebe59c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "662a11371ae915ad4f8989caf18d1c61612e02f49ee1e196a8ebd5bae7b5335c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "cd59955b6a373882aff70d36c79f125be475966e9ca710c897eda48be9cfb97b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f83b6f59a33907c5ffa978649225f2d128e1b7a51b342f2cea1816729a0f09bf"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "a569860c03cb5dbc7c11aede3f6450ad5e811c7d1a366ae984d02eea6241a974"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e8bc318b148a0bb516b490fe6a060703c2f1f3b2444c89bd58465b84fd0ae6e3"
   end
 
   depends_on "go" => :build

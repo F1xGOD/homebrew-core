@@ -1,24 +1,25 @@
 class Harsh < Formula
   desc "Habit tracking for geeks"
   homepage "https://github.com/wakatara/harsh"
-  url "https://github.com/wakatara/harsh/archive/refs/tags/v0.12.4.tar.gz"
-  sha256 "9a66549b56bf73a62595d0a61d125bde1cb15d3ba4a734591d0e633f81819433"
+  url "https://github.com/wakatara/harsh/archive/refs/tags/v0.13.3.tar.gz"
+  sha256 "24842dc6fb260bcb08a50e5e7ef3e383abe9e809488effc22cfe9451c1c76d0f"
   license "MIT"
   head "https://github.com/wakatara/harsh.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "6e25fcefd72bdb33549791a7071e9f38ffdda953e4f447d2a17f075da77ec910"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6e25fcefd72bdb33549791a7071e9f38ffdda953e4f447d2a17f075da77ec910"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6e25fcefd72bdb33549791a7071e9f38ffdda953e4f447d2a17f075da77ec910"
-    sha256 cellar: :any_skip_relocation, sonoma:        "5e99a9cc8e38dae470e28d8e1d9637bd3ed1a77c0028e8491cefed8a8593bc8d"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "de9df101f078eed4523cc31d41169253279483515e1ea5c610b24abb62b9eeb5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3030202d71533992e389f9e460b749b1be3622751095bf2f229e1b3ace557ba6"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "6de4f481a4f126df06d235dff848b99eb2e9109e4f19ba226952eaa139e0f944"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6de4f481a4f126df06d235dff848b99eb2e9109e4f19ba226952eaa139e0f944"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6de4f481a4f126df06d235dff848b99eb2e9109e4f19ba226952eaa139e0f944"
+    sha256 cellar: :any_skip_relocation, sonoma:        "133ae95a2c3d493ecfddd35b6eb229b43e65a326e2fe318daddf20eefd72ef57"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d5810a25adc51e9455cc4df4c24f6480ff667be522b118d19bd0534581376711"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dbfe32984efb7b48b6d8ba20ba05e59b47e2440168ca9ddcd0cdaf7c04b589be"
   end
 
   depends_on "go" => :build
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w -X github.com/wakatara/harsh/cmd.version=#{version}")
+    generate_completions_from_executable(bin/"harsh", shell_parameter_format: :cobra)
   end
 
   test do

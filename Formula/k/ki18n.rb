@@ -1,8 +1,8 @@
 class Ki18n < Formula
   desc "KDE Gettext-based UI text internationalization"
   homepage "https://api.kde.org/ki18n-index.html"
-  url "https://download.kde.org/stable/frameworks/6.21/ki18n-6.21.0.tar.xz"
-  sha256 "d5b23045a4e989c7286e86696544180ec76ac5fd057b50c35bd007b279694d8f"
+  url "https://download.kde.org/stable/frameworks/6.23/ki18n-6.23.0.tar.xz"
+  sha256 "c492ac5c9258d84c732addcb3a53dbdb3ba86912773f1d6f4193218657e3182f"
   license all_of: [
     "BSD-3-Clause",
     "LGPL-2.0-or-later",
@@ -16,12 +16,12 @@ class Ki18n < Formula
   end
 
   bottle do
-    sha256 arm64_tahoe:   "4d2c88c8857f81554e7942fac327472c22d1ecffa6b2ae4848ef2e9ddd09f9ba"
-    sha256 arm64_sequoia: "0fd35fa810986a5fea5d951e42ae4013f3a7bd0f378e7f6f5bcca20384fc0851"
-    sha256 arm64_sonoma:  "24935de6481f4d1fee3276c8eeffce65999a5e04aa806674fd9261a1c4e3f421"
-    sha256 sonoma:        "d5026bf7af0bad1b5c472023b58f2de201fd70babe6c24d7802d29c1a4bb0826"
-    sha256 arm64_linux:   "c83ed33e068bd546e457637619af9de7b0bcf3bd55b786b159630c9d23ff8145"
-    sha256 x86_64_linux:  "e3017c452e3ee6d39fd8229de5be1bc289b3bbd8937072c2c2cc40ac0cceb029"
+    sha256 arm64_tahoe:   "4905f09abbb99a99be8405a1ab9a12abb3cc989ba4a444fd68e26d5bce82eef9"
+    sha256 arm64_sequoia: "e5ee25fe9314a1704812f40a38694cda3229badcbc84bbf7d3688154509bfa44"
+    sha256 arm64_sonoma:  "e40a6c5c0b67acb5dfede5db3821561443f81c0d7ad24e562616c19a4d2f4689"
+    sha256 sonoma:        "6ee9797fae8ac5dc65bc56251d626adbe01296c7518bf46a4dd026878ff9de67"
+    sha256 arm64_linux:   "a58d742ed128e44de27991519596b80d50ee02831f98ac44a9103db48ed4e144"
+    sha256 x86_64_linux:  "88c3edacb246d5e1bd62be5ba01d0e717364cbd3c91eea16603dc08d24485372"
   end
 
   depends_on "cmake" => [:build, :test]

@@ -6,16 +6,16 @@ class Gptline < Formula
   url "https://files.pythonhosted.org/packages/5b/28/d15a9a5b349c77a051a633e13141151314f352067ec7d516220bd6b20fcf/gptline-1.0.8.tar.gz"
   sha256 "4a0a0b5fa4f23e5f2ad7ac5bf44a9143e5de3757b0b8eefe5d78a7757d1d34bb"
   license "GPL-3.0-only"
-  revision 11
+  revision 14
   head "https://github.com/gnachman/gptline.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "db20f984e0520a1958664dec859b5567fd505edc883780797ad0a30011421838"
-    sha256 cellar: :any,                 arm64_sequoia: "ea2191927d41c6b72b151547e05aaa0f23fa48cd50917347ed92a45d148b3d94"
-    sha256 cellar: :any,                 arm64_sonoma:  "f1aad6333495ed28e582b5bb9c002bc9aa0e9336517b67bb9eb05f5592c26897"
-    sha256 cellar: :any,                 sonoma:        "582eb7340f77a7bacf154eed928b60f3a54d1e7818dabe29fab1b87317e3e063"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "2c7c926647feeddbf0dcade3117a3b18ad996f72356b3b7ee93665174a233913"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "74f4f577f7fededd188f2864e1cf67646fd15bb0cf35941181ccb29f34bb5c20"
+    sha256 cellar: :any,                 arm64_tahoe:   "619bde3ea93d2fe3d17334ea539c88216c792d71c0269294d1132be57fa95933"
+    sha256 cellar: :any,                 arm64_sequoia: "74586d031095494908de0260128a386fc51bc3c6c23c5dddc8782d6f38b1b065"
+    sha256 cellar: :any,                 arm64_sonoma:  "f4cda55a35531a505d58dbc3ca5aca97d9a66ba318ff866113984a1214f4cd15"
+    sha256 cellar: :any,                 sonoma:        "6ca35a0a70efe88c7c802d06c55b28f16a1e16505e6c23d78395303ac7ed96f5"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "668eb40fc1cc0d4d4dbb6b0aa1099ca2e44585a71ec068748ce91c91cdee398f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c5d22501c7a8657c3032f88824f838fe0b9f8a3a37934e45424754e2d9690cf6"
   end
 
   depends_on "pkgconf" => :build
@@ -34,14 +34,17 @@ class Gptline < Formula
 
   uses_from_macos "libxml2", since: :ventura
   uses_from_macos "libxslt"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   pypi_packages exclude_packages: %w[certifi pillow pydantic],
                 extra_packages:   "lxml-html-clean"
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/16/ce/8a777047513153587e5434fd752e89334ac33e379aa3497db860eeb60377/anyio-4.12.0.tar.gz"
-    sha256 "73c693b567b0c55130c104d0b43a9baf3aa6a31fc6110116509f27bf75e21ec0"
+    url "https://files.pythonhosted.org/packages/96/f0/5eb65b2bb0d09ac6776f2eb54adee6abe8228ea05b20a5ad0e4945de8aac/anyio-4.12.1.tar.gz"
+    sha256 "41cfcc3a4c85d3f05c932da7c26d0201ac36f72abd4435ba90d0464a3ffed703"
   end
 
   resource "beautifulsoup4" do
@@ -65,8 +68,8 @@ class Gptline < Formula
   end
 
   resource "cssselect" do
-    url "https://files.pythonhosted.org/packages/72/0a/c3ea9573b1dc2e151abfe88c7fe0c26d1892fe6ed02d0cdb30f0d57029d5/cssselect-1.3.0.tar.gz"
-    sha256 "57f8a99424cfab289a1b6a816a43075a4b00948c86b4dcf3ef4ee7e15f7ab0c7"
+    url "https://files.pythonhosted.org/packages/ec/2e/cdfd8b01c37cbf4f9482eefd455853a3cf9c995029a46acd31dfaa9c1dd6/cssselect-1.4.0.tar.gz"
+    sha256 "fdaf0a1425e17dfe8c5cf66191d211b357cf7872ae8afc4c6762ddd8ac47fc92"
   end
 
   resource "distro" do
@@ -85,8 +88,8 @@ class Gptline < Formula
   end
 
   resource "filelock" do
-    url "https://files.pythonhosted.org/packages/a7/23/ce7a1126827cedeb958fc043d61745754464eb56c5937c35bbf2b8e26f34/filelock-3.20.1.tar.gz"
-    sha256 "b8360948b351b80f420878d8516519a2204b07aefcdcfd24912a5d33127f188c"
+    url "https://files.pythonhosted.org/packages/73/92/a8e2479937ff39185d20dd6a851c1a63e55849e447a55e798cc2e1f49c65/filelock-3.24.3.tar.gz"
+    sha256 "011a5644dc937c22699943ebbfc46e969cdde3e171470a6e40b9533e5a72affa"
   end
 
   resource "h11" do
@@ -120,8 +123,8 @@ class Gptline < Formula
   end
 
   resource "jiter" do
-    url "https://files.pythonhosted.org/packages/45/9d/e0660989c1370e25848bb4c52d061c71837239738ad937e83edca174c273/jiter-0.12.0.tar.gz"
-    sha256 "64dfcd7d5c168b38d3f9f8bba7fc639edb3418abcc74f22fdbe6b8938293f30b"
+    url "https://files.pythonhosted.org/packages/0d/5e/4ec91646aee381d01cdb9974e30882c9cd3b8c5d1079d6b5ff4af522439a/jiter-0.13.0.tar.gz"
+    sha256 "f2839f9c2c7e2dffc1bc5929a510e14ce0a946be9365fd1219e7ef342dae14f4"
   end
 
   resource "joblib" do
@@ -145,13 +148,13 @@ class Gptline < Formula
   end
 
   resource "nltk" do
-    url "https://files.pythonhosted.org/packages/f9/76/3a5e4312c19a028770f86fd7c058cf9f4ec4321c6cf7526bab998a5b683c/nltk-3.9.2.tar.gz"
-    sha256 "0f409e9b069ca4177c1903c3e843eef90c7e92992fa4931ae607da6de49e1419"
+    url "https://files.pythonhosted.org/packages/e1/8f/915e1c12df07c70ed779d18ab83d065718a926e70d3ea33eb0cd66ffb7c0/nltk-3.9.3.tar.gz"
+    sha256 "cb5945d6424a98d694c2b9a0264519fab4363711065a46aa0ae7a2195b92e71f"
   end
 
   resource "openai" do
-    url "https://files.pythonhosted.org/packages/0f/39/8e347e9fda125324d253084bb1b82407e5e3c7777a03dc398f79b2d95626/openai-2.13.0.tar.gz"
-    sha256 "9ff633b07a19469ec476b1e2b5b26c5ef700886524a7a72f65e6f0b5203142d5"
+    url "https://files.pythonhosted.org/packages/55/13/17e87641b89b74552ed408a92b231283786523edddc95f3545809fab673c/openai-2.24.0.tar.gz"
+    sha256 "1e5769f540dbd01cb33bc4716a23e67b9d695161a734aff9c5f925e2bf99a673"
   end
 
   resource "prompt-toolkit" do
@@ -175,8 +178,8 @@ class Gptline < Formula
   end
 
   resource "regex" do
-    url "https://files.pythonhosted.org/packages/cc/a9/546676f25e573a4cf00fe8e119b78a37b6a8fe2dc95cda877b30889c9c45/regex-2025.11.3.tar.gz"
-    sha256 "1fedc720f9bb2494ce31a58a1631f9c82df6a09b49c19517ea5cc280b4541e01"
+    url "https://files.pythonhosted.org/packages/ff/c0/d8079d4f6342e4cec5c3e7d7415b5cd3e633d5f4124f7a4626908dbe84c7/regex-2026.2.19.tar.gz"
+    sha256 "6fb8cb09b10e38f3ae17cc6dc04a1df77762bd0351b6ba9041438e7cc85ec310"
   end
 
   resource "requests" do
@@ -210,8 +213,8 @@ class Gptline < Formula
   end
 
   resource "soupsieve" do
-    url "https://files.pythonhosted.org/packages/6d/e6/21ccce3262dd4889aa3332e5a119a3491a95e8f60939870a3a035aabac0d/soupsieve-2.8.tar.gz"
-    sha256 "e2dd4a40a628cb5f28f6d4b0db8800b8f581b65bb380b97de22ba5ca8d72572f"
+    url "https://files.pythonhosted.org/packages/7b/ae/2d9c981590ed9999a0d91755b47fc74f74de286b0f5cee14c9269041e6c4/soupsieve-2.8.3.tar.gz"
+    sha256 "3267f1eeea4251fb42728b6dfb746edc9acaffc4a45b27e19450b676586e8349"
   end
 
   resource "tiktoken" do
@@ -225,23 +228,23 @@ class Gptline < Formula
   end
 
   resource "tldextract" do
-    url "https://files.pythonhosted.org/packages/97/78/182641ea38e3cfd56e9c7b3c0d48a53d432eea755003aa544af96403d4ac/tldextract-5.3.0.tar.gz"
-    sha256 "b3d2b70a1594a0ecfa6967d57251527d58e00bb5a91a74387baa0d87a0678609"
+    url "https://files.pythonhosted.org/packages/65/7b/644fbbb49564a6cb124a8582013315a41148dba2f72209bba14a84242bf0/tldextract-5.3.1.tar.gz"
+    sha256 "a72756ca170b2510315076383ea2993478f7da6f897eef1f4a5400735d5057fb"
   end
 
   resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/a8/4b/29b4ef32e036bb34e4ab51796dd745cdba7ed47ad142a9f4a1eb8e0c744d/tqdm-4.67.1.tar.gz"
-    sha256 "f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2"
+    url "https://files.pythonhosted.org/packages/09/a9/6ba95a270c6f1fbcd8dac228323f2777d886cb206987444e4bce66338dd4/tqdm-4.67.3.tar.gz"
+    sha256 "7d825f03f89244ef73f1d4ce193cb1774a8179fd96f31d7e1dcde62092b960bb"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/24/30/6b0809f4510673dc723187aeaf24c7f5459922d01e2f794277a3dfb90345/wcwidth-0.2.14.tar.gz"
-    sha256 "4d478375d31bc5395a3c55c40ccdf3354688364cd61c4f6adacaa9215d0b3605"
+    url "https://files.pythonhosted.org/packages/35/a2/8e3becb46433538a38726c948d3399905a4c7cabd0df578ede5dc51f0ec2/wcwidth-0.6.0.tar.gz"
+    sha256 "cdc4e4262d6ef9a1a57e018384cbeb1208d8abbc64176027e2c2455c81313159"
   end
 
   def install

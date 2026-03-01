@@ -1,19 +1,18 @@
 class SingBox < Formula
   desc "Universal proxy platform"
   homepage "https://sing-box.sagernet.org"
-  url "https://github.com/SagerNet/sing-box/archive/refs/tags/v1.12.14.tar.gz"
-  sha256 "f19761d09f88e2d33aadfdb3c4ff471654f34b28561826e4786b9859654ca887"
+  url "https://github.com/SagerNet/sing-box/archive/refs/tags/v1.13.0.tar.gz"
+  sha256 "6ddc71596dc937873c5aba15a4f2b395c5434265efdc1bd21f4c03d8c5b7f641"
   license "GPL-3.0-or-later"
   head "https://github.com/SagerNet/sing-box.git", branch: "dev-next"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "fefe9f37379ebee522206e5eaef26b7423a7f680563e5096db93eefe15b77c74"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d4e011367a3b2f56bf8404e37a7cc528c81ac165e03b523c8e144624d7a2e270"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e3ba719e6858441a84f6d18c172b8b419f60fc68478c9a808bcce36674de51e4"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b8d340a84f8006b90aedd9c3540c5e725e6ed63cbad3e343ede854c2577f31b0"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "1ab58213fc7d3a0ba7904275184b9eb3270474c4c6fae6c7b5c14c6b67d7dd13"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1642aac4505870f485c34576c3a451e654ad6290f0858c6761c54457b7a1c7bf"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "2879e6ac62aa2fc2ad291a8ff5dabf9c78c03a5bff3686960d461e837180bcb9"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "36094fc9c1374d3acea46ce376981d4dcb10a3e6d7cfd241cbf443ea67fef447"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3a21d5945d569bc8d9e412183e3c8f81d3819e59a8b74500560fc92e39a6f12e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "4dc32baba1c7677ee7208b2d6a41b6ab5b0c8a5ea544ae04dfff963d745b9bac"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "eef8bcd13d5e5754a0294930fb137e3937bf8e88797588a4902e6086e99c5dfa"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ab6e25d612b8849bd090a2add59c4ef0d8159bdc533da090a446ad8ba430c27"
   end
 
   depends_on "go" => :build
@@ -55,7 +54,7 @@ class SingBox < Formula
         ]
       }
     JSON
-    server = fork { exec bin/"sing-box", "run", "-D", testpath, "-c", testpath/"shadowsocks.json" }
+    server = spawn bin/"sing-box", "run", "-D", testpath, "-c", testpath/"shadowsocks.json"
 
     sing_box_port = free_port
     (testpath/"config.json").write <<~JSON
@@ -79,15 +78,15 @@ class SingBox < Formula
       }
     JSON
     system bin/"sing-box", "check", "-D", testpath, "-c", "config.json"
-    client = fork { exec bin/"sing-box", "run", "-D", testpath, "-c", "config.json" }
+    client = spawn bin/"sing-box", "run", "-D", testpath, "-c", "config.json"
 
-    sleep 3
     begin
+      sleep 3
       system "curl", "--socks5", "127.0.0.1:#{sing_box_port}", "github.com"
     ensure
-      Process.kill 9, server
+      Process.kill "TERM", server
+      Process.kill "TERM", client
       Process.wait server
-      Process.kill 9, client
       Process.wait client
     end
   end

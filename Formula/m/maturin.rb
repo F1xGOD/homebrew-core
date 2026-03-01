@@ -1,25 +1,24 @@
 class Maturin < Formula
   desc "Build and publish Rust crates as Python packages"
   homepage "https://github.com/PyO3/maturin"
-  url "https://github.com/PyO3/maturin/archive/refs/tags/v1.11.0.tar.gz"
-  sha256 "0e25b8931fd4b4d894c739fd61500cc79289ed10be907440013a7ffb6492ef78"
+  url "https://github.com/PyO3/maturin/archive/refs/tags/v1.12.5.tar.gz"
+  sha256 "b7f5fa2e24cc31d0da07a9b9a666f76374175a05fe7d80b99c48652fdb218b5b"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/PyO3/maturin.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "16f6d8c9d31772b0797c85f46ceaf39e7878df29d634f2eb21790a0872329c9f"
-    sha256 cellar: :any,                 arm64_sequoia: "5e7a56d998b5dbb179dec3d0bffd8ff2d6333e451438e81e2ece2ad91392125d"
-    sha256 cellar: :any,                 arm64_sonoma:  "69649c0f6c0c344ffe6d2c6f22d0f80f9d471c0938ddd50990bfc8e94bf24f26"
-    sha256 cellar: :any,                 sonoma:        "acfe5e1a90439d45a916e3bf00e3afa30c450e8214cf29382a827df443d93713"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "0de1daf44c61c2595bd5983b48ac3fc1269378290ce7982e8fcd3282cb4f020f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "232bc53f201f93384da082dda060afcf03e2791acf8128d51d153fdf3e68812c"
+    sha256 cellar: :any,                 arm64_tahoe:   "695631fd55b2fd0391498aa2996c2ed17e4d88e86ebc19c3f740474855678d4a"
+    sha256 cellar: :any,                 arm64_sequoia: "8c2ea0a72b766bb53e78875987c2716aa63fa737f58596bde2f01687d8836760"
+    sha256 cellar: :any,                 arm64_sonoma:  "4312ef4c233b1e8d2588adfd4658147688e6ecf5b981053ed14ab10f6d3f0b5a"
+    sha256 cellar: :any,                 sonoma:        "e666a5bfa4675608265a3230bf1b69054536a5dd8f507b601d7e5bff666944fc"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "12ab6bb1f6f8c9315efcd124c6a465d48f2b24780297ca8ad8567670bb51bb87"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "955cd287a56a71d78d087a0526ef765e91a645e669035958e0b34d4e65914b70"
   end
 
+  depends_on "pkgconf" => :build
+  depends_on "rust" => [:build, :test]
   depends_on "python@3.14" => :test
-  depends_on "rust"
-
-  uses_from_macos "bzip2"
-  uses_from_macos "xz"
+  depends_on "xz"
 
   def install
     # Work around an Xcode 15 linker issue which causes linkage against LLVM's

@@ -15,8 +15,6 @@ class Abcl < Formula
     regex(/href=.*?abcl[._-]v?(\d+(?:\.\d+)+)\.orig\.t/i)
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "3231aead5669b78ca3b23ad314c5bc1135178182fcab8ec84da66ecdef470350"
     sha256 cellar: :any_skip_relocation, arm64_sequoia:  "d3b54e12b38b7736c33fe43c677c4d396337617e4f0647a2d5522bde43e31fc0"
@@ -32,7 +30,7 @@ class Abcl < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "461c7a8fe2a872e92ff82e19767b6b80cb69cb6985676ef751dc169fc05737ab"
   end
 
-  depends_on "ant"
+  depends_on "ant" => :build
   depends_on "openjdk"
   depends_on "rlwrap"
 

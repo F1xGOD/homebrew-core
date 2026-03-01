@@ -1,8 +1,8 @@
 class Azcopy < Formula
   desc "Azure Storage data transfer utility"
   homepage "https://github.com/Azure/azure-storage-azcopy"
-  url "https://github.com/Azure/azure-storage-azcopy/archive/refs/tags/v10.31.0.tar.gz"
-  sha256 "21ca550d42bb06807d985a5ac003c0b479d55cf15506e948c78a419b421eb5c4"
+  url "https://github.com/Azure/azure-storage-azcopy/archive/refs/tags/v10.32.1.tar.gz"
+  sha256 "b1766cf6fbe798b4d57b51adaae86c442b5cf829e3ad8ef85b682b4acc239dec"
   license "MIT"
   head "https://github.com/Azure/azure-storage-azcopy.git", branch: "main"
 
@@ -12,13 +12,12 @@ class Azcopy < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "79ea7b96d109ea48fa9f2fab2c0389df9b01cca23c678c816295f8ccc61262a5"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e4d6adb2d394b1272c78cecd033b5d10d3f2bff7576f57fe1adc258caf426445"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4a9c9afa914f344ac436e1dfe0592234d146cd0b6550ec2e69169c574ba930a6"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a967704656bb73e615538665399924c87fb27e18b39b61fb3b7cf65dc096f682"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "3cab26d652b475da640ee7e947ec6f0b797deed722b6d60b5bfebee9e8b9f803"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2723bbc080ffd2f1a651623fd8d398498cc00c7d5c34c79a53b2548f5d619f68"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "58399f491b66ef2d86c62d04af516225d01da7579869d70164abac090aac8b06"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e734e0ec289211cc852d6d21b99e53324f45960b69ebfb950b8182440a856998"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "62f8e7fd98945f45726eb7da105eb93c91cbb2e345842b90844035b79e1f8bb5"
+    sha256 cellar: :any_skip_relocation, sonoma:        "43d5701bf985abf9c2783aaa538732096ebb1a17e024a94d3cb0909ebcfcc7e0"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e172b2aceb629f26509208085e7f232ab44eed1e6b1cb5be19ab1d4bfa8de939"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f54b35681e16d7ad4b352e2fc245bb20ffaf78ba3cbccda7cf1a0d8803210c11"
   end
 
   depends_on "go" => :build

@@ -1,18 +1,19 @@
 class Wangle < Formula
   desc "Modular, composable client/server abstractions framework"
   homepage "https://github.com/facebook/wangle"
-  url "https://github.com/facebook/wangle/archive/refs/tags/v2025.12.29.00.tar.gz"
-  sha256 "479cd68ca264e940063fc0035bc42934e567ce88865b876d33c7fd92536c3c32"
+  url "https://github.com/facebook/wangle/archive/refs/tags/v2026.01.12.00.tar.gz"
+  sha256 "49b8e318a44e6bcdce37d79644ffd4efc7084621d08b6822cc357047819634ec"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/facebook/wangle.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "4a4cd10cf2b97bee3d77372f9d9be440e9ef93d0f70f6d52bb2804fea73301c5"
-    sha256 cellar: :any,                 arm64_sequoia: "cfd5378d94bab4619819b22d5205a4352b7c8aa7f9e34d9efb4da5edbff0925a"
-    sha256 cellar: :any,                 arm64_sonoma:  "36baf65bacb738a50d27e19f17af606824c759e4ddbc2a136209244d44ed50af"
-    sha256 cellar: :any,                 sonoma:        "1a11372d0804a04d0114a97afa2fa89cd3318c627fa44912ffa687282be51cb5"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "2233279376bdd0e9a7524d0f50a3ed1b98daa622c053f4e41f81ebdeb8b219da"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "39edf2c0903c7689db73e9c3119822f6f476bced8cc4cfb1e33eb75ab03befbf"
+    sha256 cellar: :any,                 arm64_tahoe:   "8a172ae7dffffdca0d35b7c852325ffca9a3397d23bf7be1904c99a53591d216"
+    sha256 cellar: :any,                 arm64_sequoia: "db95b376628ec0d02351b5b1fe47e350c92e791c4a19ba602a90ce58b615bb84"
+    sha256 cellar: :any,                 arm64_sonoma:  "fcfe0362677fa2be4eb73ba01a063881e45acf1c68e0b963d40c7a17553cf3da"
+    sha256 cellar: :any,                 sonoma:        "e69a0a8b24a6f829469a9b4fc568d67a48b26519a4c529dd42d73000b0b7d213"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e39f25857a354e99e6f487022929142a611706a79919168aa132fb798723a945"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "96841635b471a9006bcc9b3f53b330507bd8c9dbe1e67b04490d545dd4bf7ac2"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -68,7 +69,7 @@ class Wangle < Formula
     system "cmake", "--build", "build"
 
     port = free_port
-    fork { exec testpath/"build/EchoServer", "-port", port.to_s }
+    spawn testpath/"build/EchoServer", "-port", port.to_s
     sleep 30
 
     require "pty"

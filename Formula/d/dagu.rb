@@ -1,18 +1,18 @@
 class Dagu < Formula
   desc "Lightweight and powerful workflow engine"
-  homepage "https://dagu.cloud"
-  url "https://github.com/dagu-org/dagu/archive/refs/tags/v1.29.2.tar.gz"
-  sha256 "7a1f650478fefed9e0a959bc199e690deef64ac3b3bc56720fe0932ee2651b78"
+  homepage "https://dagu.sh"
+  url "https://github.com/dagu-org/dagu/archive/refs/tags/v2.0.2.tar.gz"
+  sha256 "a8422dc436d47e02e6ce53a2894b826933459a3f4c596f74417bcc96fd9691b5"
   license "GPL-3.0-only"
   head "https://github.com/dagu-org/dagu.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "7c7795dc8f74e10c7aac2619f1fbb06e946184a3984e73e32d3310fd757b30ee"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "71a17ed40ab309c5392ed6d6a767b9e1b6f47ba521d9570a4966309d11d407f0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fc94704587a7eb4b931be4b7c19853541468caee6427c288fd7594593735334c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3b63d1b4080ae4a8bad71a4be431e6efc5ec985d8d2f0a6171863097bf5060e2"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "3fbb09b6ec5a2ac0faf250c0967ad8b71040a21b8c9551d2cee3664c8759fef7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bb66dcb8fe37fd6572c54edf7449a5e80ce9d8276321a899301e70c0f4e13e2f"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "f4f9e98d667f39a667fe479c4b1a8ef016b84c819a3d7172ae25f0d48090a037"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ca1a66164d0dd09ac44bfe1b6ce6eb900c7459a8d2cf694f5b44d89757cfb543"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "532f71c812150aafd88d7d3786bef51de8a40bc450c426543560ec2d70e9ef14"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e0232493c3029112e873d07504e80acb3d1a79af3a5eed1234336205c489f9ec"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "029a98765ff4bb8530972857a96b50f5cc037ce62dc582800b5ac5b028e09b47"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "98e9ab5ef98125e47e6ccddf5047ccabbb7f564a0fc325a37491b33d18d5863b"
   end
 
   depends_on "go" => :build
@@ -51,6 +51,6 @@ class Dagu < Formula
 
     system bin/"dagu", "start", "hello.yaml"
     shell_output = shell_output("#{bin}/dagu status hello.yaml")
-    assert_match "The DAG completed successfully", shell_output
+    assert_match "Result: Succeeded", shell_output
   end
 end

@@ -3,8 +3,8 @@ class Mesa < Formula
 
   desc "Graphics Library"
   homepage "https://www.mesa3d.org/"
-  url "https://archive.mesa3d.org/mesa-25.3.2.tar.xz"
-  sha256 "e69dab0d0ea03e3e8cb141b032f58ea9fcf3b9c1f61b31f6592cb4bbd8d0185d"
+  url "https://archive.mesa3d.org/mesa-26.0.1.tar.xz"
+  sha256 "bb5104f9f9a46c9b5175c24e601e0ef1ab44ce2d0fdbe81548b59adc8b385dcc"
   license all_of: [
     "MIT",
     "Apache-2.0", # include/{EGL,GLES*,vk_video,vulkan}, src/egl/generate/egl.xml, src/mapi/glapi/registry/gl.xml
@@ -23,12 +23,12 @@ class Mesa < Formula
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
 
   bottle do
-    sha256 arm64_tahoe:   "136a1bcd010223364eb9aa0d341615d9505ff96157286c78e1b8c0eca5c58c04"
-    sha256 arm64_sequoia: "d66d436ca6fdf0a9050d39ffc1730943123c1c00f7d7d7ead06da4bdea30f0b8"
-    sha256 arm64_sonoma:  "d0825939b4b6ce76f748b7f0828b41da9609e63fe4ea01e2b1efd589c2a6dec0"
-    sha256 sonoma:        "ce6be84375ea595e1d0990210846e995efa20ee468f3fbc106832970d0c6f55d"
-    sha256 arm64_linux:   "316a9f8968cbbec47fac82876ae2b54f993a59f3082fe97f938edea99a7f4e65"
-    sha256 x86_64_linux:  "74b310c24d80bcc53b82900bcc8e7b0cf35f6c729c80010c0765ceea89c8a30f"
+    sha256 arm64_tahoe:   "5c400df37ce9ba2a5855d6aeb3ee9bfdfddf30ae348e233037532a8e449e4d32"
+    sha256 arm64_sequoia: "7759f5327ba2c27973e7ce43c82257dc44ef8d5cb5dadd59379a6aaf70cb2ae7"
+    sha256 arm64_sonoma:  "4532569003a7c032d3a3f2208eba3765499425377df2156942c2a4644eceeb1e"
+    sha256 sonoma:        "8f82676221e67c80f586a42d55af764c0dfb2dd63c1827ca540c20aca7d62d41"
+    sha256 arm64_linux:   "6af3f1ff4245867cd610ef7af8978ccbda3b53993522dae5b8182d9866ac136f"
+    sha256 x86_64_linux:  "67bd0b0c280797e4d7a4c648a538e384531801e5b1cc8c760655526719c6cfe0"
   end
 
   depends_on "bindgen" => :build
@@ -51,14 +51,14 @@ class Mesa < Formula
   depends_on "libxcb"
   depends_on "libxext"
   depends_on "libxfixes"
-  depends_on "llvm"
+  depends_on "llvm@21"
   depends_on "spirv-llvm-translator"
   depends_on "spirv-tools"
+  depends_on "xcb-util-keysyms"
   depends_on "zstd"
 
   uses_from_macos "flex" => :build
   uses_from_macos "expat"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "molten-vk"
@@ -79,6 +79,7 @@ class Mesa < Formula
     depends_on "libxxf86vm"
     depends_on "lm-sensors"
     depends_on "wayland"
+    depends_on "zlib-ng-compat"
 
     on_intel do
       depends_on "cbindgen" => :build
@@ -99,8 +100,8 @@ class Mesa < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
   end
 
   resource "ply" do
@@ -145,11 +146,13 @@ class Mesa < Formula
       # Work around .../rusticl_system_bindings.h:1:10: fatal error: 'stdio.h' file not found
       ENV["SDKROOT"] = MacOS.sdk_for_formula(self).path
 
+      vulkan_drivers = (MacOS.version >= :sequoia) ? "kosmickrisp,swrast" : "swrast"
+
       %W[
         -Dgallium-drivers=llvmpipe,zink
         -Dmoltenvk-dir=#{Formula["molten-vk"].prefix}
         -Dtools=etnaviv,glsl,nir,nouveau,dlclose-skip
-        -Dvulkan-drivers=swrast
+        -Dvulkan-drivers=#{vulkan_drivers}
         -Dvulkan-layers=intel-nullhw,overlay,screenshot,vram-report-limit
       ]
     else
@@ -193,6 +196,7 @@ class Mesa < Formula
         #{prefix}/etc/OpenCL/vendors/rusticl.icd
         #{share}/vulkan/explicit_layer.d/VkLayer_MESA_overlay.json
         #{share}/vulkan/explicit_layer.d/VkLayer_MESA_screenshot.json
+        #{share}/vulkan/explicit_layer.d/VkLayer_MESA_vram_report_limit.json
       ] do |s|
         s.gsub! ".so", ".dylib"
       end

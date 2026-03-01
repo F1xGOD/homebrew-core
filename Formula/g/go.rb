@@ -1,11 +1,22 @@
 class Go < Formula
   desc "Open source programming language to build simple/reliable/efficient software"
   homepage "https://go.dev/"
-  url "https://go.dev/dl/go1.25.5.src.tar.gz"
-  mirror "https://fossies.org/linux/misc/go1.25.5.src.tar.gz"
-  sha256 "22a5fd0a91efcd28a1b0537106b9959b2804b61f59c3758b51e8e5429c1a954f"
   license "BSD-3-Clause"
+  compatibility_version 2
   head "https://go.googlesource.com/go.git", branch: "master"
+
+  stable do
+    url "https://go.dev/dl/go1.26.0.src.tar.gz"
+    mirror "https://fossies.org/linux/misc/go1.26.0.src.tar.gz"
+    sha256 "c9132a8a1f6bd2aa4aad1d74b8231d95274950483a4950657ee6c56e6e817790"
+
+    # patch to fix pkg-config flag sanitization
+    # Backport issue https://golang.org/issue/77474, should be included in 1.26.1+.
+    patch do
+      url "https://github.com/golang/go/commit/28fbdf7acb4146b5bc3d88128e407d1344691839.patch?full_index=1"
+      sha256 "2e05f7e16f2320685547a7ebb240163a8b7f1c7bf9d2f6dc4872ff8b27707a35"
+    end
+  end
 
   livecheck do
     url "https://go.dev/dl/?mode=json"
@@ -21,12 +32,12 @@ class Go < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a08dc2f6914ccf3edf0a4e0401595216fb890ffd253ee1147a7241e4f5dc8c15"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a08dc2f6914ccf3edf0a4e0401595216fb890ffd253ee1147a7241e4f5dc8c15"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a08dc2f6914ccf3edf0a4e0401595216fb890ffd253ee1147a7241e4f5dc8c15"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b40bc5deb0d8f4a0ed30763b774c294e2033be3af9ae1febc428260bc9080739"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "986db3b38f0108765760294d979cbe758411f9668b099ab852ca1f463d9aa2ca"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c44f1e34c0b26a987008b483cf22f188a0c60533277ffcb9485bf66045c82094"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "54b39d76b59f388de6f95bef52a6598535165ad72133ca413a5d81c9f87d3633"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "54b39d76b59f388de6f95bef52a6598535165ad72133ca413a5d81c9f87d3633"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "54b39d76b59f388de6f95bef52a6598535165ad72133ca413a5d81c9f87d3633"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e9b8fa3213f0e04234c8d7a0dd54ba4dc198dcf6eb5fd3b96dd8257b51c8b7c5"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "ab3d100a21cc7a4477ce3911dadaddea17f2963ae8751dc6e2d4f7cc56704559"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4f008aec1edbbe32d582f7610e83d54fcccd8fc5654d0bd830bf3b48d24592cf"
   end
 
   depends_on macos: :monterey
@@ -34,13 +45,13 @@ class Go < Formula
   # Don't update this unless this version cannot bootstrap the new version.
   resource "gobootstrap" do
     checksums = {
-      "darwin-arm64" => "416c35218edb9d20990b5d8fc87be655d8b39926f15524ea35c66ee70273050d",
-      "darwin-amd64" => "e7bbe07e96f0bd3df04225090fe1e7852ed33af37c43a23e16edbbb3b90a5b7c",
-      "linux-arm64"  => "fd017e647ec28525e86ae8203236e0653242722a7436929b1f775744e26278e7",
-      "linux-amd64"  => "4fa4f869b0f7fc6bb1eb2660e74657fbf04cdd290b5aef905585c86051b34d43",
+      "darwin-arm64" => "f282d882c3353485e2fc6c634606d85caf36e855167d59b996dbeae19fa7629a",
+      "darwin-amd64" => "6cc6549b06725220b342b740497ffd24e0ebdcef75781a77931ca199f46ad781",
+      "linux-arm64"  => "74d97be1cc3a474129590c67ebf748a96e72d9f3a2b6fef3ed3275de591d49b3",
+      "linux-amd64"  => "1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730",
     }
 
-    version "1.22.12"
+    version "1.24.13"
 
     on_arm do
       on_macos do

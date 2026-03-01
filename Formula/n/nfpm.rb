@@ -1,19 +1,18 @@
 class Nfpm < Formula
   desc "Simple deb and rpm packager"
   homepage "https://nfpm.goreleaser.com/"
-  url "https://github.com/goreleaser/nfpm/archive/refs/tags/v2.44.1.tar.gz"
-  sha256 "0c663bed40ce3f39ba605f7fe7f536d5474ddc0988d0ea745e62fb72b3650dd2"
+  url "https://github.com/goreleaser/nfpm/archive/refs/tags/v2.45.0.tar.gz"
+  sha256 "6a8e556d02b1b485e11f4bb7d07ac61c55a881b4facdd9b63bc0f04346b91e0a"
   license "MIT"
   head "https://github.com/goreleaser/nfpm.git", branch: "main"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "6656bec6b67f9d6c24482b261725ab96d56061ddcbacf461962779be7d521437"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6656bec6b67f9d6c24482b261725ab96d56061ddcbacf461962779be7d521437"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6656bec6b67f9d6c24482b261725ab96d56061ddcbacf461962779be7d521437"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3023c3cd747a5a59f6b742387e2b6c5002c97e554ce892de04d7c6dcff4295c1"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "a633d61616ba235ee99640c56ddda7dfe50dd5e13f5f69dfd6cb89892ed08067"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1ec89cf62d19545e68eec6151b8bc51d38336bb9cb92248a2353aa29d6a25c58"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "1e73cbf704f5e41fdb63f92588c579634fc97c0d4ecdd7b9ab86084b51cf699b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1e73cbf704f5e41fdb63f92588c579634fc97c0d4ecdd7b9ab86084b51cf699b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1e73cbf704f5e41fdb63f92588c579634fc97c0d4ecdd7b9ab86084b51cf699b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "40516c17b68625da2f6abcd3a1c985125ac4a34553304d5bee204d486683ddbd"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "5caa59328978c2e9586ded068af47d6241620f2fc602616641786fc1a07078a6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e6d97b3cd19b75bbfa54c96a4515cea2b3417b81003e096a6f257bef5d012031"
   end
 
   depends_on "go" => :build

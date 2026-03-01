@@ -1,35 +1,28 @@
 class VercelCli < Formula
   desc "Command-line interface for Vercel"
   homepage "https://vercel.com/home"
-  url "https://registry.npmjs.org/vercel/-/vercel-49.1.2.tgz"
-  sha256 "5bb8e6ce4e3007ab365982d34a8809d58be77fa06deb23cf135c6528a3c23e14"
+  url "https://registry.npmjs.org/vercel/-/vercel-50.25.4.tgz"
+  sha256 "379d917f938857155e8423e5b4681a9cf6b5ff7aa32acffd1e58a3a2797e9090"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "c0c9d2d4f9ef1c8f52dc5f2d6816280307307e42f3500071c281c204e24006d8"
-    sha256 cellar: :any,                 arm64_sequoia: "5c39365899b31789d84bc3e0a834274022f3ea1ec566c5c7b64be8c712a9e72d"
-    sha256 cellar: :any,                 arm64_sonoma:  "5c39365899b31789d84bc3e0a834274022f3ea1ec566c5c7b64be8c712a9e72d"
-    sha256 cellar: :any,                 sonoma:        "3ae9bc1677d99aaf0478a724bdfb7e051b63c13b8f7757a3ba97bec94c3f0abd"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f5e3fedfe62e04e905c0deed728103a6e4231e11a8590b857d2ad9e2aea4fd04"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "34a564bb305031c75ed3b8644277b8c407cfb8519102addfedab51aaa98cf9d3"
+    sha256 cellar: :any,                 arm64_tahoe:   "7e709e9889c1789dc14df7a761c6381e0994272bbbc54bd0bb6a8e3ec00ea924"
+    sha256 cellar: :any,                 arm64_sequoia: "86a870ed6f65c5989115199d1b95212e191c75b1758dc991eea4e547852beef2"
+    sha256 cellar: :any,                 arm64_sonoma:  "86a870ed6f65c5989115199d1b95212e191c75b1758dc991eea4e547852beef2"
+    sha256 cellar: :any,                 sonoma:        "1a1e8ce52b4fa98896f476f922af0ac1e43f41eb2695680e1811f1318501f9e8"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "5b2726504b37d16fefdecf2e0d7445d84c0b533f9c1d6d253063dd225b4fbf7c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6743349cbd81b795a66718f44a08e40b5cafc84865ec5b37a8f8c20ce9cba0ff"
   end
 
   depends_on "node"
 
   def install
-    inreplace "dist/index.js", "${await getUpdateCommand()}",
-                               "brew upgrade vercel-cli"
+    inreplace "dist/index.js", "await getUpdateCommand()",
+                               '"brew upgrade vercel-cli"'
+
     system "npm", "install", *std_npm_args
+    deuniversalize_machos libexec/"lib/node_modules/vercel/node_modules/fsevents/fsevents.node" if OS.mac?
     bin.install_symlink libexec.glob("bin/*")
-
-    # Remove incompatible deasync modules
-    os = OS.kernel_name.downcase
-    arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
-    node_modules = libexec/"lib/node_modules/vercel/node_modules"
-    node_modules.glob("deasync/bin/*")
-                .each { |dir| rm_r(dir) if dir.basename.to_s != "#{os}-#{arch}" }
-
-    deuniversalize_machos node_modules/"fsevents/fsevents.node" if OS.mac?
   end
 
   test do

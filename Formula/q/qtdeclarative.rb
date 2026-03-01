@@ -1,10 +1,10 @@
 class Qtdeclarative < Formula
   desc "QML, Qt Quick and several related modules"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.9/6.9.3/submodules/qtdeclarative-everywhere-src-6.9.3.tar.xz"
-  mirror "https://qt.mirror.constant.com/archive/qt/6.9/6.9.3/submodules/qtdeclarative-everywhere-src-6.9.3.tar.xz"
-  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.9/6.9.3/submodules/qtdeclarative-everywhere-src-6.9.3.tar.xz"
-  sha256 "5a071b227229afbf5c976b7b59a0d850818d06ae861fcdf6d690351ca3f8a260"
+  url "https://download.qt.io/official_releases/qt/6.10/6.10.2/submodules/qtdeclarative-everywhere-src-6.10.2.tar.xz"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.10/6.10.2/submodules/qtdeclarative-everywhere-src-6.10.2.tar.xz"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.10/6.10.2/submodules/qtdeclarative-everywhere-src-6.10.2.tar.xz"
+  sha256 "a249914ff66cdcdbf0df8b5ffad997a2ee6dce01cc17d43c6cc56fdc1d0f4b0f"
   license all_of: [
     { any_of: ["LGPL-3.0-only", "GPL-2.0-only", "GPL-3.0-only"] },
     { "GPL-3.0-only" => { with: "Qt-GPL-exception-1.0" } }, # qml
@@ -18,12 +18,12 @@ class Qtdeclarative < Formula
   end
 
   bottle do
-    sha256                               arm64_tahoe:   "01c719a27a1fa9961ded9a195e326468d7c5a9c3ab5462eb10cd553539e62b0e"
-    sha256                               arm64_sequoia: "4073f5e4d88bcc78c24f38d8ba11fb9d474b70c0fec3a76c7997108ac50241c8"
-    sha256                               arm64_sonoma:  "830c76d0e22f0d7ecc800f1d26b920fd65bc5f5ef3b6e219267e7c673d1534dc"
-    sha256 cellar: :any,                 sonoma:        "d4f34e19e1e6ce6dd7452dea1cb4b42bf39c7e3e7d6f7b73e42cf72a5635f53e"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "578fa8f1b82c9375bd421b06ec8524e81759b69a0f76cefc1a4adc879ab72828"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "25c2ae6327941d10525bec6b4596b92239bcccd7a6468b522579ae410a1c0e03"
+    sha256                               arm64_tahoe:   "40c4fa0ae02ea69c6bddfc2ed6e184638c59843e6ccc23d89ca5fb0d020db793"
+    sha256                               arm64_sequoia: "43ec33cc1424f501c43cbde74bbbe592d6d083f7311ed462c51d90cd93a23217"
+    sha256                               arm64_sonoma:  "470efa5dddc0cbf8663965f4538dd25ae25444c7f8f679ea2570c06ee6890d3d"
+    sha256 cellar: :any,                 sonoma:        "826cdedf5cf1d7180bec128312b7a1ab708228cbff94b21d4a5f204561373d93"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "3cb7ddd01b559c5b2fd499c20ee01b2c62f7041934d9a36317dbba4373b5236f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "412bad1588deeefae1fb0ba898d387cc3155b3656791e5285930e95be0a47c42"
   end
 
   depends_on "cmake" => :build

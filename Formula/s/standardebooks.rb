@@ -3,18 +3,19 @@ class Standardebooks < Formula
 
   desc "Tools for producing ebook files"
   homepage "https://github.com/standardebooks/tools"
-  url "https://github.com/standardebooks/tools/archive/refs/tags/2.10.2.tar.gz"
-  sha256 "9fedd680f600802b259dd50ef0bee5a6d7a54f2ad0290ab14e8731c61e8f0203"
+  url "https://github.com/standardebooks/tools/archive/refs/tags/2.11.2.tar.gz"
+  sha256 "dd4df54a7fe5a482db5f0af90b600c8658500a43a30cdc1fcdb4c1500913c648"
   license "GPL-3.0-or-later"
   head "https://github.com/standardebooks/tools.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "3b5bf7901206c97e49feb0f79e2f1db2c2b8dbe7d17d6c401585cebce9260b76"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2d31955137f990847b94608c1704cc3c10c2e8e4ba649bc47f0d0fd88418811f"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5c1eed6c518efe88ff1a40b139d34d0daf7ae78d0d189fc61f51e1dcccbf7e31"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e96a53c9edf4f8824e3ad4db85ce76075218018179d03827da37f8775336e69d"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "90c77f42b41b252bf143c79e1e5fd2ce89710454c6e5cd8a96907d87efa4bd09"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6be8fe8d17ff88b2beeba61122b4b1bdc35e336668c6ebbc027e4b866bfbdd02"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "299629076c795dd1cd78760cd6d4d294cade8369d794bd0598502a779b7be47b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "cf323c7e73a68d055cd4c8fc37d90f30e2961abf75d1a780baabef941fbd31c3"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6d7d2d8b9f76c6c3e43f4659a619097a30b3f6d54f5680acfb46b4e6ede31a7f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3d9486091d6d05295cf11d0d67cf93cff94a0a97f6ddd8470ea6ebd0ebab1710"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "4fe45db6bba37e5f2aba296029c543290d44c1eb714eacf1a34e18501a370b40"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d31634f18d0d2bd9b7385eed44c7aa5ec16f2b9e71087e01f927868e216f449a"
   end
 
   depends_on "rust" => :build # for selenium
@@ -28,7 +29,10 @@ class Standardebooks < Formula
 
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   pypi_packages exclude_packages: %w[certifi cffi pillow pycairo]
 
@@ -243,13 +247,13 @@ class Standardebooks < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/5e/1d/0f3a93cca1ac5e8287842ed4eebbd0f7a991315089b1a0b01c7788aa7b63/urllib3-2.6.1.tar.gz"
-    sha256 "5379eb6e1aba4088bae84f8242960017ec8d8e3decf30480b3a1abdaa9671a3f"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/24/30/6b0809f4510673dc723187aeaf24c7f5459922d01e2f794277a3dfb90345/wcwidth-0.2.14.tar.gz"
-    sha256 "4d478375d31bc5395a3c55c40ccdf3354688364cd61c4f6adacaa9215d0b3605"
+    url "https://files.pythonhosted.org/packages/b5/3a/c63d2afd6dc2cad55a44bea48c7db75edde859e320bdceb9351ba63fceb6/wcwidth-0.3.3.tar.gz"
+    sha256 "f8f7d42c8a067d909b80b425342d02c423c5edc546347475e1d402fe3d35bb63"
   end
 
   resource "webencodings" do

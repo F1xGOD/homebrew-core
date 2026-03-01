@@ -3,13 +3,13 @@ class Checkdmarc < Formula
 
   desc "Command-line parser for SPF and DMARC DNS records"
   homepage "https://domainaware.github.io/checkdmarc/"
-  url "https://files.pythonhosted.org/packages/60/56/d9ec8101c4ef2a086ceea52356fd0601d5d8cddf6cac42095cd374c99c34/checkdmarc-5.13.1.tar.gz"
-  sha256 "5f738b8a811038b832c88c6492d2e89108a67e409b571faae1f08c9fb1ec21d3"
+  url "https://files.pythonhosted.org/packages/06/de/5931217fa01f3e90e1f92df1e4754c33f592aabc0060ba86e27c74d3213b/checkdmarc-5.14.1.tar.gz"
+  sha256 "3562722112cfc1ea02d18664d6fe6c527718cc21157d0917590786ee9bbba4fd"
   license "Apache-2.0"
   head "https://github.com/domainaware/checkdmarc.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "37eb1511a5501b83fa16cae238b8e5929cc176a8bca7792a8b972bc408f01d71"
+    sha256 cellar: :any_skip_relocation, all: "43c0cddba87758998f0b6e4cf0c0bf7b17e5eb3fc328ac56944513b650df63b6"
   end
 
   depends_on "certifi" => :no_linkage
@@ -49,8 +49,8 @@ class Checkdmarc < Formula
   end
 
   resource "publicsuffixlist" do
-    url "https://files.pythonhosted.org/packages/d7/5b/99fbfa1125179d3bbaf5c331652038f62a941e580d2368b96cef23e0651a/publicsuffixlist-1.0.2.20251229.tar.gz"
-    sha256 "bfe05e029bec0aa7f840d68df9bfbaa18c8acfbfca51245ff1f80815c608cffe"
+    url "https://files.pythonhosted.org/packages/96/fe/e02215f6a94d6062f8f08bed025d23ee2ab527b3aa3d4c1e4083b26d4aa2/publicsuffixlist-1.0.2.20260220.tar.gz"
+    sha256 "6eac9ca6584e3c34c3fb7fe2c6cba744d13d77a278054a6c72b744406fc210fd"
   end
 
   resource "pyleri" do
@@ -74,13 +74,13 @@ class Checkdmarc < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "xmltodict" do
-    url "https://files.pythonhosted.org/packages/6a/aa/917ceeed4dbb80d2f04dbd0c784b7ee7bba8ae5a54837ef0e5e062cd3cfb/xmltodict-1.0.2.tar.gz"
-    sha256 "54306780b7c2175a3967cad1db92f218207e5bc1aba697d887807c0fb68b7649"
+    url "https://files.pythonhosted.org/packages/19/70/80f3b7c10d2630aa66414bf23d210386700aa390547278c789afa994fd7e/xmltodict-1.0.4.tar.gz"
+    sha256 "6d94c9f834dd9e44514162799d344d815a3a4faec913717a9ecbfa5be1bb8e61"
   end
 
   def install

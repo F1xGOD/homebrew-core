@@ -1,23 +1,22 @@
 class GrafanaAlloy < Formula
   desc "OpenTelemetry Collector distribution with programmable pipelines"
   homepage "https://grafana.com/oss/alloy-opentelemetry-collector/"
-  url "https://github.com/grafana/alloy/archive/refs/tags/v1.12.1.tar.gz"
-  sha256 "ae776da5c410d33c7233f3645119f98866c52f6bfe9f8fcb66593dcd62e3378f"
+  url "https://github.com/grafana/alloy/archive/refs/tags/v1.13.2.tar.gz"
+  sha256 "5cb793f8ddfb141de9447fb96cbd1c005ed500aeca1ef583ea399d1b4739dccb"
   license "Apache-2.0"
   head "https://github.com/grafana/alloy.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "0c65082e117e0ba12f8d075fb12270c9c85fece9ade23789b729ee3d7f0096af"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3f7e997f8681630fd1a45920445e0ac39d78f32ce9eaa276b88a72c74deede1b"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7f097521aad76eae3c1371db5803932cc62d05e3b4dd3166005316c800b9c898"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3927d0de7fe97ceb73176461a67c2569c6356c9d901ad1a7999f412564f6f0b6"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "a5f46906f8bb1ac38667dca1f17261f0488322f5cb7d9df5419ae40547a771bc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5ea38895382939e635a07c70005dbc9ef59e860f9d55518716d159a04061c5c2"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a1daa39b202c1beafd34b03edf87a325f7497578592ca6dea11f9f3e11409e79"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "714abda40d9c2217127ffd03d0a01f3c6cd5b87edf0ce2921d5d9de80b11fec6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5fcad10912412bbb6c976660b325ce25fce14efd8c8cc1e6fd1b8b1e0ee45382"
+    sha256 cellar: :any_skip_relocation, sonoma:        "01121065e0bf3be51369d045b58eb6001c889cf40f3dc642334f0e8cf812c413"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "f6d063a497988b8e6db2a5c39892af6ec00efd911a18da320c850ef9ac2789a2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e23b5884dbb68f16b403f38a69717d51b0b01be19a5b5d8da01e276205b16506"
   end
 
   depends_on "go" => :build
   depends_on "node" => :build
-  depends_on "yarn" => :build
 
   on_linux do
     depends_on "systemd" # for go-systemd (dlopen-ed)
@@ -42,15 +41,15 @@ class GrafanaAlloy < Formula
     ]
 
     # https://github.com/grafana/alloy/blob/main/tools/make/packaging.mk
-    tags = %w[netgo builtinassets]
+    tags = %w[netgo embedalloyui]
     tags << "promtail_journal_enabled" if OS.linux?
 
-    # Build the UI, which is baked into the final binary when the builtinassets
-    # tag is set.
-    system "yarn", "--cwd", "internal/web/ui"
-    system "yarn", "--cwd", "internal/web/ui", "run", "build"
+    cd "internal/web/ui" do
+        system "npm", "install", *std_npm_args(prefix: false)
+        system "npm", "run", "build"
+    end
 
-    system "go", "build", *std_go_args(ldflags:, tags:, output: bin/"alloy")
+    system "go", "build", "-C", "collector", *std_go_args(ldflags:, tags:, output: bin/"alloy")
 
     generate_completions_from_executable(bin/"alloy", "completion")
     pkgetc.mkpath

@@ -4,8 +4,8 @@ class Dpkg < Formula
   # Please use a mirror as the primary URL as the
   # dpkg site removes tarballs regularly which means we get issues
   # unnecessarily and older versions of the formula are broken.
-  url "https://deb.debian.org/debian/pool/main/d/dpkg/dpkg_1.23.3.tar.xz"
-  sha256 "57f759b573dfe25602be8f4f0df24d5264367bbd6489741dd767c30dde65ae36"
+  url "https://deb.debian.org/debian/pool/main/d/dpkg/dpkg_1.23.5.tar.xz"
+  sha256 "2dd060e2ce856c721c4c7f5e017daaf2e52bc196cc45412db98bcaeaf98ef9ca"
   license "GPL-2.0-only"
 
   livecheck do
@@ -14,12 +14,13 @@ class Dpkg < Formula
   end
 
   bottle do
-    sha256 arm64_tahoe:   "271926be9e7c176ae21e3de9d05009c09fccb4c11ddf7bc414a60d2b2ee41f0e"
-    sha256 arm64_sequoia: "9d00860deafec1c3c6cbeb3e566ca8c1bccffdadc82cc312c624be06777988d6"
-    sha256 arm64_sonoma:  "45a56ec816764c318934c6baff0ac2f4efbb42ffe8c7f88cdf28842de231a147"
-    sha256 sonoma:        "5288b2b57d0012dfc2da74927b1faf3b2b90d8cf39069292c69a3a192d0c5f58"
-    sha256 arm64_linux:   "de83449b02fdd572d133f61f4e701dec62d11d7a4402834c66b3ad9d95970755"
-    sha256 x86_64_linux:  "8f6f71f6c82b2dd57a91fc075cc312507360842248bffa0a81b8001f08a8f71f"
+    rebuild 1
+    sha256 arm64_tahoe:   "df50eda809dda8cd72e8669490f250b80c97afddc9973ebf4a5c13deaed62757"
+    sha256 arm64_sequoia: "ef461eaa0c84540f1be0142a994aee25af684002f23f8d82df6a6744db719463"
+    sha256 arm64_sonoma:  "a2066f0edf488854ccad6d73090ff8dfbfec7fe3b82e1ee4786b91989f304a47"
+    sha256 sonoma:        "0b204d255f9f42f5b72aa2b55925253350ec816dffd61af4d036f2a8b573ecb4"
+    sha256 arm64_linux:   "cf392514dd37597e85f41ccab06e515dc2c5915d83accfb129acd89693e26678"
+    sha256 x86_64_linux:  "3cdc80afdb28507ab9830c06b8f5dd50cdfa3876585cf2974db4123a586f977b"
   end
 
   depends_on "pkgconf" => :build
@@ -32,10 +33,11 @@ class Dpkg < Formula
   depends_on "xz" # For LZMA
 
   uses_from_macos "bzip2"
-  uses_from_macos "zlib"
 
   on_linux do
     keg_only "it conflicts with system dpkg"
+
+    depends_on "zlib-ng-compat"
   end
 
   patch :DATA

@@ -1,10 +1,10 @@
 class QtMariadb < Formula
   desc "Qt SQL Database Driver"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.9/6.9.3/submodules/qtbase-everywhere-src-6.9.3.tar.xz"
-  mirror "https://qt.mirror.constant.com/archive/qt/6.9/6.9.3/submodules/qtbase-everywhere-src-6.9.3.tar.xz"
-  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.9/6.9.3/submodules/qtbase-everywhere-src-6.9.3.tar.xz"
-  sha256 "c5a1a2f660356ec081febfa782998ae5ddbc5925117e64f50e4be9cd45b8dc6e"
+  url "https://download.qt.io/official_releases/qt/6.10/6.10.2/submodules/qtbase-everywhere-src-6.10.2.tar.xz"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.10/6.10.2/submodules/qtbase-everywhere-src-6.10.2.tar.xz"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.10/6.10.2/submodules/qtbase-everywhere-src-6.10.2.tar.xz"
+  sha256 "aeb78d29291a2b5fd53cb55950f8f5065b4978c25fb1d77f627d695ab9adf21e"
   license any_of: ["GPL-2.0-only", "GPL-3.0-only", "LGPL-3.0-only"]
 
   livecheck do
@@ -12,21 +12,21 @@ class QtMariadb < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "8bf1788850de1c6cec6aa1db77a53340d5dcb39c06e4656405ad063fb377bcdc"
-    sha256 cellar: :any,                 arm64_sequoia: "8e9eca41a0b17b84d468b04f043259e9515ba0d0a4d1d851b1cf0f55af0956ea"
-    sha256 cellar: :any,                 arm64_sonoma:  "5f255d8ed571f6bc636303d9d125e4e2c0ceeb739fdf5c2b8b2baf39d89c48d9"
-    sha256 cellar: :any,                 sonoma:        "de0dc48006e82698892b108199782fecaf51fd3c2564cd7f24f195b91e14b428"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "59e21db9adbe41790b543341bcf70a73669eb3a886783b774e802839466afdbc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4ea7baba2dbba72d8a457901a22a6750095a3edfd57a681815a4a3697ba6366b"
+    sha256 cellar: :any,                 arm64_tahoe:   "c4d54e61581d63521946cfd0ac1547c2e2be3db5906464e49ec563fe6d4c856e"
+    sha256 cellar: :any,                 arm64_sequoia: "2bc65ea831918d8bab1e85320317bfa7bc7b5fbecf3543a28478778db6e4c6cd"
+    sha256 cellar: :any,                 arm64_sonoma:  "52c1e326f4453615a5d248221d5e33e939843f0e7652f5f6ab3e7ec678c7859f"
+    sha256 cellar: :any,                 sonoma:        "95ab28010e2efc0af9bb34b28064c8f30de65599486aba7e063b409bead3ce71"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "4e444cf87d98aea84d9d485fcb5378cd05d9dc3fcdf0f9c2d21f3331afa30cd9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0667753d0899ce3105783e97e7d1b8575a78bfe4027e90224c8c92ca1e025858"
   end
 
   depends_on "cmake" => [:build, :test]
+  depends_on "ninja" => :build
 
-  depends_on "mariadb"
+  depends_on "mariadb-connector-c"
   depends_on "qtbase"
 
-  conflicts_with "qt-mysql", "qt-percona-server",
-    because: "qt-mysql, qt-mariadb, and qt-percona-server install the same binaries"
+  conflicts_with "qt-mysql", "qt-percona-server", because: "both install the same binaries"
 
   def install
     args = %W[
@@ -41,22 +41,18 @@ class QtMariadb < Formula
     ]
     args << "-DQT_NO_APPLE_SDK_AND_XCODE_CHECK=ON" if OS.mac?
 
-    system "cmake", "-S", "src/plugins/sqldrivers", "-B", "build", *args, *std_cmake_args
+    system "cmake", "-S", "src/plugins/sqldrivers", "-B", "build", "-G", "Ninja", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end
 
   test do
     (testpath/"CMakeLists.txt").write <<~CMAKE
-      cmake_minimum_required(VERSION #{Formula["cmake"].version})
+      cmake_minimum_required(VERSION 4.0)
       project(test VERSION 1.0.0 LANGUAGES CXX)
-      set(CMAKE_CXX_STANDARD 17)
-      set(CMAKE_CXX_STANDARD_REQUIRED ON)
-      set(CMAKE_AUTOMOC ON)
-      set(CMAKE_AUTORCC ON)
-      set(CMAKE_AUTOUIC ON)
       find_package(Qt6 COMPONENTS Core Sql REQUIRED)
-      add_executable(test main.cpp)
+      qt_standard_project_setup()
+      qt_add_executable(test main.cpp)
       target_link_libraries(test PRIVATE Qt6::Core Qt6::Sql)
     CMAKE
 
@@ -76,7 +72,6 @@ class QtMariadb < Formula
       #include <cassert>
       int main(int argc, char *argv[])
       {
-        QCoreApplication::addLibraryPath("#{share}/qt/plugins");
         QCoreApplication a(argc, argv);
         QSqlDatabase db = QSqlDatabase::addDatabase("QMARIADB");
         assert(db.isValid());
@@ -85,7 +80,7 @@ class QtMariadb < Formula
     CPP
 
     ENV["LC_ALL"] = "en_US.UTF-8"
-    system "cmake", "-S", ".", "-B", "build", "-DCMAKE_BUILD_TYPE=Debug"
+    system "cmake", "-S", ".", "-B", "build"
     system "cmake", "--build", "build"
     system "./build/test"
 

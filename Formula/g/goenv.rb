@@ -1,8 +1,8 @@
 class Goenv < Formula
   desc "Go version management"
   homepage "https://github.com/go-nv/goenv"
-  url "https://github.com/go-nv/goenv/archive/refs/tags/2.2.34.tar.gz"
-  sha256 "99f94ec500df813cd937665e21b0aab8c58809b944ee9f729b49cdaa3a400224"
+  url "https://github.com/go-nv/goenv/archive/refs/tags/2.2.37.tar.gz"
+  sha256 "fbb2d8fa31f41b9e4c660c1cab7a62bdc4d52666079136904c49a929b05c5e51"
   license "MIT"
   version_scheme 1
   head "https://github.com/go-nv/goenv.git", branch: "master"
@@ -13,12 +13,12 @@ class Goenv < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "af2cfe84fc5951e9b01f6cf7c2b356302b756a27b61cb12acd35907183adfd23"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "af2cfe84fc5951e9b01f6cf7c2b356302b756a27b61cb12acd35907183adfd23"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "af2cfe84fc5951e9b01f6cf7c2b356302b756a27b61cb12acd35907183adfd23"
-    sha256 cellar: :any_skip_relocation, sonoma:        "db47dffcbe1c3258d14a1a2ef9e99d7cc14fbf2a2c28b06764b4d8c6c45c47f0"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "af2cfe84fc5951e9b01f6cf7c2b356302b756a27b61cb12acd35907183adfd23"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "af2cfe84fc5951e9b01f6cf7c2b356302b756a27b61cb12acd35907183adfd23"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "ffc5b8de1d9aca5a793905bc6a6174f9ffdb8046c0f69f56da5b9081f42053cb"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ffc5b8de1d9aca5a793905bc6a6174f9ffdb8046c0f69f56da5b9081f42053cb"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ffc5b8de1d9aca5a793905bc6a6174f9ffdb8046c0f69f56da5b9081f42053cb"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d7f41066acb6769894b56bd658423e605c7369ef11261fa1f172ca47f7124835"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "ffc5b8de1d9aca5a793905bc6a6174f9ffdb8046c0f69f56da5b9081f42053cb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ffc5b8de1d9aca5a793905bc6a6174f9ffdb8046c0f69f56da5b9081f42053cb"
   end
 
   def install

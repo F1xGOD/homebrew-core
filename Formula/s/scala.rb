@@ -1,8 +1,8 @@
 class Scala < Formula
   desc "JVM-based programming language"
   homepage "https://dotty.epfl.ch/"
-  url "https://github.com/scala/scala3/releases/download/3.7.4/scala3-3.7.4.tar.gz"
-  sha256 "0f901a029dea183c42d674de6676fc3c5aae7ffd1db95accceada49ea6901e59"
+  url "https://github.com/scala/scala3/releases/download/3.8.2/scala3-3.8.2.tar.gz"
+  sha256 "827356a78a70d3d792f1a77e109cc3fa3ea946b8d26848bb245f275be52fd78e"
   license "Apache-2.0"
 
   livecheck do
@@ -11,7 +11,7 @@ class Scala < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "8e29902c77acae967f07af084b1a036b46fbbdb2a22992fc1e94f1f9e763f9f1"
+    sha256 cellar: :any_skip_relocation, all: "d2d8ad6f10164bd6fc0b6e7077bd508a652d5723289ee1b14b8ee78faa91e0fe"
   end
 
   # JDK Compatibility: https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html
@@ -48,7 +48,7 @@ class Scala < Formula
       }
     SCALA
 
-    out = shell_output("#{bin}/scala #{file}").strip
+    out = shell_output("#{bin}/scala --server=false #{file}").strip
 
     assert_equal "4", out
   end

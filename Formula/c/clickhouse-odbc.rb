@@ -5,7 +5,7 @@ class ClickhouseOdbc < Formula
   url "https://github.com/ClickHouse/clickhouse-odbc/archive/refs/tags/v1.2.1.20220905.tar.gz"
   sha256 "ca8666cbc7af9e5d4670cd05c9515152c34543e4f45e2bc8fa94bee90d724f1b"
   license "Apache-2.0"
-  revision 9
+  revision 11
   head "https://github.com/ClickHouse/clickhouse-odbc.git", branch: "master"
 
   livecheck do
@@ -13,17 +13,16 @@ class ClickhouseOdbc < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_tahoe:   "dee2bd4e071f2585904621067570b9a92e675831f6405aaeac76ac1648dc26b3"
-    sha256 cellar: :any,                 arm64_sequoia: "15179848956db90fc46f2d8956f6f7bf4da08455b14eaed60efabdb34a352f1d"
-    sha256 cellar: :any,                 arm64_sonoma:  "51c55d0277110f5867a2738b53802a425db0c2fc6368a34e2109e139ab453dc8"
-    sha256 cellar: :any,                 sonoma:        "ded9b6716043ec3d6a52e32fd3390f1117c3824d2d66cde643e28e6cc6c65b8e"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "63552c54a95bb8665ae1431c41b33004f505e45b29f55e6e9c30656759e28fef"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1785a346aa9d198e22c04c7c493982484fc2300a8b828c3ea70723ae78dda737"
+    sha256 cellar: :any,                 arm64_tahoe:   "24340d0d9b841fd0bdaa2b0261b5be6c63d6ed0fff2269cfdf97702cc55eecf7"
+    sha256 cellar: :any,                 arm64_sequoia: "64c30b61391ed43703997644c17a10a6cb33c27c8c8c9afa60fa833424ee2979"
+    sha256 cellar: :any,                 arm64_sonoma:  "9367c3513987d512277f455285f77990faba526b2292bb268a888cbb3c447774"
+    sha256 cellar: :any,                 sonoma:        "1c881f12bd6ad86e9f4a702aa5154e69846d415b98520bd90b74f748fcb4a5d0"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "6a6d304500e39a9444f36115d271b0cc9b457634f118febbd6ab4cb77f9383c0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4b447c4e651aab4472356cb0569bfc4e060088ec60ab54deed5433ab626569d9"
   end
+
+  deprecate! date: "2026-02-18", because: :does_not_build
 
   depends_on "cmake" => :build
   depends_on "folly" => :build

@@ -1,8 +1,8 @@
 class Chezmoi < Formula
   desc "Manage your dotfiles across multiple diverse machines, securely"
   homepage "https://chezmoi.io/"
-  url "https://github.com/twpayne/chezmoi/releases/download/v2.68.1/chezmoi-2.68.1.tar.gz"
-  sha256 "f04377dab28c0b3dd0cbd4e2671ab86120f7cc6faa1ce8fa6daff69bc8b456e4"
+  url "https://github.com/twpayne/chezmoi/releases/download/v2.69.4/chezmoi-2.69.4.tar.gz"
+  sha256 "8f15cd2a11c5db756c0884f3692d24117fd467c1bcf54818d079b564d68a754e"
   license "MIT"
   head "https://github.com/twpayne/chezmoi.git", branch: "master"
 
@@ -14,12 +14,12 @@ class Chezmoi < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "10907b9f0cb336ca833b3d2e74b7ca1f4301e43b55a51caa8e31267a48d3e8c8"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1c8dcb1b7ce55498c868783b39e221fe6df73b7905c278d3317e28c9cba54f18"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8a7161c5fa605dd18965ca2183f1366a99f678a341b0757918dc68cc2d801c1b"
-    sha256 cellar: :any_skip_relocation, sonoma:        "28bc829de27e9bee11bb655f3ddbcceb011c35f570775d2516cdbcb6201db085"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "162c5dcf742e00fe53d67702d54fc45ec9fa7d47033cb47858103bb8f44cff86"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "99e9aa167622f644de3d17011bcd71405e7c74cab2a5a0170b2aa45e477ba385"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "477ca8cbfa3bfb1c99e5152feba51ed033846e6beaf463c44aef9f0343289851"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0b0ab8d58ad4dd08f6fa4e382111c6dbe2818360b4dd5429ab813b79f7fe6301"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6f64f19e2d5089c324ecf998bfcfa53a11c237c7283f735a9d2a868d0136f26c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "7c4ea2ca5b130b381a323683cb3cdaec17c3a1ef4f59e4ff9ddd1cede7560967"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "f93f8ddf438ddb2dff5b4078d39992b4551c869ebb9453ff43c71bbfb4e59c7f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a045bfb884ffed1a8a7fd0928a4f3c98be46bfc9cf2b5919729fb718552bf637"
   end
 
   depends_on "go" => :build

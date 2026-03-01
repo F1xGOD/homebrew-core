@@ -1,18 +1,18 @@
 class Recc < Formula
   desc "Remote Execution Caching Compiler"
   homepage "https://buildgrid.gitlab.io/recc"
-  url "https://gitlab.com/BuildGrid/buildbox/buildbox/-/archive/1.3.49/buildbox-1.3.49.tar.gz"
-  sha256 "f146e0966b71167575da0e7a4dafd81fac2c76b9849a0337c236b15b89b53f5f"
+  url "https://gitlab.com/BuildGrid/buildbox/buildbox/-/archive/1.3.53/buildbox-1.3.53.tar.gz"
+  sha256 "cae712f9f4661b5051c8ffea262a808bca792de3ac122ffe20b51c38c87b13f2"
   license "Apache-2.0"
   head "https://gitlab.com/BuildGrid/buildbox/buildbox.git", branch: "master"
 
   bottle do
-    sha256 arm64_tahoe:   "22424214fe4291887c79842baed036d002cdc2cb1b018637588f9e71b2df18f9"
-    sha256 arm64_sequoia: "3ad9f6333a2e6c451b19e537af625d914c421abdc22c19a51c030c6c265ac0c1"
-    sha256 arm64_sonoma:  "5ac9b3846f6b4f89d9ebea3831137cc01a0f8483abce68ba6715e917788abea9"
-    sha256 sonoma:        "68429785063057f12c784b752c1caf690f450ee3840b535671d8994cbca63a70"
-    sha256 arm64_linux:   "d9edaea75643d16936e5d1c375fba1729eda5a990ac3a9b82dfaadeb78f0fa25"
-    sha256 x86_64_linux:  "c9832d1b27474da13df691501afcc36d27f8f238d0e59de71e7b5ee8fa8aa966"
+    sha256 arm64_tahoe:   "b15e548d32c5ae79c6d5866a934474fc0edf7f73e9157870193c98c239fbd36d"
+    sha256 arm64_sequoia: "c14e58503d2e8a0cc5233fbdb7c9450c6cf071699449781232f4bf64fdd39f28"
+    sha256 arm64_sonoma:  "270e11a7a53590fd5849d6aec1fffd592d3861b71697e4a49842d3ba839551ab"
+    sha256 sonoma:        "4d1b839071f264be9785675f8da85cadf84063b53371485545539eedccad83f2"
+    sha256 arm64_linux:   "55c3b9ccf7e5160aaf03ea293495a34cbabd054108a74a9c9200fee9f18eb805"
+    sha256 x86_64_linux:  "bbfc449accd5085db1a5538b4b836addf1f71ff36b69914afaa934f7870251de"
   end
 
   depends_on "cmake" => :build
@@ -30,7 +30,6 @@ class Recc < Formula
   depends_on "re2"
 
   uses_from_macos "curl"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "gflags"
@@ -39,6 +38,7 @@ class Recc < Formula
   on_linux do
     depends_on "pkgconf" => :build
     depends_on "util-linux"
+    depends_on "zlib-ng-compat"
   end
 
   def install

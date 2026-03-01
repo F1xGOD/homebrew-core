@@ -1,17 +1,18 @@
 class Nvc < Formula
   desc "VHDL compiler and simulator"
   homepage "https://www.nickg.me.uk/nvc/"
-  url "https://github.com/nickg/nvc/releases/download/r1.18.2/nvc-1.18.2.tar.gz"
-  sha256 "ee34522a04c49f2a73ff4367088ded9674d726b44fd480995df8ac90e84271d8"
+  url "https://github.com/nickg/nvc/releases/download/r1.19.2/nvc-1.19.2.tar.gz"
+  sha256 "328ffbf4dea1fc2087eedd713ba92af2dfabed88bb6f8428635bfd12bb479674"
   license "GPL-3.0-or-later"
+  revision 1
 
   bottle do
-    sha256 arm64_tahoe:   "a0756adf6b89227b51de8bcbcd882b6286c20e13cc0e27b6912c3e187cee4d65"
-    sha256 arm64_sequoia: "6457a0b277fac9d8c91c731b295af597ca875a2bd6167ead38282b87edd50728"
-    sha256 arm64_sonoma:  "e4495c0578dd1f4846d227ec3daa80d0c56cab9bc1db9404c93dc0e4844d1493"
-    sha256 sonoma:        "9871f7d205fd1bdff03600b3a67eafd0f40c4ebe4ec04ea064b3d3dce5c040b8"
-    sha256 arm64_linux:   "97ce5f8fe1b75a0f9e2e4135470d444526f7d2dce9b4a72c48149c02853d0846"
-    sha256 x86_64_linux:  "8ec58e009abd9993be09f5a8e78c5912076faac02e385b4dc50381a0e5277ce5"
+    sha256 arm64_tahoe:   "b467e19b0d2a785bc36db0827b31651b09d23f9ea8948288c269c505d600ed40"
+    sha256 arm64_sequoia: "17ec8b075946b514ce8e0b70fdafd12c29ea8f285084d2a33e4953a44e5d8d26"
+    sha256 arm64_sonoma:  "84565a9babab0b70971b66b5ad97f3381669521da844fb093c6d76d3c37983a1"
+    sha256 sonoma:        "ebecb69c5eaf66b60cc71be0b902385ca9d67bb7ba76330db5acdcdf9cf91106"
+    sha256 arm64_linux:   "fd734fb5f10ad512c18b2def8382e848e0c1e3b09013ef7eda3e28075686cf12"
+    sha256 x86_64_linux:  "6146b9b03cf106559cd206051ea76f4556baa6a74b240c6f5016b298a8c0f7b1"
   end
 
   head do
@@ -28,10 +29,10 @@ class Nvc < Formula
 
   uses_from_macos "flex" => :build
   uses_from_macos "libffi"
-  uses_from_macos "zlib"
 
   on_linux do
     depends_on "elfutils"
+    depends_on "zlib-ng-compat"
   end
 
   def install
@@ -43,9 +44,8 @@ class Nvc < Formula
     # In-tree builds are not supported.
     mkdir "build" do
       system "../configure", "--with-llvm=#{Formula["llvm"].opt_bin}/llvm-config",
-                             "--prefix=#{prefix}",
-                             "--with-system-cc=#{ENV.cc}",
-                             "--disable-silent-rules"
+                             "--disable-silent-rules",
+                             *std_configure_args
       system "make", "V=1"
       system "make", "V=1", "install"
     end

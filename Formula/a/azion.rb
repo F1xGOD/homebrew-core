@@ -1,19 +1,18 @@
 class Azion < Formula
   desc "CLI for the Azion service"
   homepage "https://github.com/aziontech/azion"
-  url "https://github.com/aziontech/azion/archive/refs/tags/4.13.0.tar.gz"
-  sha256 "1d90e73957abaf84cf9ede427c0297f62e3f9a589add4b4dd9171afa266b5971"
+  url "https://github.com/aziontech/azion/archive/refs/tags/4.17.0.tar.gz"
+  sha256 "1322e201e78d755bd090422ce4540470d645d3c9ed14741f8bd6c495759b6952"
   license "MIT"
   head "https://github.com/aziontech/azion.git", branch: "dev"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "b97abbd89c6a2c309759d2d712e57f2a805e6dbb00bfd29371f10057037b48ab"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b97abbd89c6a2c309759d2d712e57f2a805e6dbb00bfd29371f10057037b48ab"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b97abbd89c6a2c309759d2d712e57f2a805e6dbb00bfd29371f10057037b48ab"
-    sha256 cellar: :any_skip_relocation, sonoma:        "307f3f8459fe63e541e7a87ee749b4b1f0abcfef5a4706bfa4a230f172dd40e2"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f2745fba65728d9dd64b603b40c275db56dac0cbaad84dca86326d637cce3afc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9d6f6ffbf568cde1910ad23f4e1ef8546d4def54c445fed361d72260adc87ad4"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "483055ad2e32fe63cfd0cb5db1f14fffb0015c681fa4a3b044c3bf24d96aeb45"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "483055ad2e32fe63cfd0cb5db1f14fffb0015c681fa4a3b044c3bf24d96aeb45"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "483055ad2e32fe63cfd0cb5db1f14fffb0015c681fa4a3b044c3bf24d96aeb45"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e8a23b2f1b6a9db4c9367bb94706a16a5d76ff51f584c9966b9b1130d9496cbf"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e46dc041e0255c2557ae68a301dc3bf472b936391fad90ca74ed631d0f66fc03"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "04c3b1a285c3114152aa068ba9c55bef4f41039a46e062b3b97edd443e084f00"
   end
 
   depends_on "go" => :build

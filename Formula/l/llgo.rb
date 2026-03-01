@@ -1,8 +1,8 @@
 class Llgo < Formula
   desc "Go compiler based on LLVM integrate with the C ecosystem and Python"
   homepage "https://github.com/goplus/llgo"
-  url "https://github.com/goplus/llgo/archive/refs/tags/v0.11.8.tar.gz"
-  sha256 "3e7a22bb28f8955dfadaa248c8cba769de4e361efefda1b02ee24b9ed1d3251c"
+  url "https://github.com/goplus/llgo/archive/refs/tags/v0.12.1.tar.gz"
+  sha256 "a9ddf42295ab1348e231bdf42a6035f7a17d00ccfa820b4abf3680b222a3afbf"
   license "Apache-2.0"
   head "https://github.com/goplus/llgo.git", branch: "main"
 
@@ -12,13 +12,17 @@ class Llgo < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_tahoe:   "c6451111d6a46d929d63d3376900472da6f76b96d0675a4453bfb0cd4e773fcb"
-    sha256 cellar: :any, arm64_sequoia: "e5122050ada8d64452f946b0e8fd7fb0955a4be56e43096274ef6b937384a419"
-    sha256 cellar: :any, arm64_sonoma:  "20f26a861f1c6924bac156afe56e04314526656fe8ab0bb0741d8554147d5fe4"
-    sha256 cellar: :any, sonoma:        "7d4767ece1825bf697de6e7326ee3715bf9953648f9689c5c9a29455bffbf3bf"
-    sha256               arm64_linux:   "ad241fc7466dc25750342203b224bd3889edeb91c17a03cff304e5e7963cad6d"
-    sha256               x86_64_linux:  "53c7ab05bc67f8a8c04508a885718eb132e6bcea779d22aabbaadefb40208f63"
+    rebuild 1
+    sha256 cellar: :any, arm64_tahoe:   "0af29c250002484947a0552af23412633ed6ac42d1e4e8347f0f42e6cb9669fd"
+    sha256 cellar: :any, arm64_sequoia: "c77ad1d7acb4725c2256ad16be9228320e3177c1fb7e457441918dd49ff294a5"
+    sha256 cellar: :any, arm64_sonoma:  "e34091160ad7c6a3731e08a98e6564bf00a89ce5fbaa6d52879469e9ed9e12b0"
+    sha256 cellar: :any, sonoma:        "6d5a965d00e86404b9d84a05bc81ab8965373d1b429d3c7c65ada19818b86d8d"
+    sha256               arm64_linux:   "9ad2d0bf453e0baa4b655d2005e918e70edb720f5202fb57e41bd03e8d4a5e33"
+    sha256               x86_64_linux:  "e2c6cd5a0254e48ad57576576f12fc0a5d49c7b607fcf2b33f3cacdd742016ac"
   end
+
+  # NOTE: Can be undeprecated if upstream adds support for Go 1.25+
+  deprecate! date: "2026-02-11", because: "uses deprecated go@1.24"
 
   depends_on "bdw-gc"
   depends_on "go@1.24"
@@ -29,10 +33,10 @@ class Llgo < Formula
   depends_on "pkgconf"
 
   uses_from_macos "libffi"
-  uses_from_macos "zlib"
 
   on_linux do
     depends_on "libunwind"
+    depends_on "zlib-ng-compat"
   end
 
   def find_dep(name)

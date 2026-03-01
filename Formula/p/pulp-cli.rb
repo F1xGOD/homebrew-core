@@ -3,19 +3,18 @@ class PulpCli < Formula
 
   desc "Command-line interface for Pulp 3"
   homepage "https://github.com/pulp/pulp-cli"
-  url "https://files.pythonhosted.org/packages/6d/5c/969418ddf8e01689fc8b25f624ce8ad275af898b69b20880b3b349f35e4a/pulp_cli-0.36.3.tar.gz"
-  sha256 "aa4c56fa218bab13ffdcc6d259995ae4ef6bd6a5545123dae780c84f5c6699ce"
+  url "https://files.pythonhosted.org/packages/66/fc/65507c529ba7047c727093dd3b460db88ba9f127bf90db7f5a1787115cfd/pulp_cli-0.38.1.tar.gz"
+  sha256 "94aaabf914973be80fa1b59086752d6f7f7e80b43925a7db902dd15bfba9e787"
   license "GPL-2.0-or-later"
   head "https://github.com/pulp/pulp-cli.git", branch: "main"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_tahoe:   "96d9cc81ad6310a826fa7c59618c209db8cb41f6f2a6138603d368b9b189f529"
-    sha256 cellar: :any,                 arm64_sequoia: "5319a098663cacd3b7ba9367c961b25a10306184f85768186ba6854609540298"
-    sha256 cellar: :any,                 arm64_sonoma:  "8da19ebe9f0f7d2399d3076e81e0a59ff5f556f4708232810aa4e10922a3644a"
-    sha256 cellar: :any,                 sonoma:        "5a63f46506b9b6faafb01cc4ba9fba9559e22d4a50a8534ea6827facd05f224a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "0888e5be7eab4039409f73eaf5d826f8b23e4eddd9f36230e52c7267f370b13f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7dcaf0279cc7429b68ba849766ffeeb1667e8576be4b322161c712c09dca2136"
+    sha256 cellar: :any,                 arm64_tahoe:   "0364ba40e644326e9b589675716db8346ef14f0ba4766700b54a811c5316a8a4"
+    sha256 cellar: :any,                 arm64_sequoia: "6ca91ffe5a28d2162dbc8363840499b79b2c4987ca0893ebc7f27cb696eacc76"
+    sha256 cellar: :any,                 arm64_sonoma:  "636ed8211d094fc752c6eff68af77854949fbf7773d8acb535d515f2ee355c29"
+    sha256 cellar: :any,                 sonoma:        "6413fbe275cf9124a2f494365933111fc0177d4e7a9a7092a516e2417e17e293"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "1b607fdb2d653e0034020b59845089573871633af39c83fd055e611177c7500b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a1ce4b12f8b27c18cb5cc3d0df7f5e8539e7824ec5b37fb98a0c2e23497fbd61"
   end
 
   depends_on "certifi" => :no_linkage
@@ -40,18 +39,18 @@ class PulpCli < Formula
   end
 
   resource "multidict" do
-    url "https://files.pythonhosted.org/packages/69/7f/0652e6ed47ab288e3756ea9c0df8b14950781184d4bd7883f4d87dd41245/multidict-6.6.4.tar.gz"
-    sha256 "d2d4e4787672911b48350df02ed3fa3fffdc2f2e8ca06dd6afdf34189b76a9dd"
+    url "https://files.pythonhosted.org/packages/1a/c2/c2d94cbe6ac1753f3fc980da97b3d930efe1da3af3c9f5125354436c073d/multidict-6.7.1.tar.gz"
+    sha256 "ec6652a1bee61c53a3e5776b6049172c53b6aaba34f18c9ad04f82712bac623d"
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
   end
 
   resource "pulp-glue" do
-    url "https://files.pythonhosted.org/packages/7b/46/0094718de1ba7349c75eb76024151d12b91a7fa380b16b7289546b4fd308/pulp_glue-0.36.3.tar.gz"
-    sha256 "63515315cd8526b399302d3558bdcecfd08cec470519d1d95431a549fea0b235"
+    url "https://files.pythonhosted.org/packages/b7/0b/c7ae25290ce2e5ffefeb1d98572984ae7dad772e70c758b24c471f626dd0/pulp_glue-0.38.1.tar.gz"
+    sha256 "d05f178b15582ad55f9f0869e33769f26fab608957214ced30add3e3cdc50831"
   end
 
   resource "pyyaml" do
@@ -75,8 +74,8 @@ class PulpCli < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   def install

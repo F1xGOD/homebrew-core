@@ -1,17 +1,17 @@
 class FirebaseCli < Formula
   desc "Firebase command-line tools"
   homepage "https://firebase.google.com/docs/cli/"
-  url "https://registry.npmjs.org/firebase-tools/-/firebase-tools-15.1.0.tgz"
-  sha256 "11f67ef56b98b807658ac88b200594b502e083c56e9645e023244413dabf2880"
+  url "https://registry.npmjs.org/firebase-tools/-/firebase-tools-15.8.0.tgz"
+  sha256 "058f10be9fbbdd9a2d237008e6bbd9b71b1f0c26595d383e942aed1a009737a9"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a6848070e3cff155d4111abdacb470a2257b620a2611ca20535aafb73b3e8802"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "da26afa26693d01bcd3b7a2c96ff30f2ac8e5525e8aee696fdbfabbb6e3c6cda"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "da26afa26693d01bcd3b7a2c96ff30f2ac8e5525e8aee696fdbfabbb6e3c6cda"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3212de3a6b55502c769701587fa601932689a14320905b0a2a8be000995fce17"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "11204f3964febade6829ed5a007d265a299d3fdccf0633315c9aa1b396395c57"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "11204f3964febade6829ed5a007d265a299d3fdccf0633315c9aa1b396395c57"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "89ccaf3be6facbbf30a093fa30e720970b98867396065b28ba3b27cfa05c417d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6a817b20dd3e60d2476a24e0ced97d37d3f16e1cbbc9524aad7394b788e3d4e7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6a817b20dd3e60d2476a24e0ced97d37d3f16e1cbbc9524aad7394b788e3d4e7"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1b20d9975772b9afb0b2c573b264d582a4843322995e3f02d5c97868390429cb"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "bc617f5da1f5f0490f1b5399e0cac131bc6e58d18ddaced1ab57cf90f8079aef"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc617f5da1f5f0490f1b5399e0cac131bc6e58d18ddaced1ab57cf90f8079aef"
   end
 
   depends_on "node"

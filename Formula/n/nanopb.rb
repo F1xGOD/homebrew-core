@@ -7,7 +7,7 @@ class Nanopb < Formula
   url "https://jpa.kapsi.fi/nanopb/download/nanopb-0.4.9.1.tar.gz"
   sha256 "882cd8473ad932b24787e676a808e4fb29c12e086d20bcbfbacc66c183094b5c"
   license "Zlib"
-  revision 4
+  revision 6
 
   livecheck do
     url "https://jpa.kapsi.fi/nanopb/download/"
@@ -15,12 +15,12 @@ class Nanopb < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "ff790570b8a943bd1312bd198ef9610c6068a955ca903080150bb0e5190d32a7"
-    sha256 cellar: :any,                 arm64_sequoia: "6f7a7d02d66a6aca5f6feb14e5355575524b404c5506674aeb6878f2fcb2fb9a"
-    sha256 cellar: :any,                 arm64_sonoma:  "6d940c481acb8fe68989c2e5b7ac4a1db675a95f0062de6f4075a2e50405c4ba"
-    sha256 cellar: :any,                 sonoma:        "a0d5666967fef1a0ab57a6ab443f8a65375f49a21eabe19fae3b03a0f0c448bd"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "27ca104b3c7fccfac6deb7ea38adc50187a87fba2ea34d6c7a4d42d4ed279600"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "82b324cd00950380dada756031cb4fe6f48400f563082f2bd4e650f38139d6e8"
+    sha256 cellar: :any,                 arm64_tahoe:   "6f47aae5a78908c373b416de61546a2ecf2139a0d45b472dd2894fef8e262262"
+    sha256 cellar: :any,                 arm64_sequoia: "6fa7769388124822270e8bbfdd561b4df2dfec594c28ea626138d12dfa3b6434"
+    sha256 cellar: :any,                 arm64_sonoma:  "6e166ed53159c01eb129da7125f9773ecc44f06c89ff1683a125737b7f98f738"
+    sha256 cellar: :any,                 sonoma:        "ff3d6aed126f6a004e1efedd2a39c902955192381a867528a33784b7a6a943b4"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "6f8f4380104108c89291d4645ebaa47f1acfcffb0d71aa71f5bcac599f84e97e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f6570b5c31d5b448085a874b6be15b34b6854914ca36e5ddc4307f4caa46c39a"
   end
 
   depends_on "cmake" => :build
@@ -31,13 +31,13 @@ class Nanopb < Formula
                 extra_packages: "setuptools"
 
   resource "protobuf" do
-    url "https://files.pythonhosted.org/packages/34/44/e49ecff446afeec9d1a66d6bbf9adc21e3c7cea7803a920ca3773379d4f6/protobuf-6.33.2.tar.gz"
-    sha256 "56dc370c91fbb8ac85bc13582c9e373569668a290aa2e66a590c2a0d35ddb9e4"
+    url "https://files.pythonhosted.org/packages/ba/25/7c72c307aafc96fa87062aa6291d9f7c94836e43214d43722e86037aac02/protobuf-6.33.5.tar.gz"
+    sha256 "6ddcac2a081f8b7b9642c09406bc6a4290128fce5f471cddd165960bb9119e5c"
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/18/5d/3bf57dcd21979b887f014ea83c24ae194cfcd12b9e0fda66b957c69d1fca/setuptools-80.9.0.tar.gz"
-    sha256 "f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c"
+    url "https://files.pythonhosted.org/packages/76/95/faf61eb8363f26aa7e1d762267a8d602a1b26d4f3a1e758e92cb3cb8b054/setuptools-80.10.2.tar.gz"
+    sha256 "8b0e9d10c784bf7d262c4e5ec5d4ec94127ce206e8738f29a437945fbc219b70"
   end
 
   def install

@@ -13,26 +13,29 @@ class Yaf < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "d2461d16db50027d858d889e9ca08476103d2e05599b222635c8fc0957d730c5"
-    sha256 cellar: :any,                 arm64_sequoia: "535f168208c61a4357fd2c19d17762696b88bcf2239e088a618f87852349fbb5"
-    sha256 cellar: :any,                 arm64_sonoma:  "cfa7304be5e50eec278e09863f79c71669df96c3d6d44967720a4b2f47785352"
-    sha256 cellar: :any,                 sonoma:        "a5af33750b3d302b0230c276a16655e3a8469355ecc4babd36cecf45511d936c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "a127992c1701c3908a38d1ffea02c891af3f2718745898ab6ec5dad2abf98426"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "23c4f60c383485adc953ed5bf7811e5590bb56948161908d84c53f3588417176"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_tahoe:   "756afdea15655c6538c81f170dd9db318293eefa96ab01663530151fb5292536"
+    sha256 cellar: :any,                 arm64_sequoia: "d8c644685f9c5e24e5d66b5678044314cf1c9ebce0910f1cc6c7b39ba8360d88"
+    sha256 cellar: :any,                 arm64_sonoma:  "d7c935cb32c72ea3e7d5e59cc998cc4c2fca92010447110dc6a7bede3e290f6d"
+    sha256 cellar: :any,                 sonoma:        "4b4a407d6be6b4e06a9a2e6ed3d282761d8ee2e41ec0521deecdae25537fc705"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "4020382f47f691a4c43be0767d52e1be8bff6cec7cef443b5d1bab204d48092f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b884b07695ba889516f481a2025328b2f11b94529f4c608288e1da05bc3b1309"
   end
 
   depends_on "pkgconf" => :build
   depends_on "glib"
   depends_on "libfixbuf"
   depends_on "libtool"
-  depends_on "pcre"
 
   uses_from_macos "libpcap"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "gettext"
     depends_on "openssl@3"
+  end
+
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   def install
@@ -43,7 +46,7 @@ class Yaf < Formula
 
   test do
     input = test_fixtures("test.pcap")
-    output = pipe_output("#{bin}/yafscii", shell_output("#{bin}/yaf --in #{input}"))
+    output = pipe_output("#{bin}/yafscii", shell_output("#{bin}/yaf --in #{input}"), 0)
     expected = "2014-10-02 10:29:06.168497 - 10:29:06.169875 (0.001378 sec) tcp " \
                "192.168.1.115:51613 => 192.168.1.118:80 71487608:98fc8ced " \
                "S/APF:AS/APF (7/453 <-> 5/578) rtt 451 us"

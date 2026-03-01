@@ -1,8 +1,8 @@
 class Aptos < Formula
   desc "Layer 1 blockchain built to support fair access to decentralized assets for all"
   homepage "https://aptosfoundation.org/"
-  url "https://github.com/aptos-labs/aptos-core/archive/refs/tags/aptos-cli-v7.12.1.tar.gz"
-  sha256 "9510a60c253375bbbaa3c7ab8d4fc5ee17e7e3cc21e807beb0a42b53f4b81361"
+  url "https://github.com/aptos-labs/aptos-core/archive/refs/tags/aptos-cli-v8.1.0.tar.gz"
+  sha256 "28ba2a5065011149dfb76518a3f48a5fec1da7a71acef4b4bcec2e49e6517e0c"
   license "Apache-2.0"
   head "https://github.com/aptos-labs/aptos-core.git", branch: "main"
 
@@ -14,12 +14,12 @@ class Aptos < Formula
   no_autobump! because: :bumped_by_upstream
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "242e1c8b937d1651555f83030123bb9f1626b540da506ff067dfc1427fbf427e"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6fde434ff344ec19259f9435caf31d813b121a0d50aa9c4f692a741d13f49846"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c9fec97aa177219cc4c5ea4ca77fbe83fe787c6eb1db3538efb9d723911ccc6b"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a13af6bb4e65bc7e95e275d809212f309d46fb7fdcd3f5aa7c557ba1558a3b82"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f0e82289ee352d6008e0ec2f4c2c85f53d50c613798c3e30ae49648ade420a3a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2975048a1addd7377c1d13a957cd900ff566ca29f5a3f6653db4e8fc29fb4efe"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "f5484791aaa8b146a2eede6933c79f981136cbf30bf86163fd5045549575912e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "eea006ed074627cfc1000881a4cc685807a2ee6679d91159c9cd1d3c0e89afb2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "91286662c8444684f1530f6bc43d83acd3317c5b97776b37efd321f0458ab38f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "32faaf97acb487b6bbab5770185835cd263583c271989e360cd5d27457a529a1"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "c1fef6ff1cca807bb631ffd06eaa08e0ade37cd7e5f16ea8e3c020d0c173a0a0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ecf7659c5c7940620fd655119a058e29b9cf6271875763b524cdf7c11b38b80e"
   end
 
   depends_on "cmake" => :build
@@ -28,18 +28,20 @@ class Aptos < Formula
   uses_from_macos "llvm" => :build
 
   on_linux do
-    depends_on "lld" => :build
     depends_on "pkgconf" => :build
     depends_on "zip" => :build
     depends_on "elfutils"
     depends_on "openssl@3"
     depends_on "systemd"
+
+    on_intel do
+      depends_on "lld" => :build
+    end
   end
 
   def install
-    # Use correct compiler to prevent blst from enabling AVX support on macOS
-    # upstream issue report, https://github.com/supranational/blst/issues/253
-    ENV["CC"] = Formula["llvm"].opt_bin/"clang" if OS.mac?
+    # Remove optimization to allow bottles to be run on our minimum supported CPUs
+    inreplace ".cargo/config.toml", /,\s*"-C",\s*"target-cpu=x86-64-v3"/, ""
 
     system "cargo", "install", *std_cargo_args(path: "crates/aptos"), "--profile=cli"
   end

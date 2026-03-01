@@ -7,8 +7,6 @@ class Serveit < Formula
   revision 1
   head "https://github.com/garybernhardt/serveit.git", branch: "master"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     rebuild 1
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "5f667f37bc21e896dc225f76ca5755aa0c47d994928cc2a09ed06534fa3acc6a"
@@ -51,7 +49,7 @@ class Serveit < Formula
 
   test do
     port = free_port
-    pid = fork { exec bin/"serveit", "-p", port.to_s }
+    pid = spawn bin/"serveit", "-p", port.to_s
     sleep 2
     assert_match(/Listing for/, shell_output("curl localhost:#{port}"))
   ensure

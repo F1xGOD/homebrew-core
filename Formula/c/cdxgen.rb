@@ -1,17 +1,17 @@
 class Cdxgen < Formula
   desc "Creates CycloneDX Software Bill-of-Materials (SBOM) for projects"
   homepage "https://github.com/CycloneDX/cdxgen"
-  url "https://registry.npmjs.org/@cyclonedx/cdxgen/-/cdxgen-12.0.0.tgz"
-  sha256 "9e9aa47d26cd7a0f44c9741186ccd8d6d755bc89c76c3df0dca06fa8d688a6dd"
+  url "https://registry.npmjs.org/@cyclonedx/cdxgen/-/cdxgen-12.1.1.tgz"
+  sha256 "6a3e999584ed5547b806453effa741e98ef51b6a8a03385107ed6551e5da4fe7"
   license "Apache-2.0"
-  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "36811a347d3c40b216f50d30a1334c5ec6568c2097a0486552cf609862f513fb"
-    sha256 cellar: :any,                 arm64_sequoia: "911ada4d8598436cbd72b0b4d32483af6a0f1b65bd2c390614bd9bbf56665a42"
-    sha256 cellar: :any,                 arm64_sonoma:  "5282d20746caec231c9993bfbcefc113e4519bfbff139e75fe3f156fe3424864"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "eaa701a4e6335f0ea902fe309645304543b792c9b1e3ae70b8852de6d1dfa86d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "396a6de5b3fee4099490ef33d5c7cc6a0427cc13d19160da87a697127d86f384"
+    sha256 cellar: :any,                 arm64_tahoe:   "fd13e2b1e7d080f867165822bc1330ee4a38d0cddb76f338e83b29d0bcf281a1"
+    sha256 cellar: :any,                 arm64_sequoia: "bad4728c9fa54ce1c1dd49e3b3af6f44ec2838e82a30d1777acf6972bafa3c46"
+    sha256 cellar: :any,                 arm64_sonoma:  "5f594b4830000f631c95e5c1064a86f4103c7a8f858f18fb349a472d1d70353b"
+    sha256 cellar: :any,                 sonoma:        "2d6538244c3ad89a4d56d325240486f15940ed679a2b9daf3a7081c1eef49781"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "392374c492b3164f96c5a7f75c30f62b159a002b30edfe58104e7cfc2a97192c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d2cc95744b1ceab5d19de2819db72973ecb11ed816b41f963f8097e0e37c7a09"
   end
 
   depends_on "dotnet" # for dosai
@@ -22,8 +22,8 @@ class Cdxgen < Formula
   depends_on "trivy"
 
   resource "dosai" do
-    url "https://github.com/owasp-dep-scan/dosai/archive/refs/tags/v2.0.3.tar.gz"
-    sha256 "c66f96ab143e5e62262b963142b55f9ca7ae6708d175f62c0130b805dac226a5"
+    url "https://github.com/owasp-dep-scan/dosai/archive/refs/tags/v2.1.1.tar.gz"
+    sha256 "b17b6abdf651e50aea6de4b7652ac5b902ef268a8d33e9b5c47fc687bcd6c5a7"
   end
 
   def install
@@ -43,7 +43,7 @@ class Cdxgen < Formula
     os = OS.kernel_name.downcase
     arch = Hardware::CPU.intel? ? "amd64" : Hardware::CPU.arch.to_s
     node_modules = libexec/"lib/node_modules/@cyclonedx/cdxgen/node_modules"
-    cdxgen_plugins = node_modules/"@cyclonedx/cdxgen-plugins-bin-#{os}-#{arch}/plugins"
+    cdxgen_plugins = node_modules/"@cdxgen/cdxgen-plugins-bin-#{os}-#{arch}/plugins"
     rm_r(cdxgen_plugins/"dosai")
     rm_r(cdxgen_plugins/"sourcekitten")
     rm_r(cdxgen_plugins/"trivy")
