@@ -2,18 +2,18 @@ class Ortp < Formula
   desc "Real-time transport protocol (RTP, RFC3550) library"
   homepage "https://linphone.org/"
   # TODO: Switch to monorepo in 5.5.x
-  url "https://gitlab.linphone.org/BC/public/ortp/-/archive/5.4.72/ortp-5.4.72.tar.bz2"
-  sha256 "288d9c4dc69ec67b654ffaea8fccbaabcd23ffe66b339dbc22bdd30823bd7f2d"
+  url "https://gitlab.linphone.org/BC/public/ortp/-/archive/5.4.91/ortp-5.4.91.tar.bz2"
+  sha256 "1842f5cbc90a58c23b3dff2cff2560d896e21f99b88314547cf9e1f34e8f653c"
   license all_of: ["AGPL-3.0-or-later", "GPL-3.0-or-later"]
   head "https://gitlab.linphone.org/BC/public/linphone-sdk.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "c1c87a85cd070b4b8668b8a83f8ae5a2c50ff5db3a42c43611efa6e226ae0946"
-    sha256 cellar: :any,                 arm64_sequoia: "75d521ea3e575342e4b21c7c070d63079401e184d3c91dc4399cd0bb8e2176b3"
-    sha256 cellar: :any,                 arm64_sonoma:  "495a3d626a253b3a564f44c7f41ba993e70be4a2cf3dada50c07c7b5735733c9"
-    sha256 cellar: :any,                 sonoma:        "342145e4ef2a50463035fcf3fdd30cf8d4df534aa04f1e01f2335d5b82aa7eed"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "0e79e0be4784a406e3abb02b26d56cc739c4b318f8b536939796b544de9726d7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6d93820f1550c79b908fdba6b8bcd745c5049f96b01bfcdd8089955a3cf2bcb8"
+    sha256 cellar: :any,                 arm64_tahoe:   "72f181085684c47a6d7e3ccdb699a68fdea06e848994750c0870d755c1786f17"
+    sha256 cellar: :any,                 arm64_sequoia: "d74485f344364805724dc118ea017cbd457d7b335be67e2ab9f05b64396efd0f"
+    sha256 cellar: :any,                 arm64_sonoma:  "de984f5e184439797037e2a16d60e375bad422679bcd2c84bca9912c1555b388"
+    sha256 cellar: :any,                 sonoma:        "606d0b7d44489df031657217e84d9047731af82c7df657ee0a6659a0499a765d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "bc2753bfe4013ce8892003a361635db0ccf3b924a6dd3727588fcbf7255193d8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "282838a2e03311f2266f7c9632f018c665e9679b28bb2338d72b314be30a15a6"
   end
 
   depends_on "cmake" => :build
@@ -21,8 +21,8 @@ class Ortp < Formula
   depends_on "openssl@3"
 
   resource "bctoolbox" do
-    url "https://gitlab.linphone.org/BC/public/bctoolbox/-/archive/5.4.72/bctoolbox-5.4.72.tar.bz2"
-    sha256 "0008f13e97556ceacdfcea89305bd77f1fd416b46b106a5148f34954b838e751"
+    url "https://gitlab.linphone.org/BC/public/bctoolbox/-/archive/5.4.91/bctoolbox-5.4.91.tar.bz2"
+    sha256 "10800f43377e7399f839e12af5ae570b63a1f66e7c97643fc64587809604763c"
 
     livecheck do
       formula :parent

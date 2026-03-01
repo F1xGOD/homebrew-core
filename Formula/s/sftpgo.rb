@@ -5,8 +5,6 @@ class Sftpgo < Formula
   sha256 "7d70361aa52857816d2c14ff8b306429476f0864a10d99d9139b6ef1a8aaa45e"
   license "AGPL-3.0-only"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     sha256 arm64_tahoe:   "a2c5a58f6786fa00d6088cf3aa6d4a18633f86b7c1af5111a7c720ea6982f741"
     sha256 arm64_sequoia: "cfb4dfe0a2167c8a17d3639dc4075af9cab077201207bf4da95ae961b6d25205"
@@ -77,9 +75,7 @@ class Sftpgo < Formula
     ENV["SFTPGO_SFTPD__BINDINGS__0__ADDRESS"] = "127.0.0.1"
     ENV["SFTPGO_SFTPD__HOST_KEYS"] = "#{testpath}/id_ecdsa,#{testpath}/id_ed25519"
     ENV["SFTPGO_LOG_FILE_PATH"] = ""
-    pid = fork do
-      exec bin/"sftpgo", "serve", "--config-file", "#{pkgetc}/sftpgo.json"
-    end
+    pid = spawn bin/"sftpgo", "serve", "--config-file", "#{pkgetc}/sftpgo.json"
 
     sleep 5
     assert_match expected_output, shell_output("curl -s 127.0.0.1:#{http_port}/healthz")

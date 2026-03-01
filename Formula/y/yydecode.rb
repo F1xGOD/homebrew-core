@@ -5,8 +5,6 @@ class Yydecode < Formula
   sha256 "bd4879643f6539770fd23d1a51dc6a91ba3de2823cf14d047a40c630b3c7ba66"
   license "GPL-2.0-or-later"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     rebuild 1
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "054034a4990c7dab07cc32767d6d851fef67b58993c276573c8d510fd59698fe"
@@ -32,9 +30,16 @@ class Yydecode < Formula
     # Fix compile with newer Clang
     ENV.append_to_cflags "-Wno-implicit-function-declaration" if DevelopmentTools.clang_build_version >= 1403
 
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--mandir=#{man}"
+    system "./configure", "--mandir=#{man}", *std_configure_args
     system "make", "install"
+  end
+
+  test do
+    require "base64"
+    test_png = test_fixtures("test.png")
+    (testpath/"test.png.txt").write "begin-base64 644 test.png\n#{Base64.encode64(test_png.binread)}===="
+
+    system bin/"yydecode", "--output-file=test.png", "test.png.txt"
+    assert compare_file(testpath/"test.png", test_png), "expected output file and original to be identical"
   end
 end

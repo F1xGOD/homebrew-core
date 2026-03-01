@@ -1,18 +1,18 @@
 class Traefik < Formula
   desc "Modern reverse proxy"
   homepage "https://traefik.io/"
-  url "https://github.com/traefik/traefik/releases/download/v3.6.6/traefik-v3.6.6.src.tar.gz"
-  sha256 "33224014d6488f5dca817af4ee7aa82b23353b50026fcbc6ba2089b1231ab735"
+  url "https://github.com/traefik/traefik/releases/download/v3.6.9/traefik-v3.6.9.src.tar.gz"
+  sha256 "dd040144d2c5117de1572f7660904b810b5fa5c8182ad4ad1a884d9b0bda343d"
   license "MIT"
   head "https://github.com/traefik/traefik.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "d06b0ff6a4a56d0247d29450714e9e8d433bfbc67af1db12658f64974fd38ae0"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a06ed9a6a76c47918bab7706690c4ca1e955c01adb357c35afb74dbc537e00af"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "14caa96f00ded15c894c9d4301c4eef6b314011c46185a12a159683543428e4f"
-    sha256 cellar: :any_skip_relocation, sonoma:        "20d8de9ecc78555947f83d02258b1a0b4d79c743171c25fe911170507318a426"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "5475ffd5ffa15ce741669778dc3e637ab9bdbd0959a0200b786de2bac7d8daec"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "715600e17a9fcd1e512496d3b41ff003379f9e319ece17566deba2d15560801b"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "6d7d130c1b2e615034985a1392219541cdde3f5fe941842dd5f96c07bf42484b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "244c98b775fe63ce34cea7c203cbef66323ed35f2083a0ad9a44b24c4693ded6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "56febfd4cb5040ce25ede5886e0801e7d987f43c7f9db3308471278a4ef78a62"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ae146e34767ee51f56d8279cd5379fefc5457f14e9eff6a0be1c5c02079be4f1"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "ae86f5d76bec9267b8e398faad4c335d2b3e9d7524cc1a42d566d92562f116cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "39d474f0b47e2476a4b3b474eadf40520469609fdb9f5c4875d38a4fb2979171"
   end
 
   depends_on "corepack" => :build

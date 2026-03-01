@@ -3,27 +3,23 @@ class YtDlp < Formula
 
   desc "Feature-rich command-line audio/video downloader"
   homepage "https://github.com/yt-dlp/yt-dlp"
-  url "https://files.pythonhosted.org/packages/14/77/db924ebbd99d0b2b571c184cb08ed232cf4906c6f9b76eed763cd2c84170/yt_dlp-2025.12.8.tar.gz"
-  sha256 "b773c81bb6b71cb2c111cfb859f453c7a71cf2ef44eff234ff155877184c3e4f"
+  url "https://files.pythonhosted.org/packages/58/d9/55ffff25204733e94a507552ad984d5a8a8e4f9d1f0d91763e6b1a41c79b/yt_dlp-2026.2.21.tar.gz"
+  sha256 "4407dfc1a71fec0dee5ef916a8d4b66057812939b509ae45451fa8fb4376b539"
   license "Unlicense"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "03a036177843fd8540c380fcd3b16131517ed2eb45711d6ee5e63aa65eb42b79"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9dbbb7d92b2e8b2ec62ac898aa21d01bc7688d1376f8fcf1ce044656df11215b"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "456f98e57d91f1f369f41c2b8a57ff31e29abec5aceeebc165c84c8ff929e22a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "f217a88ef89c2c6f41f1b32c85f535eb032eaaf1029ee2ffdbd9015795874ed3"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "0103510413e10b32764dc6efc61c740ef9133e6241385131098a90fd8e1becb4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dd89266b4a21bc374f7231ede96b5b972227724a019037ab3557082c8b0d93e3"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "49e667d871969ab33e076530618d8ed2ab0ca0298da3bbca1b4c029f5be44a2c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "61425301bda97e8e6e00fb7b875621081c583f85dced67785237a8d169705413"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "bad9f05aaa33f02dafc1042b13429a2908904ffeca852c38651f62705fa8ce42"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b9accfab7533741811c33bba742a1dba439d77d818cd4e71bb198655b6ec771c"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "61969d1f60a5bab05903704bc6bfcc4a604c1f056c6ea9b68273336d173546bb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "269db6ce160fcac76390682952ab4cc233d679b4e424d0a9af40e7fc0ffb2c58"
   end
 
   head do
     url "https://github.com/yt-dlp/yt-dlp.git", branch: "master"
 
     depends_on "pandoc" => :build
-
-    on_macos do
-      depends_on "make" => :build
-    end
   end
 
   depends_on "node" => :build # https://github.com/yt-dlp/ejs/issues/37
@@ -65,22 +61,22 @@ class YtDlp < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1c/43/554c2569b62f49350597348fc3ac70f786e3c32e7f19d266e19817812dd3/urllib3-2.6.0.tar.gz"
-    sha256 "cb9bcef5a4b345d5da5d145dc3e30834f58e8018828cbc724d30b4cb7d4d49f1"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "websockets" do
-    url "https://files.pythonhosted.org/packages/21/e6/26d09fab466b7ca9c7737474c52be4f76a40301b08362eb2dbc19dcc16c1/websockets-15.0.1.tar.gz"
-    sha256 "82544de02076bafba038ce055ee6412d68da13ab47f0c60cab827346de828dee"
+    url "https://files.pythonhosted.org/packages/04/24/4b2031d72e840ce4c1ccb255f693b15c334757fc50023e4db9537080b8c4/websockets-16.0.tar.gz"
+    sha256 "5f6261a5e56e8d5c42a4497b364ea24d94d9563e8fbd44e78ac40879c60179b5"
   end
 
   resource "yt-dlp-ejs" do
-    url "https://files.pythonhosted.org/packages/de/72/57d02cf78eb45126bd171298d6a58a5bd48ce1a398b6b7ff00fc904f1f0c/yt_dlp_ejs-0.3.2.tar.gz"
-    sha256 "31a41292799992bdc913e03c9fac2a8c90c82a5cbbc792b2e3373b01da841e3e"
+    url "https://files.pythonhosted.org/packages/6b/0d/b9e4ab1b47cdeba0842df634b74b3c0144307640ad5b632a5e189c4ab7ce/yt_dlp_ejs-0.5.0.tar.gz"
+    sha256 "8dfae59e418232f485253dcf8e197fefa232423c3af7824fe19e4517b173293b"
   end
 
   def install
-    system "gmake", "lazy-extractors", "pypi-files" if build.head?
+    system "make", "lazy-extractors", "pypi-files" if build.head?
     virtualenv_install_with_resources
     bash_completion.install libexec/"share/bash-completion/completions/yt-dlp"
     zsh_completion.install libexec/"share/zsh/site-functions/_yt-dlp"

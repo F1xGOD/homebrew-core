@@ -1,26 +1,26 @@
 class Taglib < Formula
   desc "Audio metadata library"
   homepage "https://taglib.org/"
-  url "https://taglib.github.io/releases/taglib-2.1.1.tar.gz"
-  sha256 "3716d31f7c83cbf17b67c8cf44dd82b2a2f17e6780472287a16823e70305ddba"
+  url "https://taglib.github.io/releases/taglib-2.2.tar.gz"
+  sha256 "c89e7ebd450535e77c9230fac3985fcdce7bee05e06c9cd0bc36d50184e9c9dd"
   license all_of: ["LGPL-2.1-only", "MPL-1.1"]
   head "https://github.com/taglib/taglib.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "6f29ef2be3f8ab43a3956a21de1f80d0bb3951df2e16376f592e476a4fe07cf8"
-    sha256 cellar: :any,                 arm64_sequoia: "78cd3f2121fab66ac1f4b3f28a54c46d129375e8ece28f7eeb4cb68f2c89722a"
-    sha256 cellar: :any,                 arm64_sonoma:  "a8d56fabd553d9d4f5de8a78476f803ea5e6d7d7dc00861f767fbe54b161f50d"
-    sha256 cellar: :any,                 arm64_ventura: "3723f18ff63cd33ec1b6da0f7ab43c08be3994c6c70471a9a21025488b5956d1"
-    sha256 cellar: :any,                 sonoma:        "4a107bbeb7a9d53f3046d18a19a4161e5e549ab3cf67069d65d506bdc317132f"
-    sha256 cellar: :any,                 ventura:       "793d01948030616da5df4d999fba744e7639d5441aff12e83b1fec516042cc87"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "5f60f5717e204f3b8e059ca019f928b8b95a46ad1c40fe96b5903b867874881a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "04369b3a1ba6dcdfd99b354eb9c92106f7c507f1819b68b349d1798478c6cab1"
+    sha256 cellar: :any,                 arm64_tahoe:   "d0044355186d153ad651115e26d09394ddc11239309fa0fb0c7c95aeb8e4240a"
+    sha256 cellar: :any,                 arm64_sequoia: "aba6369a993f148591a3e714bc470f4ada52e63837fc188a383ba1f7d113e8de"
+    sha256 cellar: :any,                 arm64_sonoma:  "e84e807e6890ba7bb3ad27334c6973ff82733a29b380031dd30c03105c878ec8"
+    sha256 cellar: :any,                 sonoma:        "e76523d01007ea5b5009701443c70f718c74a7e35c564ece10dc691b9ec9395e"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "4018c10b274e6b50c87c2fd733a78394f84e26f5ac76978231124f90c733c1fc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3d173f67508c1856472128df632dbae773ad1035da34c728d9166b6f6753c46e"
   end
 
   depends_on "cmake" => :build
   depends_on "utf8cpp"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     args = %w[-DWITH_MP4=ON -DWITH_ASF=ON -DBUILD_SHARED_LIBS=ON]
@@ -31,7 +31,7 @@ class Taglib < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <taglib/id3v2tag.h>
       #include <taglib/textidentificationframe.h>
       #include <iostream>
@@ -52,9 +52,9 @@ class Taglib < Formula
 
         return 0;
       }
-    EOS
+    CPP
 
-    system ENV.cxx, "-std=c++17", "test.cpp", "-o", "test", "-L#{lib}", "-ltag", "-I#{include}", "-lz"
+    system ENV.cxx, "-std=c++17", "test.cpp", "-o", "test", "-I#{include}", "-L#{lib}", "-ltag"
     assert_match "Artist: Test Artist", shell_output("./test")
 
     assert_match version.to_s, shell_output("#{bin}/taglib-config --version")

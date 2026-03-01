@@ -2,10 +2,9 @@ class Onnxruntime < Formula
   desc "Cross-platform, high performance scoring engine for ML models"
   homepage "https://github.com/microsoft/onnxruntime"
   url "https://github.com/microsoft/onnxruntime.git",
-      tag:      "v1.22.2",
-      revision: "5630b081cd25e4eccc7516a652ff956e51676794"
+      tag:      "v1.24.2",
+      revision: "058787ceead760166e3c50a0a4cba8a833a6f53f"
   license "MIT"
-  revision 7
 
   livecheck do
     url :stable
@@ -13,17 +12,18 @@ class Onnxruntime < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "00a3e7a0b501c14e54254fb9afd0f8c4eb1ec1ce0224212b8cd3292342ebf05e"
-    sha256 cellar: :any,                 arm64_sequoia: "5e89dfd4887b9aa8f1f71aa1ea6bf8e08bd66d682209a4e58a25d713d553483b"
-    sha256 cellar: :any,                 arm64_sonoma:  "6b16cdefb5a69a003a6f6eda8a96ba951ff9054b05071b714dca90ec81934f68"
-    sha256 cellar: :any,                 sonoma:        "7b15831b1626b8d6040b5e840f451da7604ed66deea0b59e8cde9329c20a09ca"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "21a137464cb1dd26ea5dd350636885fdff844114555b65e39f577b579b43655b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0505c3af64134aef09bae87662af8a6784688573235984a1c03a7cc335c23066"
+    sha256 cellar: :any,                 arm64_tahoe:   "32964befa7e0b2c9d07d07e00272c1d67fc65be9b34c376e50fc739aefdabf8b"
+    sha256 cellar: :any,                 arm64_sequoia: "00f6802680b3515817d7e2c72c564b7ce58b9d4324e4197a4a27cd850f7bc5c3"
+    sha256 cellar: :any,                 arm64_sonoma:  "ddc3b74aaf7f58808163cd0f6bd51af34dce1f65d1a829bde61797184da04703"
+    sha256 cellar: :any,                 sonoma:        "47043397465edee01ac17e1c412dddae37a32f7746e78433a581c9ed78f6c724"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b16b9f058f362a51c40a6a76eacc08c528cd455b085e83da4f487f345946a927"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9db7f1dd77c959a6e024602e13d29e2cc50f771f1c6dc3f077adec758ee5350d"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
   depends_on "cpp-gsl" => :build
+  depends_on "eigen" => :build
   depends_on "flatbuffers" => :build # NOTE: links to static library
   depends_on "howard-hinnant-date" => :build
   depends_on "nlohmann-json" => :build
@@ -34,35 +34,15 @@ class Onnxruntime < Formula
   depends_on "protobuf"
   depends_on "re2"
 
-  # Need newer than stable `eigen` after https://github.com/microsoft/onnxruntime/pull/21492
-  # element_wise_ops.cc:708:32: error: no matching member function for call to 'min'
-  resource "eigen3" do
-    url "https://gitlab.com/libeigen/eigen/-/archive/1d8b82b0740839c0de7f1242a3585e3390ff5f33/eigen-1d8b82b0740839c0de7f1242a3585e3390ff5f33.tar.bz2"
-    version "1d8b82b0740839c0de7f1242a3585e3390ff5f33"
-    sha256 "37c2385d5b18471d46ac8c971ce9cf6a5a25d30112f5e4a2761a18c968faa202"
-
-    livecheck do
-      url "https://raw.githubusercontent.com/microsoft/onnxruntime/refs/tags/v#{LATEST_VERSION}/cmake/deps.txt"
-      regex(%r{^eigen;.*/eigen[._-](\h+)\.zip}i)
-    end
-  end
-
   resource "pytorch_cpuinfo" do
-    url "https://github.com/pytorch/cpuinfo/archive/8a1772a0c5c447df2d18edf33ec4603a8c9c04a6.tar.gz"
-    version "8a1772a0c5c447df2d18edf33ec4603a8c9c04a6"
-    sha256 "37bb2fd2d1e87102baea8d131a0c550c4ceff5a12fba61faeb1bff63868155f1"
+    url "https://github.com/pytorch/cpuinfo/archive/403d652dca4c1046e8145950b1c0997a9f748b57.tar.gz"
+    version "403d652dca4c1046e8145950b1c0997a9f748b57"
+    sha256 "c33bcad94ccbdd4966cc21291f0dcacd40d1dd04eb4c2a6ef1c8da669c01e024"
 
     livecheck do
       url "https://raw.githubusercontent.com/microsoft/onnxruntime/refs/tags/v#{LATEST_VERSION}/cmake/deps.txt"
       regex(%r{^pytorch_cpuinfo;.*/(\h+)\.zip}i)
     end
-  end
-
-  # Workaround for Abseil >= 20250814.0 which removed absl::low_level_hash.
-  # Issue ref: https://github.com/microsoft/onnxruntime/issues/25815
-  patch do
-    url "https://src.fedoraproject.org/rpms/onnxruntime/raw/1e041e70baa51b4661c16ec5446daab332937cb4/f/abseil-cpp-20250814.patch"
-    sha256 "9b0bf4fda2acf486907005e781f68c56b47c0b05cc2a2cff04c891f2d35b92f9"
   end
 
   # Apply Fedora's workaround[^1] to allow `onnxruntime` to use `onnx` built without
@@ -86,13 +66,14 @@ class Onnxruntime < Formula
       -DHOMEBREW_ALLOW_FETCHCONTENT=ON
       -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       -DFETCHCONTENT_TRY_FIND_PACKAGE_MODE=ALWAYS
+      -DFETCHCONTENT_SOURCE_DIR_MP11=#{Formula["boost"].opt_prefix}
       -DPython_EXECUTABLE=#{python3}
       -DONNX_CUSTOM_PROTOC_EXECUTABLE=#{Formula["protobuf"].opt_bin}/protoc
       -Donnxruntime_BUILD_SHARED_LIB=ON
       -Donnxruntime_BUILD_UNIT_TESTS=OFF
       -Donnxruntime_GENERATE_TEST_REPORTS=OFF
       -Donnxruntime_RUN_ONNX_TESTS=OFF
-      -Donnxruntime_USE_FULL_PROTOBUF=ON
+      -Donnxruntime_USE_FULL_PROTOBUF=OFF
     ]
 
     # Regenerate C++ bindings to use newer `flatbuffers`
@@ -163,7 +144,11 @@ class Onnxruntime < Formula
     (testpath/"mul_1.onnx").write Base64.decode64(mul_1_onnx)
 
     system ENV.cxx, "-std=c++17", "-I#{include}", "test.cc", "-L#{lib}", "-lonnxruntime", "-o", "test"
-    assert_equal version, shell_output("./test 2>&1")
+    output_lines = shell_output("./test 2>&1").lines
+
+    # Remove warning messages that are safe to ignore
+    output_lines.reject! { |line| line["Skipping pci_bus_id for PCI path"] }
+    assert_equal version.to_s, output_lines.join
   end
 end
 

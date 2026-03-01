@@ -1,17 +1,17 @@
 class Miniflux < Formula
   desc "Minimalist and opinionated feed reader"
   homepage "https://miniflux.app"
-  url "https://github.com/miniflux/v2/archive/refs/tags/2.2.15.tar.gz"
-  sha256 "28cd9f7280d4807f53855de27ec1bad4cad68e29a469d7f38a2c5c4ad7404c56"
+  url "https://github.com/miniflux/v2/archive/refs/tags/2.2.17.tar.gz"
+  sha256 "06cee3802e3534d6c05e6f35762141433b06b43d21b91f463e708696606803e4"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "62193155be881f7c41cbddf679184a702fab1f2b4d8f57ce4faa161d50cdd013"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "682208711e9d3ac749305c3820e4b37aa4a607ece0261b1af377ad76a65353dc"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2510eae4b278b3a27eac89a0841fb557bf49bd8b5519f224968603d9f3b2f18a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "23d31d0f9c269b0a1eb1e4cd2416f15b9138b9faa4fcd90b8d6de36c78f276f9"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "26f228c406c1e2d944af5dedb20acc7a4d54699d4812a807acbd7eb2d421a899"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f9ba29dc16917c010cc48091b1d34bd6e43fe20b0877103f2f56877cd1c53751"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "30b90cdd56f930cf376c0358c71dbe858bc546718718dbc3b0cc018d69dc24b5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "06d5ddf52f4185b1a40b398636c558d0ded8bf39e640ceabfc66762eb451ecd7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "dd23d929b6a99c2bf57927bc1a9218a6582b015ee96f164a1fbc1aadf1ee9066"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b5f18d20e0d7cb1131413c601b8afc9a37aac96014ed937bd6499aa09b963faf"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "71831293ea409bdb7d743f7e7844837e750cb4fd2364d8b546392594e1ff6418"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4539765daf20c6e77048430702ec309dcec7fd712971afa654830c5990040c86"
   end
 
   depends_on "go" => :build
@@ -68,8 +68,8 @@ class Miniflux < Formula
 
       miniflux_pid = spawn(bin/"miniflux", "-c", testpath/"miniflux.conf")
       begin
-        sleep 2
-        assert_equal "OK", shell_output("curl -s http://127.0.0.1:#{miniflux_port}/healthcheck")
+        assert_equal "OK",
+          shell_output("curl --silent --retry 5 --retry-connrefused http://127.0.0.1:#{miniflux_port}/healthcheck")
       ensure
         Process.kill "TERM", miniflux_pid
         Process.wait miniflux_pid

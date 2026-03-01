@@ -1,21 +1,24 @@
 class Pillow < Formula
   desc "Friendly PIL fork (Python Imaging Library)"
   homepage "https://python-pillow.github.io/"
-  url "https://files.pythonhosted.org/packages/5a/b0/cace85a1b0c9775a9f8f5d5423c8261c858760e2466c79b2dd184638b056/pillow-12.0.0.tar.gz"
-  sha256 "87d4f8125c9988bfbed67af47dd7a953e2fc7b0cc1e7800ec6d2080d490bb353"
+  url "https://files.pythonhosted.org/packages/1f/42/5c74462b4fd957fcd7b13b04fb3205ff8349236ea74c7c375766d6c82288/pillow-12.1.1.tar.gz"
+  sha256 "9ad8fa5937ab05218e2b6a4cff30295ad35afd2f83ac592e68c0d871bb0fdbc4"
   license "HPND"
   head "https://github.com/python-pillow/Pillow.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_tahoe:   "ff2bbd99dda7ce7abb304d4928959c1724f6ddf193194021b1c3074966eeb4b3"
-    sha256 cellar: :any, arm64_sequoia: "1833bd4053addaf27fc722cd8a492436a59e3cf02a219a94bf84f49c63537d2e"
-    sha256 cellar: :any, arm64_sonoma:  "fcb4113eb505824c5c113b6aef44af0dea7b9bf7c877f07483d5ebed1265948a"
-    sha256 cellar: :any, sonoma:        "e54ba44aa57a4ca0654b4dd48e65205b1d410f232658280ca24af471bacc6bae"
-    sha256               arm64_linux:   "b106456d1752531caca067c9a2759f5eb27da100fb40adf30b6326056e7edc8d"
-    sha256               x86_64_linux:  "46340278cadab63940fbcf66191001ac0ab1e89522c9cd9801cf484939e963c3"
+    sha256 cellar: :any, arm64_tahoe:   "608dc8063cbbea272a1d80555038705ba9faf8a732ae510ebd15e84dd426271a"
+    sha256 cellar: :any, arm64_sequoia: "0ac999cbd9b63f14112d86e6e0d987d3ad0b33a5fa992bc6a676b27ed9c20772"
+    sha256 cellar: :any, arm64_sonoma:  "5380e49362ae6f6ab0f40699bff8996e503e19f6c6743d3049138e99d1b3966e"
+    sha256 cellar: :any, sonoma:        "b6e52594c64c36b21ad89fca370b5820adec04233ef7cc083f7c35f38e86052a"
+    sha256               arm64_linux:   "befb876d3acb63de7c9365043b85f589cdaaf79750dcbd402befbcc772147842"
+    sha256               x86_64_linux:  "b5ae4fb7868bc8cf959a5fd340f76014276e9cf40aa1421dfa92d242d305819c"
   end
 
+  depends_on "cmake" => :build
+  depends_on "ninja" => :build
   depends_on "pkgconf" => :build
+  depends_on "pybind11" => :build
   depends_on "python@3.13" => [:build, :test]
   depends_on "python@3.14" => [:build, :test]
   depends_on "freetype"
@@ -29,7 +32,9 @@ class Pillow < Formula
   depends_on "openjpeg"
   depends_on "webp"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def pythons
     deps.map(&:to_formula)

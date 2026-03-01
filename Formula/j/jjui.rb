@@ -1,17 +1,17 @@
 class Jjui < Formula
   desc "TUI for interacting with the Jujutsu version control system"
   homepage "https://github.com/idursun/jjui"
-  url "https://github.com/idursun/jjui/archive/refs/tags/v0.9.8.tar.gz"
-  sha256 "2752e6586c1cd010d077aff202d7da00923c593bd8e124d17c6b44804a521a93"
+  url "https://github.com/idursun/jjui/archive/refs/tags/v0.9.12.tar.gz"
+  sha256 "214a7f620e035bdcdfe0f9f8ac56b532bcd11a91bb7b06c515b8bf005af03ebd"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "7eab8f4970c0d8bdd698d26b37ad12453bba2fb1d688de2ed0a673760126d6a3"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7eab8f4970c0d8bdd698d26b37ad12453bba2fb1d688de2ed0a673760126d6a3"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7eab8f4970c0d8bdd698d26b37ad12453bba2fb1d688de2ed0a673760126d6a3"
-    sha256 cellar: :any_skip_relocation, sonoma:        "76223739ce82fad6fdae3fe7d587cba888bcf276275a82a78b4be6b8b084296f"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "494e9c76265547bb120f327698a70ed98f59c57bbd2837fb77c4ea94fe8894fc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "420af7e16efe6da7e4e6666947f1a6eb1c7e101a5bd7f7725cbc61ee484cea02"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "f23b326270667d228b1fe675224ac893651cf354753b415556535e23b0196df6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f23b326270667d228b1fe675224ac893651cf354753b415556535e23b0196df6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f23b326270667d228b1fe675224ac893651cf354753b415556535e23b0196df6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bd2446b1a9ff6a20fc6ed6794f1ba291d87c53f3cffad3a8280416142436f5f6"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b64b931c97a2d1ad8a977fa85da05cda8627c68f09138c808fce943f8e89e306"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e315e2b4ec08cfd18e87626acb140beb9d0485d2d26cd4f5dbb9f196196d9663"
   end
 
   depends_on "go" => :build
@@ -24,6 +24,6 @@ class Jjui < Formula
 
   test do
     assert_match version.to_s, shell_output("#{bin}/jjui -version")
-    assert_match "Error: There is no jj repo in", shell_output("#{bin}/jjui 2>&1", 1)
+    assert_match "There is no jj repo in", shell_output("#{bin}/jjui 2>&1", 1)
   end
 end

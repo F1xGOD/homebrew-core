@@ -1,10 +1,9 @@
 class PerconaXtrabackupAT80 < Formula
   desc "Open source hot backup tool for InnoDB and XtraDB databases"
   homepage "https://www.percona.com/software/mysql-database/percona-xtrabackup"
-  url "https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.35-34/source/tarball/percona-xtrabackup-8.0.35-34.tar.gz"
-  sha256 "6ca81cd647e7cb1d8fd341f97cd32248bd719f9104a63eb24f1edda6a2d2441c"
+  url "https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.35-35/source/tarball/percona-xtrabackup-8.0.35-35.tar.gz"
+  sha256 "012aa40e35d7186da1d0c4ccd20d703b2b56a69dc0d750056d969245226a3d67"
   license "GPL-2.0-only"
-  revision 8
 
   livecheck do
     url "https://www.percona.com/products-api.php", post_form: {
@@ -21,15 +20,19 @@ class PerconaXtrabackupAT80 < Formula
   end
 
   bottle do
-    sha256 arm64_tahoe:   "119c0842d814b1e62e1e718462b11896657a5aef3a711f106dc48b42165745d2"
-    sha256 arm64_sequoia: "1e5418c288f9a188a28bbc4d08eac769be4fabf6955778e828736523cdd69e14"
-    sha256 arm64_sonoma:  "e2e6f6b024f13c88b994eb9c00e56ed71ef6a1f9785bfc150eef27126d92e626"
-    sha256 sonoma:        "bcb0d310be2d18ed42b4ca8bd50a4fbad215142826ba01ce2c37adddab104f57"
-    sha256 arm64_linux:   "a62e5003ef934d0106e629be152b7b1d21fb5ea9d19c10cae1e4b7b42f0ff8b8"
-    sha256 x86_64_linux:  "4e817f96783153c4af262ae973df731153dd757448cec6a46b0ddf905a401f40"
+    rebuild 1
+    sha256 arm64_tahoe:   "4351b09a661500dcb961e282a613c1f690f9bc66cd2272019943a71f634c6838"
+    sha256 arm64_sequoia: "54fd58fb5a60de4004e382a4ee778bc3a4742d3e2610f9df887c591f2b29ea76"
+    sha256 arm64_sonoma:  "3641079f58027cecf48f80a8cdf1dc0d738feb0c9b9072edb4ad459f18d0fd0b"
+    sha256 sonoma:        "fc7bc80446461639deef238dd12a35754f0bb3b02863f9671ba06940b45fde23"
+    sha256 arm64_linux:   "e1e54c2b3a31a29b94c789b5de1abc8d2bd21cd4a52634201a43e68c0c6a80ed"
+    sha256 x86_64_linux:  "5dcb9dc888ef16f2d40a7b177da2847654002b1a872f40c0db65120dd1b6bda3"
   end
 
   keg_only :versioned_formula
+
+  # https://www.percona.com/services/policies/percona-software-support-lifecycle
+  deprecate! date: "2026-04-01", because: :unsupported
 
   depends_on "bison" => :build # needs bison >= 3.0.4
   depends_on "cmake" => :build
@@ -44,7 +47,7 @@ class PerconaXtrabackupAT80 < Formula
   depends_on "openssl@3"
   depends_on "perl-dbd-mysql"
   depends_on "protobuf"
-  depends_on "zlib"
+  depends_on "zlib-ng-compat" # Zlib 1.2.13+
   depends_on "zstd"
 
   uses_from_macos "cyrus-sasl" => :build

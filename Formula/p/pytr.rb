@@ -3,17 +3,17 @@ class Pytr < Formula
 
   desc "Use TradeRepublic in terminal and mass download all documents"
   homepage "https://github.com/pytr-org/pytr"
-  url "https://files.pythonhosted.org/packages/db/1d/f7d0c067f6f56b8d723e57ed60c2558137a97b332acc0279b457e7f8bf35/pytr-0.4.5.tar.gz"
-  sha256 "6be72cc8b848f6cf6f34e72b5897bd580e2a37997d69eb99e44d3a6fa64d0911"
+  url "https://files.pythonhosted.org/packages/73/ec/792938e5d254b053aff3dcd3c477e0c80fc65a978f39a641afc1073a789f/pytr-0.4.6.tar.gz"
+  sha256 "e77bf0ce3013541c5a6bb644c2616208c4fd64efd85dbe5915f4b5cfd5d11766"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "8dc2a7eefee133a1768f6adecd156394e4645f33a469c5cc6b591717b1cd2b2c"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c810ad62bdc9424c7fb62c5ed398c47b781c42343f3003cda5aac2d7acbc8798"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f698d24829b38ec04c87f98b0da82659b5071eaa7698ac054be0e46e691ffc0a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "45d8d4c414db6cdcb91e51860c16512e9f8b0eecfa97044ce99b94ec84c53eb8"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "7ea1317b854a3ed5021dec01d46ad6a85edcf03a80846add9769dcfecde52d7e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b5c1331d6a291268c8c77c72dba19e789c59e2502c9b37dc6646eaa43a6cfc78"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "3c7b4d2c397f423bc28e2be98795fa2ab587ebcd20720a4f06a45be94dc27524"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "bb9102a2376ca3db0ce3fce3e5620b0bc827fab93c42f18363e050524527ef01"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fe774571a720d92db32f6570ab1c9da20b07086c28eb588604e499ecb9c86c48"
+    sha256 cellar: :any_skip_relocation, sonoma:        "175931d734198f181f35ab6a3017664af84b306910cdb4328f60d8bd93bb37bc"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e48a5ae37a9299725b68b918361ca6c7bd52450bc85f3dea9539f335808d2904"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bce354acff62a70a06a4948ab2f443fefdfb8e9903948efab36a4cb79504da0b"
   end
 
   depends_on "certifi" => :no_linkage
@@ -22,8 +22,8 @@ class Pytr < Formula
   pypi_packages exclude_packages: "certifi"
 
   resource "babel" do
-    url "https://files.pythonhosted.org/packages/7d/6b/d52e42361e1aa00709585ecc30b3f9684b3ab62530771402248b1b1d6240/babel-2.17.0.tar.gz"
-    sha256 "0c54cffb19f690cdcc52a3b50bcbf71e07a808d1c80d549f2459b9d2cf0afb9d"
+    url "https://files.pythonhosted.org/packages/7d/b2/51899539b6ceeeb420d40ed3cd4b7a40519404f9baf3d4ac99dc413a834b/babel-2.18.0.tar.gz"
+    sha256 "b80b99a14bd085fcacfa15c9165f651fbb3406e66cc603abf11c5750937c992d"
   end
 
   resource "charset-normalizer" do
@@ -52,8 +52,8 @@ class Pytr < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
   end
 
   resource "pathvalidate" do
@@ -87,13 +87,13 @@ class Pytr < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "websockets" do
-    url "https://files.pythonhosted.org/packages/21/e6/26d09fab466b7ca9c7737474c52be4f76a40301b08362eb2dbc19dcc16c1/websockets-15.0.1.tar.gz"
-    sha256 "82544de02076bafba038ce055ee6412d68da13ab47f0c60cab827346de828dee"
+    url "https://files.pythonhosted.org/packages/04/24/4b2031d72e840ce4c1ccb255f693b15c334757fc50023e4db9537080b8c4/websockets-16.0.tar.gz"
+    sha256 "5f6261a5e56e8d5c42a4497b364ea24d94d9563e8fbd44e78ac40879c60179b5"
   end
 
   def install

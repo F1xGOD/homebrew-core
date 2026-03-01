@@ -1,17 +1,20 @@
 class CppHttplib < Formula
   desc "C++ header-only HTTP/HTTPS server and client library"
   homepage "https://github.com/yhirose/cpp-httplib"
-  url "https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.30.0.tar.gz"
-  sha256 "135adc029364a70d0c1769f60bef8a2cdc7915e2525eb3ec759e2084af7a7e7b"
+  url "https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.35.0.tar.gz"
+  sha256 "979a18af80c3daa0a4993cb58a7550038a90d9018f6ed05b5e9db2f8f720cc21"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "d62e9acc599e70278c846e82f747fd1737dea074f5eb2284563d38c5880d16dc"
+    sha256 cellar: :any_skip_relocation, all: "c699fa7faba990a983ea049e83afc1ef4187edef97afc3c5ca29151d1962a66c"
   end
 
   depends_on "cmake" => :build
   depends_on "openssl@3" => :build
-  uses_from_macos "zlib" => :build
+
+  on_linux do
+    depends_on "zlib-ng-compat" => :build
+  end
 
   fails_with :clang do
     build 1300
@@ -71,9 +74,7 @@ class CppHttplib < Formula
     system ENV.cxx, "server.cpp", "-I#{include}", "-lpthread", "-std=c++11", "-o", "server"
     system ENV.cxx, "client.cpp", "-I#{include}", "-lpthread", "-std=c++11", "-o", "client"
 
-    fork do
-      exec "./server"
-    end
+    spawn "./server"
     sleep 3
     assert_match "Hello World!", shell_output("./client")
   end

@@ -1,32 +1,48 @@
 class Patat < Formula
   desc "Terminal-based presentations using Pandoc"
   homepage "https://github.com/jaspervdj/patat"
-  url "https://hackage.haskell.org/package/patat-0.15.2.0/patat-0.15.2.0.tar.gz"
-  sha256 "d1f182ecdf145b8db1aacee1c4d46731d197b192e6ef855c3505067c1cea2b65"
   license "GPL-2.0-or-later"
   head "https://github.com/jaspervdj/patat.git", branch: "main"
 
+  stable do
+    url "https://hackage.haskell.org/package/patat-0.15.2.0/patat-0.15.2.0.tar.gz"
+    sha256 "d1f182ecdf145b8db1aacee1c4d46731d197b192e6ef855c3505067c1cea2b65"
+
+    # Backports relaxed dependency constraints to build with GHC >= 9.12
+    patch do
+      url "https://github.com/jaspervdj/patat/commit/16d568bc414f4f0ced8b4f897c3584fd82a7797a.patch?full_index=1"
+      sha256 "1a0f9aa653b9dd8b47acbdaabee3b50b557b87ca8d2c364a85a8f8b8ec637abc"
+    end
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "00aa976ca5fdacc86e38303a701c6b39f69c66dc71df0737d797222981f377f5"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "90b7a9394554857c0a8535126c47949d931a7f659e4e70026cc7c3de14d3feb9"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "cd312988933bf91ab8ed3c458ddfc17d084a37347f18021ce5633c53980435fa"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "d92ea4a497a9bfa9f1697058c421881cb94f8dea121b676d0dbdd3e158351aaa"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a06c67fb2863949481fc857ead7592b89e464aab11530a61a41a93e4f89aef1e"
-    sha256 cellar: :any_skip_relocation, ventura:       "5704db30193d278c0ba64e99bb67f426b19cbd7899fcbf293d294432e8d5a989"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "fc042157bd5597b79314b5b08f3f7baf4289e1d31fe410d00af0462489cb2a6e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e117d456e17b90dec4429df57ed91c429144578f20c8e5b9f99c75f0d4e3d304"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_tahoe:   "5078a6ef677ef802f2f78ca950c5e0d756ec8058a00ac43c990af4cc42b641e5"
+    sha256 cellar: :any,                 arm64_sequoia: "a959da2b101e50e8066aa852735b17ef36976a7d72bcd6af8c8e069e02352b79"
+    sha256 cellar: :any,                 arm64_sonoma:  "bb22958819bdc12b2d484ebfd732513d7f370f096d460f5010bdd029967a7d3c"
+    sha256 cellar: :any,                 sonoma:        "027fcd9e810e61b16f996ba16d4406b56c77f0928db0001eea1c2a1904e40fcd"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "bddf7b47c06f8906f627ef84ff4105e87e75777f4e6d6cdc3f834804e5702813"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fb2810208b1abbb9b541d3eb0d576bce58c57e4af2c0b1ddad3dd465138dc962"
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc@9.10" => :build
+  depends_on "ghc" => :build
   depends_on "pandoc" => :build
   depends_on "pkgconf" => :build
+  depends_on "gmp"
 
-  uses_from_macos "zlib"
+  uses_from_macos "libffi"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
+    # Workaround to build aeson with GHC 9.14, https://github.com/haskell/aeson/issues/1155
+    args = ["--allow-newer=base,containers,template-haskell"]
+
     system "cabal", "v2-update"
-    system "cabal", "v2-install", *std_cabal_v2_args
+    system "cabal", "v2-install", *args, *std_cabal_v2_args
   end
 
   test do

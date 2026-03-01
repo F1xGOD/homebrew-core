@@ -30,9 +30,7 @@ class Roapi < Formula
 
   def install
     # skip default features like snmalloc which errs on ubuntu 16.04
-    system "cargo", "install", "--no-default-features",
-                               "--features", "rustls",
-                               *std_cargo_args(path: "roapi")
+    system "cargo", "install", "--no-default-features", *std_cargo_args(path: "roapi", features: "rustls")
   end
 
   test do
@@ -44,10 +42,8 @@ class Roapi < Formula
     (testpath/"data.csv").write "name,age\nsam,27\n"
     expected_output = '[{"name":"sam"}]'
 
+    pid = spawn bin/"roapi", "-a", "localhost:#{port}", "-t", testpath/"data.csv"
     begin
-      pid = fork do
-        exec bin/"roapi", "-a", "localhost:#{port}", "-t", "#{testpath}/data.csv"
-      end
       query = "SELECT name from data"
       header = "ACCEPT: application/json"
       url = "localhost:#{port}/api/sql"

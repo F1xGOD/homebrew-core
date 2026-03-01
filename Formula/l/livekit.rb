@@ -1,8 +1,8 @@
 class Livekit < Formula
   desc "Scalable, high-performance WebRTC server"
   homepage "https://livekit.io"
-  url "https://github.com/livekit/livekit/archive/refs/tags/v1.9.9.tar.gz"
-  sha256 "f9aae7627cad57426eadf5d9550eeddfad22720d8e68174c3d9ca2c51192ed02"
+  url "https://github.com/livekit/livekit/archive/refs/tags/v1.9.11.tar.gz"
+  sha256 "a0f8042a63e895b33bc9c5d231969427c13201deb74dd10090a7655929a7d28a"
   license "Apache-2.0"
   head "https://github.com/livekit/livekit.git", branch: "master"
 
@@ -15,12 +15,12 @@ class Livekit < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "87f2e2ac646dae786e4cd7b69e60be21ea3bc06fbb51a1ad4fe42dbdd2daa941"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "70f1c4892321a2c0592f32d866fb5c0d1d57c80ed176fd5147306025f5b17a02"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1a1bc1c14b720c9cbb39cec9a7505385bda0d24166e6da4f5e081f1607317f0f"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b2ce63bad8d57dee61348d23e61386ecadc7c307bf07150c76aa84a234fbcae5"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cf300ec794f6a338671389508bb131534c57ca58a3022005ec2cc4b85afb7607"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "39197b8a041dbc256209de9e06d9b7e6c2e039405f63298221818386d56104b7"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "e70aef28bf1971b0fc6477e48f0de186a306130cafe9ca46a1bd7a86d474fd1e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7e5eed0ee99e4e91d9b8fa42fc4299ff04abd30af89c0c968512732c497e0726"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f5908e56ae56f12d9a4df5a830a074306decfae64879be74add868818f1606eb"
+    sha256 cellar: :any_skip_relocation, sonoma:        "51c5473e06e1864ca186e0cf82b19bec1e7a5634dc8b1e1734a37ad55f79a917"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "998cc7fb03f7d215d2aeeb8643940b025a722283f9da1ce9c4cf5d5d98053f1b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "855119b7c242430db8591d606d522774af48509419eecaeef49da14de2dd16a1"
   end
 
   depends_on "go" => :build
@@ -32,9 +32,7 @@ class Livekit < Formula
   test do
     http_port = free_port
     random_key = "R4AA2dwX3FrMbyY@My3X&Hsmz7W)LuQy"
-    fork do
-      exec bin/"livekit-server", "--keys", "test: #{random_key}", "--config-body", "port: #{http_port}"
-    end
+    spawn bin/"livekit-server", "--keys", "test: #{random_key}", "--config-body", "port: #{http_port}"
     sleep 3
     assert_match "OK", shell_output("curl -s http://localhost:#{http_port}")
 

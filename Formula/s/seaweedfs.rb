@@ -2,8 +2,8 @@ class Seaweedfs < Formula
   desc "Fast distributed storage system"
   homepage "https://github.com/seaweedfs/seaweedfs"
   url "https://github.com/seaweedfs/seaweedfs.git",
-      tag:      "4.04",
-      revision: "8d752906012e511bd52c68369bc7c8c8b108b71c"
+      tag:      "4.13",
+      revision: "63f641a6c9e6ee7e1fec417cabba4edf88cebc53"
   license "Apache-2.0"
   head "https://github.com/seaweedfs/seaweedfs.git", branch: "master"
 
@@ -13,12 +13,12 @@ class Seaweedfs < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "88825d39a5870041f3295b1f94569e4ed0cbd8dd22eb9327e8bc7fce0b5ce1ba"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "888b38b48b41ca97313f525c41395c4e654e7734b8e5c07e6f7d24df4c00243d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8088a9600041f61d335e9b23edc860bdac64eb37cdce8ef431b88295df2bf57b"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3cbe5c49bf32178edd7d1805707a5bdf20e2af277696d1ad153774914d7b355a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cc9d077aa06373c780ab013d1d0939d2a7518c8a16f4250cfd5ee6e77338963c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "393c82d36893ac3e100d84b9ad95291257133f9a08b4254ad5e988bb054d74dd"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "dca34ccf309415d2da1e6d8e866be54e8fea03cb8436fa89b88b10e02ebb23e4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9965d3297e8131f563ee8aa9e37e1b9241b898e68d928ec8ac7be26cb44b69eb"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9b21d919758c2e8e958dac883781209267048b866ee62190be1d68121aadccfc"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e023a3dbdff3656fabade5c3626daf306b820ce3d7cb3a1ddd96112a9b31162c"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "96e35a9e88e17637771f191a8f0348ded60098aa11144644ac0ae8df911e021d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bffb2b6faff7a9450f6bdb5747876213074672d4dc56675114e888d65cf1f12d"
   end
 
   depends_on "go" => :build
@@ -50,11 +50,9 @@ class Seaweedfs < Formula
     master_grpc_port = free_port
     volume_grpc_port = free_port
 
-    fork do
-      exec bin/"weed", "server", "-dir=#{testpath}", "-ip.bind=0.0.0.0",
-           "-master.port=#{master_port}", "-volume.port=#{volume_port}",
-           "-master.port.grpc=#{master_grpc_port}", "-volume.port.grpc=#{volume_grpc_port}"
-    end
+    spawn bin/"weed", "server", "-dir=#{testpath}", "-ip.bind=0.0.0.0",
+          "-master.port=#{master_port}", "-volume.port=#{volume_port}",
+          "-master.port.grpc=#{master_grpc_port}", "-volume.port.grpc=#{volume_grpc_port}"
     sleep 30
 
     # Upload a test file

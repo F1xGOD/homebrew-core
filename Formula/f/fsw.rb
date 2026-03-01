@@ -5,8 +5,6 @@ class Fsw < Formula
   sha256 "9222f76f99ef9841dc937a8f23b529f635ad70b0f004b9dd4afb35c1b0d8f0ff"
   license "GPL-3.0-or-later"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     rebuild 2
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "00cd7d239ddaea10afcdb88fa8c03bd40dae89077f35ac47b0ba19289d1477ca"
@@ -23,6 +21,10 @@ class Fsw < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:    "8a48b6b49e24af2105a97f5dd0b8ce189c136ac33cecf354619e7380d89afd48"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "8eda4b9b2f8597f3fab6330e173bcfdfbd77e41fc406f22be2235055d4d555af"
   end
+
+  # https://github.com/emcrisostomo/fsw/commit/36152c3d1ea3495420bdef809ddaff0fa972ab77
+  deprecate! date: "2026-01-04", because: :unmaintained, replacement_formula: "fswatch"
+  disable! date: "2027-01-04", because: :unmaintained, replacement_formula: "fswatch"
 
   def install
     ENV.append "CXXFLAGS", "-stdlib=libc++" if OS.mac?

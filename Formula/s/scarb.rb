@@ -1,8 +1,8 @@
 class Scarb < Formula
   desc "Cairo package manager"
   homepage "https://docs.swmansion.com/scarb/"
-  url "https://github.com/software-mansion/scarb/archive/refs/tags/v2.15.0.tar.gz"
-  sha256 "91e6a2f9c3007e7a969db06c4865bafb015caf5b2510b8fa6afc5d80a2eb9e4a"
+  url "https://github.com/software-mansion/scarb/archive/refs/tags/v2.16.0.tar.gz"
+  sha256 "c848e4d8cf0451595266d56f94c1ae06b3c650642d3978e85745b73645fac043"
   license "MIT"
   head "https://github.com/software-mansion/scarb.git", branch: "main"
 
@@ -12,16 +12,19 @@ class Scarb < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "ef99fce7dab00f7f69fd21e821f05663c673d5815ec6f2284917f2f509664bbd"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "18e206b16a9c675d9b477af9acd3621833dbd2d12d968bfba2f7f1615870b0f2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "840a6b054d3ce7fdf7f5614bb6c862762dcc2a98a425338df82c76c3c4eb48d4"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b303d8eb19b22fa4d50b7119bfa8d01d32f45bb17a9db6d201ba03f8791bbd04"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "848cf282d5428df96fe537328994db9cb84357c72d9a8c9d8644f07358ddc328"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7c0a854de435add927e97ca6b4ccbbbab54f5b4e4ffecd8aff54168825c02d86"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "cd770a555c858af63e4dfa2c9ff0dbc7adb369312ab341b8e8909b9b9e818152"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "650118751a4207421a74b6902d32f7da0553792498d19c54c29f81baab14e438"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c5ec964dc1632994e23a0d75df915ec9230105a1d811a447e9d9b849d64b8314"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f26817c53ac5e05a2825e6234cecebd915f028970c77034504c33e79a60700e2"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d432bff6034e4d5157eddeeb288fa8f863060342ad4c1dd2e8241ec7bb95d43a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f52994e88de648e61558a7d64c7a3517cbc51930c7a63c3ef5cd0cc3028e4f62"
   end
 
   depends_on "rust" => :build
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     %w[

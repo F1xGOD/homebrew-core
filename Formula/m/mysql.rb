@@ -3,11 +3,10 @@ class Mysql < Formula
   # FIXME: Actual homepage fails audit due to Homebrew's user-agent
   # homepage "https://dev.mysql.com/doc/refman/9.3/en/"
   homepage "https://github.com/mysql/mysql-server"
-  url "https://cdn.mysql.com/Downloads/MySQL-9.5/mysql-9.5.0.tar.gz"
-  mirror "https://repo.mysql.com/apt/ubuntu/pool/mysql-innovation/m/mysql-community/mysql-community_9.5.0.orig.tar.gz"
-  sha256 "ef3343981375865a2519f72b600e55f9c646e60e204a2964d3b7e8e748a110a5"
+  url "https://cdn.mysql.com/Downloads/MySQL-9.6/mysql-9.6.0.tar.gz"
+  mirror "https://repo.mysql.com/apt/ubuntu/pool/mysql-innovation/m/mysql-community/mysql-community_9.6.0.orig.tar.gz"
+  sha256 "240061d869d5ae188c9a333845928899e9d963ccbd67865a8a2e4b6fcb67178c"
   license "GPL-2.0-only" => { with: "Universal-FOSS-exception-1.0" }
-  revision 3
 
   livecheck do
     url "https://dev.mysql.com/downloads/mysql/?tpl=files&os=src"
@@ -17,12 +16,13 @@ class Mysql < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
-    sha256 arm64_tahoe:   "1272ff2e7050857dd050b3f28bb2f1008307c5d9fc80f84d5dfceba214f8e6b9"
-    sha256 arm64_sequoia: "3e78a3eb79235d112e7819327c7a4ea1eea22f05ca6700581412a125955abb4e"
-    sha256 arm64_sonoma:  "a34a801f3e3ce8cf510f0309bcd72cb41685da680bedb1ac082c2e80bba4bf85"
-    sha256 sonoma:        "c9d48e7fc935e24e452b139509c0c884cc672509b39f4708075383ae69d96c17"
-    sha256 arm64_linux:   "9ef8cb5b982c6db86731a98e18e5a017dcbea792cee077b919f885d98bba3bb3"
-    sha256 x86_64_linux:  "cd3e93e9348e740267e385e7ba7929980adc63de3a31e1d67f85f74eff1e433d"
+    rebuild 1
+    sha256 arm64_tahoe:   "89e155570b72b3a3512bac1d272d44ba3566933f8f8539111affa58fd435e140"
+    sha256 arm64_sequoia: "78491e19abf22af1e5760e52c0160037e1971f55a5ac9ae605e5a6ad2f6cb914"
+    sha256 arm64_sonoma:  "931c76cc245d2ae2cd887949dde8aa944434e67ca3a50beecf78bafd3af0d8ed"
+    sha256 sonoma:        "87618e4075f4d1ea5cac5f194271db36ce9f7741c078ad37c5979f2c6df8ac0e"
+    sha256 arm64_linux:   "b0050d3878ffc69da9fc28374bf5e811d30789030000107a09ef257407fca11a"
+    sha256 x86_64_linux:  "99be0096577eaa097709a5f7d68f4a87b5ba63a755279b41e290c8b5d50c5a10"
   end
 
   depends_on "bison" => :build
@@ -33,7 +33,7 @@ class Mysql < Formula
   depends_on "lz4"
   depends_on "openssl@3"
   depends_on "protobuf"
-  depends_on "zlib" # Zlib 1.2.13+
+  depends_on "zlib-ng-compat" # Zlib 1.2.13+
   depends_on "zstd"
 
   uses_from_macos "curl"
@@ -82,7 +82,6 @@ class Mysql < Formula
       # Disable ABI checking
       inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0"
     elsif MacOS.version <= :ventura
-      ENV.llvm_clang
       ENV.append "LDFLAGS", "-L#{Formula["llvm"].opt_lib}/unwind -lunwind"
       # When using Homebrew's superenv shims, we need to use HOMEBREW_LIBRARY_PATHS
       # rather than LDFLAGS for libc++ in order to correctly link to LLVM's libc++.

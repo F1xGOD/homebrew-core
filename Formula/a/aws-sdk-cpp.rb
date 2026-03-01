@@ -1,22 +1,32 @@
 class AwsSdkCpp < Formula
   desc "AWS SDK for C++"
   homepage "https://github.com/aws/aws-sdk-cpp"
-  url "https://github.com/aws/aws-sdk-cpp/archive/refs/tags/1.11.720.tar.gz"
-  sha256 "6b0f56e8f6f7d5a837e73173646630161c2b7419ed178afc3f5fd5b7bab25e11"
   license "Apache-2.0"
   head "https://github.com/aws/aws-sdk-cpp.git", branch: "main"
+
+  stable do
+    url "https://github.com/aws/aws-sdk-cpp/archive/refs/tags/1.11.750.tar.gz"
+    sha256 "053d1f9a166e1614bef2691d652c800e5a0546f6fdf7676047ae62fb2ee12b64"
+
+    # Backport fix for missing headers
+    patch do
+      url "https://github.com/aws/aws-sdk-cpp/commit/175e80312cba3d2aa8d6ac0069d2a19161b1f273.patch?full_index=1"
+      sha256 "e30e650e724023a852b6f7169babb5d323c3de85e75394cfc02bd10650167df9"
+    end
+  end
 
   livecheck do
     throttle 15
   end
 
   bottle do
-    sha256                               arm64_tahoe:   "c1464a35d01570d2a72f37c426fe1500d8b7e1d6c55dba4cae40387fcc65b0f7"
-    sha256                               arm64_sequoia: "3a9bee1d12a201f4593b2d6bd25be9e6d5c74062f63eb661aa7ffbf65c67c43f"
-    sha256                               arm64_sonoma:  "b4387f61dba330666f7f7f80118f16c344b0de6d4d74cd318b7597c11475ff22"
-    sha256 cellar: :any,                 sonoma:        "069d1e23cca439e822572c52caa7cbae8604c6ea49825095c1eab451b41be0e0"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "2b0c2ea0f61bd45dafa6a3fbc0b3cf40efec7675efe2ea2729d9d2dc238af462"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b91fe6ab9bd011b62af774f240f520c2fb6a44352e9ffe1abc6522732ae7350d"
+    rebuild 1
+    sha256                               arm64_tahoe:   "bf22d8e6396b6f3fb60be214207e84e0c5b80b11bd3525b600a5c62fe261785a"
+    sha256                               arm64_sequoia: "9bf737ddb7b2adc41765db96251589ef72284e56ef7008b5e986c64082b9db36"
+    sha256                               arm64_sonoma:  "66c2d06aec56ba3ea073212bdb1130bfa0bf1ec2e9b7815428a3b5f3c0331871"
+    sha256 cellar: :any,                 sonoma:        "b738f5bb473c0d2b4fde59d0f871337845b519563821715e86d7b698c934a3c0"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "43e1b495c8fead310585c3b44ddc25b890853034102c6987c86350a77061a4f0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3bc3bacedc9060ade38b5d33dab97dfc38b4cbe15d8d3897971ee61c07e3b260"
   end
 
   depends_on "cmake" => :build
@@ -29,7 +39,10 @@ class AwsSdkCpp < Formula
   depends_on "aws-crt-cpp"
 
   uses_from_macos "curl"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     # Avoid OOM failure on Github runner

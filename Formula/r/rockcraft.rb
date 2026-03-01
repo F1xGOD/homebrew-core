@@ -5,18 +5,23 @@ class Rockcraft < Formula
   homepage "https://documentation.ubuntu.com/rockcraft/"
   # git checkout needed for setuptools-scm
   url "https://github.com/canonical/rockcraft.git",
-      tag:      "1.16.0",
-      revision: "700add86859077a9283d1d5a876cc4c1fdd532ea"
+      tag:      "1.17.0",
+      revision: "ec3e2f0539ca9228b5696a7d907cd857a485930c"
   license "GPL-3.0-only"
   head "https://github.com/canonical/rockcraft.git", branch: "main"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "2c926287246f81ad6e25a0d570155f87a5d6e789bb3d22ea1fc8d292fbb7c291"
-    sha256 cellar: :any,                 arm64_sequoia: "3a37fd6b19cb45dc7baefddd78ff2f75e4d4388b465dff0af0cdd56308560572"
-    sha256 cellar: :any,                 arm64_sonoma:  "f658f4bfac91ff3a53945d39614590094fc37c6ac52f6ceebb97f26a75a3f6de"
-    sha256 cellar: :any,                 sonoma:        "33c5e74cd516f66bf8c1afa09d17632c476711441094d63b5273651570723a4d"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "d991e44a6614737e12a0d4c9573b47c2dedce8580af2fdd8b45d96caaffafacf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ea6d479814327b593e835e730b6b5b4e829bac0ab6f4af2ef9ade23a28966f9a"
+    sha256 cellar: :any,                 arm64_tahoe:   "f409a92b81f32d1a1d7496aca5908536d8709f496a12fc98eaebe6833674c49c"
+    sha256 cellar: :any,                 arm64_sequoia: "64f15f1c6337671c8e6b5530c9625ddb6f29e25fb3a0af3312b2a2b217d6c18a"
+    sha256 cellar: :any,                 arm64_sonoma:  "885358ad43814057adb3762e55a5b367ddcd8fdbc5e40dc680b7bf12dfcfabad"
+    sha256 cellar: :any,                 sonoma:        "08aec148632d5100a2a87562acc1e7586df4f2ecdd24d45e9e0da37d21806785"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "c6f012010cf0add2844b0d9005a354d42a9b67c95a1ced2b325b555789f790dc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9cf60ae3665b176543c62159cd430aa8fda8db2fd13410268f2128e348727a0e"
   end
 
   depends_on "certifi" => :no_linkage
@@ -46,8 +51,8 @@ class Rockcraft < Formula
   end
 
   resource "craft-application" do
-    url "https://files.pythonhosted.org/packages/f6/f8/53b68f2b70385d31b5d6f8e147d70bedeece67076d7b06bc91d908669ac0/craft_application-6.0.1.tar.gz"
-    sha256 "291249a0f24e811c37175bbc9a23c7f4a37b3dba9db01a5dcd35d21253ce8db9"
+    url "https://files.pythonhosted.org/packages/81/86/4ee23f43b5b28d4bda940a441bd4fb599bd264ddd9f9d420d6c0673be92d/craft_application-6.2.0.tar.gz"
+    sha256 "ad89335d42afc74d5ab78ee9450b0d4c4abc4b88ec6cbe37b033f27378027e43"
   end
 
   resource "craft-archives" do
@@ -66,8 +71,8 @@ class Rockcraft < Formula
   end
 
   resource "craft-parts" do
-    url "https://files.pythonhosted.org/packages/f5/18/5ff89127861f2a3ab832b0bd7707bb5b3840a2234c415ef4756c1ba0c905/craft_parts-2.27.0.tar.gz"
-    sha256 "d4f52527b066093be6662ccf4279df2de0b5e620df38d66f607e5af5af9d3220"
+    url "https://files.pythonhosted.org/packages/5d/a0/3db062814d05d7af35386ea0d7c491a10673004298fc0519cc459e1cc6ad/craft_parts-2.29.0.tar.gz"
+    sha256 "dc90319e0080db8f6919bf10fcd63f000a26c1ce9e408847e2f0b223b911565b"
   end
 
   resource "craft-platforms" do
@@ -76,8 +81,8 @@ class Rockcraft < Formula
   end
 
   resource "craft-providers" do
-    url "https://files.pythonhosted.org/packages/7f/c5/2249f683065b65c272e727f239cfb0f884e8fdc5bbfa06b0b2a463a57c83/craft_providers-3.2.0.tar.gz"
-    sha256 "5637ae2865b813e3580d660eb4e36bf404a7b6fba28a42afdb94731d8a9305ec"
+    url "https://files.pythonhosted.org/packages/63/7a/23dbbbe35ee65236fe982afdd3d3832d4e9d51b4d1cbca40ea44ca457f68/craft_providers-3.3.0.tar.gz"
+    sha256 "2ef9eeb4abe4163a556c1148ec84af47b1904791ac296c774114243931acd90c"
   end
 
   resource "distro" do
@@ -86,13 +91,13 @@ class Rockcraft < Formula
   end
 
   resource "distro-support" do
-    url "https://files.pythonhosted.org/packages/90/c8/40cf2bdb5647c0ccad40a02edde6966d03a3258c550d92a2030427867029/distro_support-2025.8.13.tar.gz"
-    sha256 "12a73039db0a04e4b987789598f05c554adb3b2ec8e97bc28f40a125dc82d982"
+    url "https://files.pythonhosted.org/packages/91/9f/530d03c3d7172f787949af55768d088a341e52974c03ce26142693375de1/distro_support-2025.12.16.tar.gz"
+    sha256 "95d93375983a68cd749e7ae9d434a22ab7d5b6f515fbed52541ecc9457296946"
   end
 
   resource "httplib2" do
-    url "https://files.pythonhosted.org/packages/52/77/6653db69c1f7ecfe5e3f9726fdadc981794656fcd7d98c4209fecfea9993/httplib2-0.31.0.tar.gz"
-    sha256 "ac7ab497c50975147d4f7b1ade44becc7df2f8954d42b38b3d69c515f531135c"
+    url "https://files.pythonhosted.org/packages/c1/1f/e86365613582c027dda5ddb64e1010e57a3d53e99ab8a72093fa13d565ec/httplib2-0.31.2.tar.gz"
+    sha256 "385e0869d7397484f4eab426197a4c020b606edd43372492337c0b4010ae5d24"
   end
 
   resource "idna" do
@@ -151,13 +156,13 @@ class Rockcraft < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/cf/86/0248f086a84f01b37aaec0fa567b397df1a119f73c16f6c7a9aac73ea309/platformdirs-4.5.1.tar.gz"
-    sha256 "61d5cdcc6065745cdd94f0f878977f8de9437be93de97c1c12f853c9c0cdcbda"
+    url "https://files.pythonhosted.org/packages/1b/04/fea538adf7dbbd6d186f551d595961e564a3b6715bdf276b477460858672/platformdirs-4.9.2.tar.gz"
+    sha256 "9a33809944b9db043ad67ca0db94b14bf452cc6aeaac46a88ea55b26e2e9d291"
   end
 
   resource "pylxd" do
@@ -166,8 +171,8 @@ class Rockcraft < Formula
   end
 
   resource "pyparsing" do
-    url "https://files.pythonhosted.org/packages/f2/a5/181488fc2b9d093e3972d2a472855aae8a03f000592dbfce716a512b3359/pyparsing-3.2.5.tar.gz"
-    sha256 "2df8d5b7b2802ef88e8d016a2eb9c7aeaa923529cd251ed0fe4608275d4105b6"
+    url "https://files.pythonhosted.org/packages/f3/91/9c6ee907786a473bf81c5f53cf703ba0957b23ab84c264080fb5a450416f/pyparsing-3.3.2.tar.gz"
+    sha256 "c777f4d763f140633dcb6d8a3eda953bf7a214dc4eff598413c070bcdc117cbc"
   end
 
   resource "python-dateutil" do
@@ -216,8 +221,8 @@ class Rockcraft < Formula
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/8d/d2/ec1acaaff45caed5c2dedb33b67055ba9d4e96b091094df90762e60135fe/setuptools-80.8.0.tar.gz"
-    sha256 "49f7af965996f26d43c8ae34539c8d99c5042fbff34302ea151eaa9c207cd257"
+    url "https://files.pythonhosted.org/packages/18/5d/3bf57dcd21979b887f014ea83c24ae194cfcd12b9e0fda66b957c69d1fca/setuptools-80.9.0.tar.gz"
+    sha256 "f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c"
   end
 
   resource "six" do
@@ -228,6 +233,11 @@ class Rockcraft < Formula
   resource "snap-helpers" do
     url "https://files.pythonhosted.org/packages/50/2a/221ab0a9c0200065bdd8a5d2b131997e3e19ce81832fdf8138a7f5247216/snap-helpers-0.4.2.tar.gz"
     sha256 "ef3b8621e331bb71afe27e54ef742a7dd2edd9e8026afac285beb42109c8b9a9"
+  end
+
+  resource "snap-http" do
+    url "https://files.pythonhosted.org/packages/83/0b/97fa751d236936dbb4cfc227e04c677fee110e824ce623ed382b7e66caea/snap_http-1.11.0.tar.gz"
+    sha256 "ee9afbe38e53c242cd7970ebda6f79fcad517998d79bae50ad24ff6b357f4965"
   end
 
   resource "spdx" do
@@ -246,8 +256,8 @@ class Rockcraft < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "wadllib" do

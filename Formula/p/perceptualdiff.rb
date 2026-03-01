@@ -5,8 +5,6 @@ class Perceptualdiff < Formula
   sha256 "0dea51046601e4d23dc45a3ec342f1a305baf3bf3328e9ccdae115fe1942f041"
   license "GPL-2.0-or-later"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     sha256 cellar: :any,                 arm64_tahoe:   "03e7c420c4d2142cbec50a5ff677801f9a2ffef94cfdcb96715cfd88eca62667"
     sha256 cellar: :any,                 arm64_sequoia: "69f5e86989148e15fdca126111c1070bb23777eabadd346f8e735b6cedc86f5a"
@@ -17,6 +15,9 @@ class Perceptualdiff < Formula
     sha256 cellar: :any_skip_relocation, arm64_linux:   "1a32ccce208ebcb91041bdf8d2508618a5e1b671ea9fccd5f16c9bc8b2015303"
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "2d9a1e10f07e3467e60a855f18c75a07fee4c238d746dc0b91652c147733e9c8"
   end
+
+  deprecate! date: "2026-01-10", because: "uses deprecated `freeimage`"
+  disable! date: "2027-01-10", because: "uses deprecated `freeimage`"
 
   depends_on "cmake" => :build
   depends_on "freeimage"

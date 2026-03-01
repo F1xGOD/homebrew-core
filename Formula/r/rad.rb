@@ -1,18 +1,18 @@
 class Rad < Formula
   desc "Modern CLI scripts made easy"
   homepage "https://amterp.github.io/rad/"
-  url "https://github.com/amterp/rad/archive/refs/tags/v0.6.25.tar.gz"
-  sha256 "56a5447b4acabc8d190bd7bea4eb7746546684375238b2ef94c423c420f0a6b9"
+  url "https://github.com/amterp/rad/archive/refs/tags/v0.8.0.tar.gz"
+  sha256 "75dca31dbb0fb67ba6d6d27bf0073e0a59d3b9a78843fa034ed72c26799f2836"
   license "Apache-2.0"
   head "https://github.com/amterp/rad.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "f3a58a4b5a374623920130b7a99cc291495c9726655ab2987089348af6cbd885"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "39a2aa0707be583b9d07aff7bd8f9db8ee714165d287cec8db9922f5684e93ef"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8e95b348d5e2793cdfc21e3f69598ae9f2727b4494c518d7262b836ea791a296"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3255931decea4013300285b52037e288de7c4d04e0e5cc530da552976b4f0e97"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "8ee18e8b822f5e7ee3a76ce80b9e14eeb5e931984b08f1bc108c4ada12820e80"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "af380d96502109f2497bc0a33499c8f6ba0d7c2d03e2a229edce20067fe17762"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "2d8ee8452b0bb02e22149812ae750afca15c96a3d66281e7c46a26b194b0ed8c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7509cfda16190713d28fad235607bd98c7346ad34ea1f359d264f0a983b2a804"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "61431e87fe97f7000ecbdbe6d56b06d0e345b980a27d8d74730a35b3231ff62c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "4280d4c601b7fc7f0eb662730c712124755ad7540ac67a4486fa012f10ea4113"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "4c27f24e3f637faa120f26fdeae4156606f0927dfda58bd6d1a6208179b0041e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4935c8b27ed127b885fac20bbc55ace8758d20fc8d4175244670903db8c0be8f"
   end
 
   depends_on "go" => :build

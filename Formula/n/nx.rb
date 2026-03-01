@@ -1,18 +1,18 @@
 class Nx < Formula
   desc "Smart, Fast and Extensible Build System"
   homepage "https://nx.dev"
-  url "https://registry.npmjs.org/nx/-/nx-22.3.3.tgz"
-  sha256 "1a41938d356f18bc10909fcfe5ea39b4c978c2ee9198b4673e1d76b00c39132a"
+  url "https://registry.npmjs.org/nx/-/nx-22.5.3.tgz"
+  sha256 "846eb7142f1e2f3604153e422c4e28b295524c3b681db0e181b78fb2bfa46794"
   license "MIT"
   version_scheme 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "7e5ff0798721c7191140e053c2b423152cd948e61631eae5be84f0b4b7e77152"
-    sha256 cellar: :any,                 arm64_sequoia: "604f848c6aaf1489130d5cb4480f8b62ec5cea90ac511e8b152558b5b3868d59"
-    sha256 cellar: :any,                 arm64_sonoma:  "604f848c6aaf1489130d5cb4480f8b62ec5cea90ac511e8b152558b5b3868d59"
-    sha256 cellar: :any,                 sonoma:        "f7dce3959e53220c12f9556ff9641c9af3b4ee9791400a49c33ef50d44ee1974"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "e8fd0d5f15474290e4f86700458dc4ac89bde14c243333784ec04d5a703b3aee"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5513269b4849b65ef5233d8fd0c1b266333bb432528791df4b613bb0572b63a7"
+    sha256 cellar: :any,                 arm64_tahoe:   "d236d1411f732fbb5b3502cef6308b9d8a14662d22fd6d9e5c3424f0fa94e9a1"
+    sha256 cellar: :any,                 arm64_sequoia: "9e1e7af4282d6545b4324a1a8d4c33b28fa4bde7d789552e00162a20e5b8040c"
+    sha256 cellar: :any,                 arm64_sonoma:  "9e1e7af4282d6545b4324a1a8d4c33b28fa4bde7d789552e00162a20e5b8040c"
+    sha256 cellar: :any,                 sonoma:        "e0d1f83f0432dd7e1cf1ed70d6dfb71eabc599a82a4a581281672e3f90e4db3f"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "7071b94a63e7a4d724c6947a5191d93453080c6b2eadea216ae0ab375e19186a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9012e75f9855e389f5c9439946970f4eb1f593b070507fae4ea2f263b368be71"
   end
 
   depends_on "node"
@@ -36,7 +36,7 @@ class Nx < Formula
     system bin/"nx", "init", "--no-interactive"
     assert_path_exists testpath/"nx.json"
 
-    output = shell_output("#{bin}/nx 'test'")
-    assert_match "Successfully ran target test", output
+    output = shell_output("#{bin}/nx test").gsub(/\e\[[0-9;]*m/, "")
+    assert_match "Successfully ran target test for project @acme/repo", output
   end
 end

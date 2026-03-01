@@ -1,8 +1,8 @@
 class Bazel < Formula
   desc "Google's own build tool"
   homepage "https://bazel.build/"
-  url "https://github.com/bazelbuild/bazel/releases/download/8.5.0/bazel-8.5.0-dist.zip"
-  sha256 "b476d96141f9bd803562aee0448376b61494112918bce441898585493db33ed1"
+  url "https://github.com/bazelbuild/bazel/releases/download/9.0.0/bazel-9.0.0-dist.zip"
+  sha256 "dfa496089624d726a158afcac353725166f81c5708ee1ecc9e662f2891b3544d"
   license "Apache-2.0"
 
   livecheck do
@@ -11,12 +11,12 @@ class Bazel < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "2def149c7d67908fcaf8b5524fcaa6278b52e347df1417c822a900a55d8f2dff"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2def149c7d67908fcaf8b5524fcaa6278b52e347df1417c822a900a55d8f2dff"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4af6110ba35d016727ca246a5e989d764ef101c222b0670afe246834f3f18c2a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "ac882a8178f609b52fa6b459921a9180b2d6776768f9bba42340b17a8a740960"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "5453552e5de8c58c391a1b9e902d90ba81b478d2cefc0fb0c659b05fe2f6d30a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d54fb76fc0880203208012c4681dcf0ea9d77a67106afb27d9445b0d12120f0c"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "b93b8c24160c8008e82e14cf343bf965d903d5f389a9953775675941f9517a3f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b93b8c24160c8008e82e14cf343bf965d903d5f389a9953775675941f9517a3f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b8ed51284a3f0ff6134237ba61a0c6bd9f9758b125b51e9e5d2f9f7f9db4248d"
+    sha256 cellar: :any_skip_relocation, sonoma:        "07e3928b177f750d658ebc419aebc2310078f6eb0c887b04376359a0b1143d8a"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "223f7372762ef62f8cb2ace6d3cd4903529ad09e02b57f4d8be9e1ea3ac83c8b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc9980313a5778b1bfbe939a02d35790681fc92ad6e0e7d9c99b9569ba10a936"
   end
 
   depends_on "openjdk@21"
@@ -49,11 +49,11 @@ class Bazel < Formula
   def install
     java_home_env = Language::Java.java_home_env("21")
 
-    ENV["EMBED_LABEL"] = "#{version}-homebrew"
+    ENV["EMBED_LABEL"] = "#{version} #{tap.user}"
     # Force Bazel ./compile.sh to put its temporary files in the buildpath
     ENV["BAZEL_WRKDIR"] = buildpath/"work"
-    # Force Bazel to use brew OpenJDK
-    extra_bazel_args = ["--tool_java_runtime_version=local_jdk"]
+    # Force Bazel to use brewed OpenJDK and PATH
+    extra_bazel_args = %w[--tool_java_runtime_version=local_jdk --action_env=PATH --host_action_env=PATH --isatty=no]
     ENV.merge! java_home_env.transform_keys(&:to_s)
     # Bazel clears environment variables which breaks superenv shims
     ENV.remove "PATH", Superenv.shims_path
@@ -120,7 +120,9 @@ class Bazel < Formula
   end
 
   test do
-    touch testpath/"WORKSPACE"
+    (testpath/"MODULE.bazel").write <<~STARLARK
+      bazel_dep(name = "rules_java", version = "9.5.0")
+    STARLARK
 
     (testpath/"ProjectRunner.java").write <<~JAVA
       public class ProjectRunner {
@@ -131,6 +133,8 @@ class Bazel < Formula
     JAVA
 
     (testpath/"BUILD").write <<~STARLARK
+      load("@rules_java//java:defs.bzl", "java_binary")
+
       java_binary(
         name = "bazel-test",
         srcs = glob(["*.java"]),
@@ -153,6 +157,6 @@ class Bazel < Formula
     (testpath/"tools/bazel").chmod 0755
 
     assert_equal "stub-wrapper\n", shell_output("#{bin}/bazel --version", 1)
-    assert_equal "bazel #{version}-homebrew\n", shell_output("#{bin}/bazel-#{version} --version")
+    assert_match "bazel #{version}", shell_output("#{bin}/bazel-#{version} --version")
   end
 end

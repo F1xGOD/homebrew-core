@@ -186,6 +186,10 @@ jobs:
               path: Formula/.+
               content: license .*"(GPL|LGPL|AGPL|GFDL)-[0-9].[0-9][+]?".*
 
+            - label: review no_autobump stanza
+              path: Formula/.+
+              content: 'no_autobump! because: :requires_manual_review'
+
             - label: boost
               path: Formula/.+
               content: depends_on "boost(@[0-9.]+)?"
@@ -302,6 +306,7 @@ jobs:
                 openvino|\
                 pcl|\
                 ponyc|\
+                prowler|\
                 pytorch|\
                 qtwebengine|\
                 root|\
@@ -348,10 +353,10 @@ jobs:
                 libgpg-error|\
                 libidn2|\
                 libmicrohttpd|\
-                librist|\
                 libnghttp2|\
                 libomp|\
                 libpng|\
+                librist|\
                 libtool|\
                 libunistring|\
                 mpfr|\
@@ -359,20 +364,21 @@ jobs:
                 node|\
                 numpy|\
                 openblas|\
+                openjdk|\
                 openjpeg|\
                 openssl@3|\
                 p11-kit|\
                 pango|\
                 pcre2|\
                 python@3.14|\
+                qtbase|\
                 rav1e|\
+                readline|\
                 rust|\
                 sdl2|\
                 shared-mime-info|\
                 sqlite|\
                 suite-sparse|\
-                qtbase|\
-                readline|\
                 unbound|\
                 xz|\
                 zstd\
@@ -382,14 +388,29 @@ jobs:
 
             - label: CI-build-dependents-from-source
               path:
-                - 'Formula/.+/(cabal-install|docbook-xsl|emscripten|erlang|ocaml|ocaml-findlib|ocaml-num|openjdk|rust)\.rb'
-                - 'Aliases/(ghc|go)(@[0-9.]+)?$'
+                - "Formula/.+/(\
+                    cabal-install|\
+                    docbook-xsl|\
+                    emscripten|\
+                    erlang|\
+                    ocaml|\
+                    ocaml-findlib|\
+                    ocaml-num|\
+                    openjdk|\
+                    pyqt-builder|\
+                    rust\
+                    )\\.rb"
+                - "Aliases/(\
+                    ghc|\
+                    go\
+                    )(@[0-9.]+)?$"
               missing_content: '\n  revision [0-9]+\n'
               keep_if_no_match: true
               allow_any_match: true
 
             - label: CI-skip-recursive-dependents
               path: "Formula/.+/(\
+                alsa-lib|\
                 ca-certificates|\
                 certifi|\
                 cmake|\
@@ -398,9 +419,10 @@ jobs:
                 glib|\
                 harfbuzz|\
                 openssl@3|\
-                wayland-protocols|\
+                rust|\
                 sqlite|\
-                systemd\
+                systemd|\
+                wayland-protocols\
                 ).rb"
               keep_if_no_match: true
               allow_any_match: true
@@ -421,7 +443,6 @@ jobs:
 
             - label: CI-linux-self-hosted-deps
               path: "Formula/.+/(\
-                alsa-lib|\
                 glib|\
                 libcap|\
                 libva|\
@@ -430,7 +451,7 @@ jobs:
                 openssl@3|\
                 python@3.14|\
                 wayland-protocols|\
-                zlib|\
+                zlib-ng-compat\
                 ).rb"
               keep_if_no_match: true
               allow_any_match: true

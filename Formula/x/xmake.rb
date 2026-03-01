@@ -1,18 +1,18 @@
 class Xmake < Formula
   desc "Cross-platform build utility based on Lua"
   homepage "https://xmake.io/"
-  url "https://github.com/xmake-io/xmake/releases/download/v3.0.5/xmake-v3.0.5.tar.gz"
-  sha256 "b947666281222f79e082283b6f84e68880c499305890f6ab8b03b8bac82456dc"
+  url "https://github.com/xmake-io/xmake/releases/download/v3.0.7/xmake-v3.0.7.tar.gz"
+  sha256 "c9052e4550b8925268540603363d68fa90e4c1b407d0e6e00b735055afbea27f"
   license "Apache-2.0"
   head "https://github.com/xmake-io/xmake.git", branch: "dev"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "e122e50452d8057044ca9bf2664e2913cc06b468fffea12851ed2b2a83197b03"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1b1c4afeac76a18f56aa1d90a08a64691aed264afa1e6d5e8ec1b18f04b93455"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c910ea78c06b36c60cd1f6cb3e844ee395fb77c65d332061bcd293ef82555ac7"
-    sha256 cellar: :any_skip_relocation, sonoma:        "289dcf003043dc5b67086f8fc825231e3ade7b215ea2d864e006bd242fc4f8bc"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c05e7972405094cce476618600c1aa8f17f9bac1df38459844bbbe0c2ed6c767"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bb08339768e2a3c44000f89265364b9bdd8c9810f9ef340aade906ad7daf5a9a"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "d894528d5e21853788f313e1b1407dc7002a77c2e2455fb6dbd147dce5de595e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c554d24cc53498d0bc996a7ae8bba9e7a88c7406a6aeb78d37409a056cf06571"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "df9e67df229b1bf5e4ac7a796cef5b9b6c98d5ff8e08631fb5a1fe14e77627aa"
+    sha256 cellar: :any_skip_relocation, sonoma:        "67f0ecef9ca9f8964a6424890accf62abc0402066870e8baac0f4796573fae4d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "5dc3d3045dfe881b65508deff3fb014f8e0b7841da5ec13fb9e9b2028102a1ff"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a1bc14dea30e316f040d34f7118559773a4f82bea7e4c964188077dfe9279ce6"
   end
 
   uses_from_macos "ncurses"

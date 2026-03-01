@@ -7,12 +7,12 @@ class Dotnet < Formula
 
   stable do
     # Source-build tag announced at https://github.com/dotnet/source-build/discussions
-    url "https://github.com/dotnet/dotnet/archive/refs/tags/v9.0.112.tar.gz"
-    sha256 "6b0d297661f16ad272212f491516f9932a93eab1c68af622b94190a566eb4d6f"
+    url "https://github.com/dotnet/dotnet/archive/refs/tags/v10.0.103.tar.gz"
+    sha256 "92fbc35b1b7ede2f4995e32aaa354c7d227e99179aaaa4661282a9d0ec977e4e"
 
     resource "release.json" do
-      url "https://github.com/dotnet/dotnet/releases/download/v9.0.112/release.json"
-      sha256 "420355ac27b4756ad45c497c42361fbff02921fa78718ee36dcf6e2632259786"
+      url "https://github.com/dotnet/dotnet/releases/download/v10.0.103/release.json"
+      sha256 "05154d070eebb81ef7b1eff89466956db93ee42f9d03059a9eb91c0f2bd745ba"
 
       livecheck do
         formula :parent
@@ -20,12 +20,19 @@ class Dotnet < Formula
     end
   end
 
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "2f2322a8e3b4528b21a50bc0774e8764c1d6da0d53f35fb15557c9a2a7c57f18"
-    sha256 cellar: :any,                 arm64_sequoia: "5b0ab6727606b066ecbe191855e21ed3b99e7cf7b4206614be5b8f4aa0215033"
-    sha256 cellar: :any,                 arm64_sonoma:  "1849719e839920b9929ca2d34daaafe859611c625391e5d9d86786d9f07ac35e"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f366246b1e883ffec3ca12cc6e8c9cb92186af8e29cccacc957b583b35ddddda"
-    sha256                               x86_64_linux:  "1373f6a410cdfcde56024f40d5235a85fb00db5798a2dc6fd64742187f34cfaf"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "c7a20890580a32e135b5e72329962ed04b74bf308ceca4a945a4d562f91ff3ca"
+    sha256 cellar: :any,                 arm64_sequoia: "fb22c42da98af7d630e941fb91c0f966040ec212cea269159546b2b1d2ef85d6"
+    sha256 cellar: :any,                 arm64_sonoma:  "660b026358811e6c4f12853ddda218f24f8bf905f825147cf0d4d12b10d9e5a3"
+    sha256 cellar: :any,                 sonoma:        "96556ea4496f6e3fa7d2657f55697ae816ed7805d84afb2cc1bd2e18f4202dd3"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "85bc4fb6a26d2e9205ff544afea190088a8ac6bd1c89f25e15cf70585dcb7cdc"
+    sha256                               x86_64_linux:  "f115905c3bb05f74489b893f6d05792171d531ece66bd2bcefb93c6914498673"
   end
 
   depends_on "cmake" => :build
@@ -37,7 +44,6 @@ class Dotnet < Formula
 
   uses_from_macos "python" => :build
   uses_from_macos "krb5"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "grep" => :build # grep: invalid option -- P
@@ -46,19 +52,13 @@ class Dotnet < Formula
   on_linux do
     depends_on "libunwind"
     depends_on "lttng-ust"
+    depends_on "zlib-ng-compat"
 
     on_intel do
       depends_on "llvm" => :build
 
       fails_with :gcc do
         cause "Illegal instruction when running crossgen2"
-      end
-
-      # Backport fix for Clang 21
-      patch do
-        url "https://github.com/dotnet/runtime/commit/d4ff34564bcaf4ec5a02ecdca17ea63e5481cc42.patch?full_index=1"
-        sha256 "6b2485ca234b6dbab8ae5e2e5007c8e8d28130d14213cd5c5546cdefc27d8373"
-        directory "src/runtime"
       end
     end
   end
@@ -73,6 +73,20 @@ class Dotnet < Formula
     ENV["CLR_CC"] = which(ENV.cc)
     ENV["CLR_CXX"] = which(ENV.cxx)
 
+    # Fixes build error where member names shadow type names
+    # Error: declaration of '...' changes meaning of '...'
+    inreplace "src/runtime/src/coreclr/jit/gentree.h" do |s|
+      s.gsub! "    ExecutionContextHandling    ExecutionContextHandling",
+              "    ::ExecutionContextHandling    ExecutionContextHandling"
+      s.gsub! "= ExecutionContextHandling::None;",
+              "= ::ExecutionContextHandling::None;"
+
+      s.gsub! "    ContinuationContextHandling ContinuationContextHandling",
+              "    ::ContinuationContextHandling ContinuationContextHandling"
+      s.gsub! "= ContinuationContextHandling::None;",
+              "= ::ContinuationContextHandling::None;"
+    end
+
     if OS.mac?
       # Need GNU grep (Perl regexp support) to use release manifest rather than git repo
       ENV.prepend_path "PATH", Formula["grep"].libexec/"gnubin"
@@ -80,33 +94,31 @@ class Dotnet < Formula
       # Avoid mixing CLT and Xcode.app when building CoreCLR component which can
       # cause undefined symbols, e.g. __swift_FORCE_LOAD_$_swift_Builtin_float
       ENV["SDKROOT"] = MacOS.sdk_for_formula(self).path
+
+      # Skip installer build on macOS - prevents CreatePkg target errors
+      # See: https://github.com/dotnet/runtime/issues/122832
+      inreplace ["src/aspnetcore/Directory.Build.props", "src/runtime/Directory.Build.props"],
+                "</Project>",
+                "<PropertyGroup>\n    <SkipInstallerBuild>true</SkipInstallerBuild>\n  </PropertyGroup>\n</Project>"
     else
       icu4c_dep = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
       ENV.append_path "LD_LIBRARY_PATH", icu4c_dep.to_formula.opt_lib
-
-      # Work around build script getting stuck when running shutdown command on Linux
-      # TODO: Try removing in the next release
-      # Ref: https://github.com/dotnet/source-build/discussions/3105#discussioncomment-4373142
-      inreplace "build.sh", '"$CLI_ROOT/dotnet" build-server shutdown', ""
-      inreplace "repo-projects/Directory.Build.targets",
-                '"$(DotnetTool) build-server shutdown --vbcscompiler"',
-                '"true"'
     end
 
-    args = ["--clean-while-building", "--source-build", "--with-system-libs", "brotli+libunwind+rapidjson+zlib"]
+    args = %w[
+      --branding release
+      --clean-while-building
+      --source-build
+      --with-system-libs all
+    ]
     if build.stable?
       args += ["--release-manifest", "release.json"]
       odie "Update release.json resource!" if resource("release.json").version != version
       buildpath.install resource("release.json")
     end
 
-    system "./prep-source-build.sh"
-    # We unset "CI" environment variable to work around aspire build failure
-    # error MSB4057: The target "GitInfo" does not exist in the project.
-    # Ref: https://github.com/Homebrew/homebrew-core/pull/154584#issuecomment-1815575483
-    with_env(CI: nil) do
-      system "./build.sh", *args
-    end
+    system "./prep-source-build.sh", "--"
+    system "./build.sh", *args
 
     libexec.mkpath
     tarball = buildpath.glob("artifacts/*/Release/dotnet-sdk-*.tar.gz").first
@@ -166,16 +178,13 @@ class Dotnet < Formula
 
     system bin/"dotnet", "build", "--framework", target_framework, "--output", testpath, testpath/"test.csproj"
     output = shell_output("#{bin}/dotnet run --framework #{target_framework} #{testpath}/test.dll a b c")
-    # We switched to `assert_match` due to progress status ANSI codes in output.
-    # TODO: Switch back to `assert_equal` once fixed in release.
-    # Issue ref: https://github.com/dotnet/sdk/issues/44610
-    assert_match "#{testpath}/test.dll,a,b,c\n", output
+    assert_equal "#{testpath}/test.dll,a,b,c\n", output
 
     # Test to avoid uploading broken Intel Sonoma bottle which has stack overflow on restore.
     # See https://github.com/Homebrew/homebrew-core/issues/197546
     resource "docfx" do
-      url "https://github.com/dotnet/docfx/archive/refs/tags/v2.78.3.tar.gz"
-      sha256 "d97142ff71bd84e200e6d121f09f57d28379a0c9d12cb58f23badad22cc5c1b7"
+      url "https://github.com/dotnet/docfx/archive/refs/tags/v2.78.4.tar.gz"
+      sha256 "255f71f4a6fc7b9ffd0c598d0eba11630dc01262f1fa45ec4f1794508f7033cf"
     end
     resource("docfx").stage do
       system bin/"dotnet", "restore", "src/docfx", "--disable-build-servers", "--no-cache"

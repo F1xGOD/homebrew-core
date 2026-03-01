@@ -1,8 +1,8 @@
 class Xgboost < Formula
   desc "Scalable, Portable and Distributed Gradient Boosting Library"
   homepage "https://xgboost.ai/"
-  url "https://github.com/dmlc/xgboost/releases/download/v3.1.2/xgboost-src-3.1.2.tar.gz"
-  sha256 "12f2d6f735fa71e007c40171fd926c12306276dd299dc48f6c923e4f3891c33e"
+  url "https://github.com/dmlc/xgboost/releases/download/v3.2.0/xgboost-src-3.2.0.tar.gz"
+  sha256 "16a31dfbc0c54544c9c36ab5f696fa7b646c125f161c52c814d757a58241a404"
   license "Apache-2.0"
 
   livecheck do
@@ -11,12 +11,12 @@ class Xgboost < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "69a8d50686d1e7a9a1891cce69e0dfae6a481c19750c24405b069d8fbda93df3"
-    sha256 cellar: :any,                 arm64_sequoia: "41ca8720cb5d93af050049cc686050f3c3923e9f157ad8c89f2213af3c4aec04"
-    sha256 cellar: :any,                 arm64_sonoma:  "19e16791812ee2a3bdd303d8bdf4141d4d8f93750948873e69209c12c0730969"
-    sha256 cellar: :any,                 sonoma:        "44f257577c7abf343a002edb4294793ae46e19cd4675da7feeecf4415d35ee20"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "5a2f627e7df7fddb9e6dc1480b9a664954c11405c060f8887766b786ee278772"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8d37e6667cdac436dd23aea5d57548fc8c24566fc503942cc2c27b2721fc5101"
+    sha256 cellar: :any,                 arm64_tahoe:   "5a95ce8b876749dcc5ef5675674500ead83b3da69b64945455f20cc6765c8365"
+    sha256 cellar: :any,                 arm64_sequoia: "e346db9ed7ee1b5a718b0ee94ae7c311aa1baa31b7c0ed01db4ad93ae600d84b"
+    sha256 cellar: :any,                 arm64_sonoma:  "349ede65433762b092f684a0130fe9b63c134d8417e73cad766dd03cb35e9b5a"
+    sha256 cellar: :any,                 sonoma:        "bae04c0461e2a5e996e67a9e0c2e2648b7e58fa8cf9e9a35065ef1c8daa2b6cb"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "5969e0b1577357773b3cf5daca4a7237fa62dae7dc3ce95c54dcae44944dd8f0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bbd350d38e5d16cc7f46993d316bdee723c7a4e7b9a53dab9e2d0912e5678e4f"
   end
 
   depends_on "cmake" => :build
@@ -36,8 +36,6 @@ class Xgboost < Formula
   end
 
   def install
-    ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
-
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"

@@ -16,7 +16,10 @@ class Anyquery < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "fe11155b9ff95e6974a11c963eba2ccf3ee387bfb8357fe51d5793b3542223be"
   end
 
-  depends_on "go" => :build
+  # unpin Go when Anyquery supports Go 1.26
+  # (when go.mod references vitess > v23.0.2, ref https://github.com/vitessio/vitess/pull/19367)
+  depends_on "go@1.25" => :build
+  depends_on "mysql-client" => :test
 
   def install
     ENV["CGO_ENABLED"] = "1" if OS.linux? && Hardware::CPU.arm?
@@ -33,14 +36,18 @@ class Anyquery < Formula
   end
 
   test do
-    assert_match "no such table: non_existing_table",
-                 shell_output("#{bin}/anyquery -q \"SELECT * FROM non_existing_table\"")
-    # test server
-    pid = fork do
-      system bin/"anyquery", "server"
+    output = shell_output("#{bin}/anyquery -q \"SELECT * FROM non_existing_table\"")
+    assert_match "no such table: non_existing_table", output
+
+    port = free_port.to_s
+    pid = spawn bin/"anyquery", "server", "--port", port
+    begin
+      sleep 5
+      output = shell_output("#{Formula["mysql-client"].bin}/mysql -h 127.0.0.1 -P #{port} -e 'show tables;' main")
+      assert_match "information_schema.COLLATIONS", output
+    ensure
+      Process.kill("TERM", pid)
+      Process.wait(pid)
     end
-    sleep 20
-  ensure
-    Process.kill("TERM", pid)
   end
 end

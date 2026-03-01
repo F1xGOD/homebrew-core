@@ -1,8 +1,8 @@
 class Apko < Formula
   desc "Build OCI images from APK packages directly without Dockerfile"
   homepage "https://github.com/chainguard-dev/apko"
-  url "https://github.com/chainguard-dev/apko/archive/refs/tags/v0.30.34.tar.gz"
-  sha256 "5ff2e903667148dfab6b43982a254fa51cb9ae63332bb8f9e566a83e4d363a30"
+  url "https://github.com/chainguard-dev/apko/archive/refs/tags/v1.1.11.tar.gz"
+  sha256 "40b0161f2a93855c485c82db17fd12946584d8708dd6fc87e9ba760ded9f2edc"
   license "Apache-2.0"
   head "https://github.com/chainguard-dev/apko.git", branch: "main"
 
@@ -15,13 +15,12 @@ class Apko < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "25b47788f10286de9158458845fac3da20e0f889c469eba524c62add1aee7429"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2b5ca487439284a224e839af52841a7653ee9168765ea995a1a64b5dcc7523ea"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "da4c426d4b4d98a6e779060a4e6e63d56beba1879fc775b10350a309d2223392"
-    sha256 cellar: :any_skip_relocation, sonoma:        "4ec17bc23fb1fa011d18c8e6229d8d52f2e12e26d741ebda22ef6c4b4e33435b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b755c24fe97bdeacef4fbdcff5de455b1a80cd222594c156262969ee2b16558b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e3f3a129c12daa6f1c419d0c7c62bb5fa2f071e42d4ee8fdfeb13032af48802f"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "b27d84bfb93f813d241615aa8e70577434d6288e83108d079b2ad71d79a74cd9"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "66dc5ef696c44080436f097ad5160c2f311e1ad1d456589d258bbd1b63fff23e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "399cd0a05d0be17901e0e144792a53b79c24519894983e552193620ca4c5297c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "0fafac56b5b2cbb39fefb194c73e3fea5eb02078a8ea1fdcf3c7283b3670679d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "1e07836fe53859c730032b657716fec44c0dbf6cca412ce62d0251e3bdf96023"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d00d7ea42ff7fff214284b32f2907d560260f983938ee3e5c204174464286537"
   end
 
   depends_on "go" => :build

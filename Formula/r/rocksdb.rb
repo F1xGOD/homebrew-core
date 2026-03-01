@@ -1,19 +1,19 @@
 class Rocksdb < Formula
   desc "Embeddable, persistent key-value store for fast storage"
   homepage "https://rocksdb.org/"
-  url "https://github.com/facebook/rocksdb/archive/refs/tags/v10.7.5.tar.gz"
-  sha256 "a9948bf5f00dd1e656fc40c4b0bf39001c3773ad22c56959bdb1c940d10e3d8d"
+  url "https://github.com/facebook/rocksdb/archive/refs/tags/v10.10.1.tar.gz"
+  sha256 "df2ff348f3fac8578fd4b727eee7267aaf90cd403c99b55e898d1db63fa8cff5"
   license any_of: ["GPL-2.0-only", "Apache-2.0"]
-  revision 1
   head "https://github.com/facebook/rocksdb.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "91f1e32cc2accef334886facbb0a87db6c5d64927e0c33a8a6d901d76775e8ca"
-    sha256 cellar: :any,                 arm64_sequoia: "eac0fd5b81ce8bf4a25449cae9ddf7915860cd47bd6bfbf1faac9a3ac2e073b2"
-    sha256 cellar: :any,                 arm64_sonoma:  "de2bb132a7d973e535390268a455be39ef3925b97b16c2ba86a96ea2d4e908c6"
-    sha256 cellar: :any,                 sonoma:        "5e17d55dc11662f24138fa44b7d1c8e3ee6824abb6689457e189845b9a1a90df"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "66de4009ed5fb8249d79bd3305aca4391f03da4b3e1c82d9826e9958d8842cdd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "93f9289c81a27fa1291fa9f3fff08cf3d7fa8a4d212062e02bedd9beae4bb25f"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "d1614d2a4c5acb5bf39aebcb2792717cff23ef9d8dd761cbc4c03f42227a44f3"
+    sha256 cellar: :any,                 arm64_sequoia: "fbd10ebeaf9b1518d3af65eec5ba4bbf9a71dfe53f6022163af62068dfcfa72f"
+    sha256 cellar: :any,                 arm64_sonoma:  "5fcd71d99272f69748d20547639cd29f8b74eee68c7cbdcc965f64c1c79c54ac"
+    sha256 cellar: :any,                 sonoma:        "04b506ca88a63e1f6f17d9710c175642b139f570d4601c2062403e0a2483eccc"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "ad10f71bedbadd5f0cd51bc782704e0e10d710ee1599500916331d79d1af7d9e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "90c4057d4b34589ce782a576fca13702246c2f9bb94cb421930f7dd1e9b45f93"
   end
 
   depends_on "cmake" => :build
@@ -23,13 +23,9 @@ class Rocksdb < Formula
   depends_on "zstd"
 
   uses_from_macos "bzip2"
-  uses_from_macos "zlib"
 
-  # Fix to error ld: library 'atomic' not found
-  # PR ref: https://github.com/facebook/rocksdb/pull/14048
-  patch do
-    url "https://github.com/facebook/rocksdb/commit/1d18c4ed0177f184f228a7cdfb78eb85d0dab540.patch?full_index=1"
-    sha256 "7c76c3aaf970cd38129f42b6b76da3f37c59048507681c6953211d233e8cbdff"
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   def install

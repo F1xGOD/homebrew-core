@@ -2,8 +2,8 @@ class Fortio < Formula
   desc "HTTP and gRPC load testing and visualization tool and server"
   homepage "https://fortio.org/"
   url "https://github.com/fortio/fortio.git",
-      tag:      "v1.73.1",
-      revision: "e7d1fea2a94108269baef277dff2c23f31035a60"
+      tag:      "v1.74.0",
+      revision: "5e8726d193ae6cdda257320411aa1c4eb890db45"
   license "Apache-2.0"
   head "https://github.com/fortio/fortio.git", branch: "master"
 
@@ -16,12 +16,12 @@ class Fortio < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "7a229bee0e9ef7d5a05c914c740f58da0778272b1a63eda7f042a45732ca1b58"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7a229bee0e9ef7d5a05c914c740f58da0778272b1a63eda7f042a45732ca1b58"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7a229bee0e9ef7d5a05c914c740f58da0778272b1a63eda7f042a45732ca1b58"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b7a000702fd1edf8df74269457fe993b80475d091adc5de56665ff45ac348c04"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "6a9a96ba0839771e054e1b9f396cf9bdf088919d27ceac427cf655a76d4ddc0d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8d5e5ebc9459fb5e810039e8b2664875caf488b10ca0bcdd9c7c167ff3379952"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "02ac622031a875c66b580bace7536a329d17cdd43cb471410cb5d7d833e4dc2c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "02ac622031a875c66b580bace7536a329d17cdd43cb471410cb5d7d833e4dc2c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "02ac622031a875c66b580bace7536a329d17cdd43cb471410cb5d7d833e4dc2c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a2bf13857791fc4aab8165f9859e6c394c19e01c0171311c723871e7e6016571"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "38d39b0995271882402fbbce912c34f629fef2a374f14cc58a1276d1310cab40"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2d0210fb98bab882a6f2de83edb766d368fbfdc7ff39c0515d617ab35216a722"
   end
 
   depends_on "go" => :build
@@ -35,15 +35,14 @@ class Fortio < Formula
     assert_match version.to_s, shell_output("#{bin}/fortio version")
 
     port = free_port
+    pid = spawn bin/"fortio", "server", "-http-port", port.to_s
     begin
-      pid = fork do
-        exec bin/"fortio", "server", "-http-port", port.to_s
-      end
       sleep 2
       output = shell_output("#{bin}/fortio load http://localhost:#{port}/ 2>&1")
       assert_match(/^All\sdone/, output.lines.last)
     ensure
-      Process.kill("SIGTERM", pid)
+      Process.kill("TERM", pid)
+      Process.wait(pid)
     end
   end
 end

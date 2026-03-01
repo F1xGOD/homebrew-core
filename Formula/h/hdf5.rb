@@ -1,9 +1,10 @@
 class Hdf5 < Formula
   desc "File format designed to store large amounts of data"
   homepage "https://www.hdfgroup.org/solutions/hdf5/"
-  url "https://github.com/HDFGroup/hdf5/releases/download/hdf5_1.14.6/hdf5-1.14.6.tar.gz"
-  sha256 "e4defbac30f50d64e1556374aa49e574417c9e72c6b1de7a4ff88c4b1bea6e9b"
+  url "https://github.com/HDFGroup/hdf5/releases/download/2.0.0/hdf5-2.0.0.tar.gz"
+  sha256 "f4c2edc5668fb846627182708dbe1e16c60c467e63177a75b0b9f12c19d7efed"
   license "BSD-3-Clause"
+  revision 1
   version_scheme 1
 
   # Upstream maintains multiple major/minor versions and the "latest" release
@@ -14,17 +15,13 @@ class Hdf5 < Formula
     strategy :github_releases
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "7dd4b930e5542aafbd2393a5131de5ce20c4b2be182f9a5b6a36564a015b520c"
-    sha256 cellar: :any,                 arm64_sequoia: "2338b44eb0a44fbb3261862de8310f98f749caef3ae9387687b961e7f3b97d0f"
-    sha256 cellar: :any,                 arm64_sonoma:  "50b38bf19514ed01f14c9c2d94619945fcdc60c5deaf83ea1595916093f7977c"
-    sha256 cellar: :any,                 arm64_ventura: "3bbb75b9bb29386801e650f2406ecde85ec9d73460b0b1bd2629d457a7ba1672"
-    sha256 cellar: :any,                 sonoma:        "13a628da9dbe2b7528532731dabe50715bf0487ce069f040fac75f9eadd8b3b5"
-    sha256 cellar: :any,                 ventura:       "ee3258e58082872fac217ece616a82a76c945ba9f38362c710b77df833adbceb"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "8a5ab8ac6290a03e1e69dda1ff8363c8f2dfdfed2e7491e8d04d95987a3f98fc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "526dee09cdfb1857f883931aa914cab567df80cf2cc95dfaa899d6fbee9f6619"
+    sha256 cellar: :any,                 arm64_tahoe:   "ae6cec3e48d2f3ace0027a8ae722494911048a9889bb2e0a6785687a3d0c2bd8"
+    sha256 cellar: :any,                 arm64_sequoia: "b023689b62eeab2d1be5c814d8877c24b70d09147c08441752ea836c4491c47b"
+    sha256 cellar: :any,                 arm64_sonoma:  "ac477526c4f5405c6bbdb81bdbff7bf7d9da42e40e0bbdfe3d48498caf8c803c"
+    sha256 cellar: :any,                 sonoma:        "09ff5ab1eff3f2b6767c2f52103418d31409c796d6cb7914d7a03e062f212012"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e7e8b27ef73eda4843dd686e751bbb43ba096406209f06f099f94ba37e68e2e5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "46d20eb636a2295c21b7498d5a39ed30634df1b9a956bcae089ef0df7ec9f2e8"
   end
 
   depends_on "cmake" => :build
@@ -32,41 +29,41 @@ class Hdf5 < Formula
   depends_on "libaec"
   depends_on "pkgconf"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   conflicts_with "hdf5-mpi", because: "hdf5-mpi is a variant of hdf5, one can only use one or the other"
 
   def install
-    args = %w[
+    # Avoid c/c++ shims in settings files
+    inreplace_c_files = %w[
+      src/H5build_settings.cmake.c.in
+      src/libhdf5.settings.in
+    ]
+    inreplace inreplace_c_files do |s|
+      s.gsub! "@CMAKE_C_COMPILER@", ENV.cc
+      s.gsub! "@CMAKE_CXX_COMPILER@", ENV.cxx
+    end
+
+    # CMake FortranCInterface_VERIFY fails with LTO on Linux due to different GCC and GFortran versions
+    ENV.append "FFLAGS", "-fno-lto" if OS.linux?
+
+    args = %W[
+      -DHDF5_H5CC_C_COMPILER=#{ENV.cc}
+      -DHDF5_H5CC_CXX_COMPILER=#{ENV.cxx}
       -DHDF5_USE_GNU_DIRS:BOOL=ON
       -DHDF5_INSTALL_CMAKE_DIR=lib/cmake/hdf5
       -DHDF5_BUILD_FORTRAN:BOOL=ON
       -DHDF5_BUILD_CPP_LIB:BOOL=ON
       -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=ON
+      -DHDF5_ENABLE_ZLIB_SUPPORT:BOOL=ON
     ]
 
     # https://github.com/HDFGroup/hdf5/issues/4310
     args << "-DHDF5_ENABLE_NONSTANDARD_FEATURE_FLOAT16:BOOL=OFF"
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
-
-    # Avoid c shims in settings files
-    inreplace_c_files = %w[
-      build/src/H5build_settings.c
-      build/src/libhdf5.settings
-      build/CMakeFiles/h5cc
-      build/CMakeFiles/h5hlcc
-    ]
-    inreplace inreplace_c_files, Superenv.shims_path/ENV.cc, ENV.cc
-
-    # Avoid cpp shims in settings files
-    inreplace_cxx_files = %w[
-      build/CMakeFiles/h5c++
-      build/CMakeFiles/h5hlc++
-    ]
-    inreplace_cxx_files << "build/src/libhdf5.settings" if OS.linux?
-    inreplace inreplace_cxx_files, Superenv.shims_path/ENV.cxx, ENV.cxx
-
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end

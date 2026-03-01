@@ -1,37 +1,28 @@
 class Diamond < Formula
   desc "Accelerated BLAST compatible local sequence aligner"
   homepage "https://github.com/bbuchfink/diamond"
-  url "https://github.com/bbuchfink/diamond/archive/refs/tags/v2.1.17.tar.gz"
-  sha256 "71d0bad8453823f25c92634d00cf8dac02972840a19f4d34783e1e52d2d13d77"
+  url "https://github.com/bbuchfink/diamond/archive/refs/tags/v2.1.23.tar.gz"
+  sha256 "ebac52b733216b6d2585fdf13e99edf5edffcc6f8c46a340a445bb03684c8726"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "531331f17e37ea06c0b6f33aea4d90229601e7509a6c285f9b6f64be77d199dc"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "cef84ff2de611955e8ff6e7d8a075322fb19795395b72be725da41cccb67dae2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3f48850d055f2114843083c791c6e5ccc45a38aaff65f44f0c5135c26fa0d250"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e1b1a020ee53978e824d92c3d1e5de0dd9c48908d985d100057e9e1aa5258649"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "eb4caa521e71ca8284e047106055647a41521a09bd7db345ee92a1ac1b3a0e61"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "26759fd4515ed7fd5a5a1e3132f01eeba011bd735fd4be54adc7886d7b7fa09d"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "e6548e006c2ee39452c85d7acbd888b4b664b665b05777f44b2e54646423a66a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5f0f8373285d2907d2043180b487bdb34b94a8796e65097b9c5f5b47c8fa720c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "54b24a1869d3ad875cae8d398f3c4e32d14d685c7ca235f09e7ba8271e33fe36"
+    sha256 cellar: :any_skip_relocation, sonoma:        "69806bd545b2608766869f8873b1eb6461b34c949ebc513b346719c15c2bd0ba"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "eb1559108f988480835bd87f0015654b5b608927cd7a020c5e1f1861b7436413"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0b2df73c8eeb630511baababc770f358ce5ed3cd516a76d401438f9b50f5eafc"
   end
 
   depends_on "cmake" => :build
 
   uses_from_macos "sqlite"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
-    if DevelopmentTools.clang_build_version >= 1700
-      # Fix to error: no member named 'uncaught_exception' in namespace 'std'; did you mean 'uncaught_exceptions'?
-      inreplace "src/util/log_stream.h",
-                "!std::uncaught_exception()",
-                "std::uncaught_exceptions() == 0"
-      # Fix to error: no matching function for call to object of type 'const __copy_n'
-      # TransformIterator is not an input_iterator in C++20 iterator concepts
-      inreplace "src/util/data_structures/flat_array.h",
-                "data_.insert(data_.end(), begin, end);",
-                "std::for_each(begin, end, [&](auto&& v){ data_.push_back(v); });"
-    end
-
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"

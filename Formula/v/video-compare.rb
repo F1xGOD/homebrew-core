@@ -1,17 +1,17 @@
 class VideoCompare < Formula
   desc "Split screen video comparison tool using FFmpeg and SDL2"
   homepage "https://github.com/pixop/video-compare"
-  url "https://github.com/pixop/video-compare/archive/refs/tags/20251213.tar.gz"
-  sha256 "4b79583a52494ac35b5edd216fcc985e591fd0456e06c474972b51606d220272"
+  url "https://github.com/pixop/video-compare/archive/refs/tags/20260214.tar.gz"
+  sha256 "f7a9232c94814f4b796ed0ca88786cc6f9aa8c9e46d11ed9eea2ce1279e588c2"
   license "GPL-2.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "3991ace6e26cb00a8ee7e4b79d97793d0b1e0ba3db6bb9f434d294038a7065e9"
-    sha256 cellar: :any,                 arm64_sequoia: "4fc724c2c413c8ec2732cad1248b43516138aead62a028fad931552e533620cc"
-    sha256 cellar: :any,                 arm64_sonoma:  "c64faa8c4f44caa51e4aa401ee727d3e795245e728c52848201eef7d6b1c3c8c"
-    sha256 cellar: :any,                 sonoma:        "ababb955b17e08fc6e69e717d1623583fad18e14f961dff774e049c5d7781734"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "1205f01248bdc10aabfd25efc0cec6d2cc214a32a51e15c274e9f933ffac9c96"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "eb6725716edf7755989a473439bffda47c6d44c5116540430b177fdf2ee1271d"
+    sha256 cellar: :any,                 arm64_tahoe:   "5c41f5c842cb6567fef3b2154d5cdd9d4a10c563b7a01b58322c28d0e2f6453d"
+    sha256 cellar: :any,                 arm64_sequoia: "d08623273c95110d928f1bd57e613f09c15ad5764593b8fb3ee68e5dabd3d005"
+    sha256 cellar: :any,                 arm64_sonoma:  "4eee5a0b2cd44dd5ff48c96774f955be19cc02457ba8111ec2807fc63764c992"
+    sha256 cellar: :any,                 sonoma:        "1181845ab67d5049456f91e6bafc417846a7feb943c1ec321b4bdadbb04e1808"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b4f980acf1739beb513ce8714e94e931bf8aa1044dff63c615dad82636201160"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "396cd7cb97832f0b6b6c909a3c11bc4375b829023d30ccadea7d440a1cbdad9f"
   end
 
   depends_on "ffmpeg"
@@ -26,9 +26,7 @@ class VideoCompare < Formula
   test do
     testvideo = test_fixtures("test.gif") # GIF is valid ffmpeg input format
     begin
-      pid = fork do
-        exec bin/"video-compare", testvideo, testvideo
-      end
+      pid = spawn bin/"video-compare", testvideo, testvideo
       sleep 3
     ensure
       Process.kill("TERM", pid)

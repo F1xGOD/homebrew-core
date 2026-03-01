@@ -1,20 +1,11 @@
 class Pinocchio < Formula
   desc "Efficient and fast C++ library implementing Rigid Body Dynamics algorithms"
   homepage "https://stack-of-tasks.github.io/pinocchio"
+  url "https://github.com/stack-of-tasks/pinocchio/releases/download/v3.9.0/pinocchio-3.9.0.tar.gz"
+  sha256 "60553630d83de492bc0cf1126add2acc591c87f1bc8ea7f70693e7563fc103a3"
   license "BSD-2-Clause"
-  revision 3
+  revision 1
   head "https://github.com/stack-of-tasks/pinocchio.git", branch: "devel"
-
-  stable do
-    url "https://github.com/stack-of-tasks/pinocchio/releases/download/v3.8.0/pinocchio-3.8.0.tar.gz"
-    sha256 "aa4664d95a54af7197354a80f5ad324cb291b00593886b78dd868b1fd13636ca"
-
-    # Backport support for Boost 1.89.0
-    patch do
-      url "https://github.com/stack-of-tasks/pinocchio/commit/fbc4ee6dcf3a082834472faef137aff680aed185.patch?full_index=1"
-      sha256 "3e06a335e5722d8bce41825d2e4cc7c24ecb901c59bf5b4e1a41e7534508c35c"
-    end
-  end
 
   livecheck do
     url :stable
@@ -22,13 +13,12 @@ class Pinocchio < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256                               arm64_tahoe:   "765252361b069130a17ed7e5479e49ab941dfdc73bea52c236c0bbfe44edc972"
-    sha256                               arm64_sequoia: "01649bbddd2c7eddc9d58c1e654733ce1b525579066ee55720ef05bbde7fd3ab"
-    sha256                               arm64_sonoma:  "510a870a1b145f9c5723fd165673ca659a61bc17b1e15413ff55b72a8400977c"
-    sha256 cellar: :any,                 sonoma:        "f253712cbe290a0e0f390db5767d37307b2b7c4d7d421bbc2491023e958f314b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "4a107f39b9e3a5f436605519bc1fb2ebf85cba19d0bd32369b51874d29738f5a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "65a9b4dffd6b821dcf8d078b95b3e16e4e2582dd1d0e6a7cdddb8bac9d41dea6"
+    sha256                               arm64_tahoe:   "86760207b0a7782de6ca11d04726d572890eb3cba376d18bdd5d7c443daf3556"
+    sha256                               arm64_sequoia: "678658704bb233f5551f42558bcc2fe6059393b40778fe82a835ce22f0e552de"
+    sha256                               arm64_sonoma:  "5b909398a93744936f8eb31da544d85956036ef736d167d751fed2fbe3eb28dc"
+    sha256 cellar: :any,                 sonoma:        "88cccbcb3217a83fb2460ae41b38afd9d99edef7e3e311e25d84bfc56d48b765"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "63d9387d9e37e929257b1e50f02ae50607d4ffa600082a6783fc1cdec975dc11"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3b2477eb36d42baeef8bfcd2456bfc1b02ac161297a880ad5a301785e2993732"
   end
 
   depends_on "cmake" => :build

@@ -1,18 +1,18 @@
 class Dasel < Formula
   desc "JSON, YAML, TOML, XML, and CSV query and modification tool"
   homepage "https://github.com/TomWright/dasel"
-  url "https://github.com/TomWright/dasel/archive/refs/tags/v3.2.0.tar.gz"
-  sha256 "8e0c20898ccf24ac9ca2217dec21bc4e0f6a17949431756ea0bce94d55d0cd43"
+  url "https://github.com/TomWright/dasel/archive/refs/tags/v3.3.1.tar.gz"
+  sha256 "0d83ee2235b2698ae84402cc03f0e3880a7b8e132408d5b45d02d544da894abc"
   license "MIT"
   head "https://github.com/TomWright/dasel.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "8d1a43143567c60c5d7b82ccde34b3f325703121d100996721ab16e923d378c8"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8d1a43143567c60c5d7b82ccde34b3f325703121d100996721ab16e923d378c8"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8d1a43143567c60c5d7b82ccde34b3f325703121d100996721ab16e923d378c8"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e0eb540b3fb50cb7eb218abd8a3c22c1883e7aed7ade905fce4082fb2762d3c2"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "1e7185b8d75ff0d94fb12bb667ce4ca56188985d810ebd5e2a04371b06c2c41f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f14f48f6b23fe44392accfb0bfd6561b4d4d9ae0f50124024cb6fa1ea35d713a"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "d002a98797ee44628fd3338bcf03d62f65c1c6446794e69e3929b80e952ba765"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d002a98797ee44628fd3338bcf03d62f65c1c6446794e69e3929b80e952ba765"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d002a98797ee44628fd3338bcf03d62f65c1c6446794e69e3929b80e952ba765"
+    sha256 cellar: :any_skip_relocation, sonoma:        "42ed0e8bdf37a9e1f53790e4477918c61a3a2528070339f5e86b642da69b821e"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "c49c88313c29c180c6a84d8a67ea9526575ed178fb69c11b9fdc86756a8fed9d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9c4ae5831bd03cb6c0e8cf027f336cd7ea4fe33f9b7a7d8e77b2bdfcdba4fd61"
   end
 
   depends_on "go" => :build
@@ -23,7 +23,7 @@ class Dasel < Formula
   end
 
   test do
-    assert_equal "\"Tom\"", shell_output("echo '{\"name\": \"Tom\"}' | #{bin}/dasel -i json 'name'").chomp
+    assert_equal "\"Tom\"", pipe_output("#{bin}/dasel -i json 'name'", '{"name": "Tom"}', 0).chomp
     assert_match version.to_s, shell_output("#{bin}/dasel version")
   end
 end

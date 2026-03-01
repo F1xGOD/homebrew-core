@@ -1,8 +1,8 @@
 class Kyverno < Formula
   desc "Kubernetes Native Policy Management"
   homepage "https://kyverno.io/"
-  url "https://github.com/kyverno/kyverno/archive/refs/tags/v1.16.1.tar.gz"
-  sha256 "95c236722e8cca0fc7a0da8640c42f5df6cec8d9da91cbf892ab27d2a1245251"
+  url "https://github.com/kyverno/kyverno/archive/refs/tags/v1.17.1.tar.gz"
+  sha256 "32c7451f768280a8a1199be1b595ccd3847e196da0b04a33076af83d07737e88"
   license "Apache-2.0"
   head "https://github.com/kyverno/kyverno.git", branch: "main"
 
@@ -14,13 +14,12 @@ class Kyverno < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "8f17ef6c6a412b4d23b34302a360804c42c393722931d5b00515a877382d9cbb"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dd49f93b967599c890e481e694a26ca527b18a6ac1d56ca8733e8cbcff9b02f1"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "541036ede99d361a0c635cea1110e68c6ddd8330257b9e6a2576ff488dc8ece1"
-    sha256 cellar: :any_skip_relocation, sonoma:        "da3ecc4806c38b8746481053fde56ca4f36ba3d5e05703f5fc5dfebc7367a38c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "3866eb47bd1e7a6cef252704507c2e4426f8a9efe3bfc5d20c32c51f7cefdb49"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0725adc36a61695c97ac24fb711b6d655d98f5a13c3f83d72958121834f0abe0"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "1e9304423f6c9de6798782616e08a732d9983bee5b6fcb2d4194dabeb5e847c2"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c69a6d26a6cf6e5ac4c170f86d9ee0bda56cfc9bf985025972ece51b005f4565"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3874e0d5e30db6e8f3d4edfe57dd23075f0281cc40eac1677307a95bb2e5c35f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1223c1458893e9d7dafa136a75423d2e3544de85c331c5e9a08f0c1c98807b62"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "2f44084feb208336733d1971941c13f0565cf101c81f8b201ef1d3408e46757e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0e5e4c51e3e383278b6ec0b73af56d8feba0ddcc3a88d7ec8ff8ad2c11ac277d"
   end
 
   depends_on "go" => :build

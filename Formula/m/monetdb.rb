@@ -1,8 +1,8 @@
 class Monetdb < Formula
   desc "Column-store database"
   homepage "https://www.monetdb.org/"
-  url "https://www.monetdb.org/downloads/sources/Dec2025/MonetDB-11.55.1.tar.xz"
-  sha256 "a5848beef0908ee5b4477beb66a9fa72ee1ab8d5bb4eec5cafcc3fa9dc32b299"
+  url "https://www.monetdb.org/downloads/sources/Dec2025-SP1/MonetDB-11.55.3.tar.xz"
+  sha256 "9592aa0fb18aeb22ceb6a4f9b60cd7960362832704e3625a025673e89e861a51"
   license "MPL-2.0"
   head "https://www.monetdb.org/hg/MonetDB", using: :hg
 
@@ -11,15 +11,15 @@ class Monetdb < Formula
     regex(/href=.*?MonetDB[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
-  no_autobump! because: :requires_manual_review
+  no_autobump! because: :bumped_by_upstream
 
   bottle do
-    sha256 arm64_tahoe:   "8cef9a117f2d3ed5056d3e5e7291f2273241a592b80a2c7a32c403de804e936b"
-    sha256 arm64_sequoia: "eb99c8534561a7a7b7b07977f4bd6a2474b6327a3d4764c345c5589d6da9ae5f"
-    sha256 arm64_sonoma:  "d1b804fa762abe8c747b5a99a2710b080428b9f12af787e2d0e60844195b73d4"
-    sha256 sonoma:        "237d613c63a9d44144f022c915df9e0f8c05a427de0a11ef7e1781c72047f8d4"
-    sha256 arm64_linux:   "b95207ec31139d4d2b45efd62164efca075d211e2c216adc2b6e28c4d1c65bb8"
-    sha256 x86_64_linux:  "be9449ed54cbd051d018f3ad9fff9f9750c685fc7348e64884845dc0cba4fca3"
+    sha256 arm64_tahoe:   "7c3536841c412cfa0564540cf569935c9f4d93cff2d85f82c7f7c89398a83ed5"
+    sha256 arm64_sequoia: "dda5c447aea4bba4d87909d719fe9ac8afc147e76ded673b820f9201776b150a"
+    sha256 arm64_sonoma:  "71254a64a8b98c14ae26bf322263af2a8baaaa85efbd8fbfa16b2e5542a90fdc"
+    sha256 sonoma:        "d2414b833b2874a2bc8224d97561e4fe68b89811d7e7b807b99ed944faeb9fa4"
+    sha256 arm64_linux:   "d247bbffc4afc7e931a9354938e2b3ff9168aa9c5b70333df1d4e221855730a3"
+    sha256 x86_64_linux:  "447f37b30a3e92f8886a1c80eda479ae058519fe1c47b457e3a8a444f6eeea71"
   end
 
   depends_on "bison" => :build # macOS bison is too old
@@ -27,13 +27,16 @@ class Monetdb < Formula
   depends_on "pkgconf" => :build
   depends_on "lz4"
   depends_on "openssl@3"
-  depends_on "pcre"
+  depends_on "pcre2"
   depends_on "readline" # Compilation fails with libedit
   depends_on "xz"
 
   uses_from_macos "python" => :build
   uses_from_macos "bzip2"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     system "cmake", "-S", ".", "-B", "build",

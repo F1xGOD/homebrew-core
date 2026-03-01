@@ -3,25 +3,23 @@ class MysqlAT80 < Formula
   # FIXME: Actual homepage fails audit due to Homebrew's user-agent
   # homepage "https://dev.mysql.com/doc/refman/8.0/en/"
   homepage "https://github.com/mysql/mysql-server"
-  url "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-8.0.44.tar.gz"
-  sha256 "a8cc09a35af63668c5235cf282aef789428c6f30c1d9a581b337c816ce8ce8bb"
+  url "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-8.0.45.tar.gz"
+  sha256 "f679707d05f0c2b61e9b14961302e7f540c23e9e5e2bffd8ad9193599e295cee"
   license "GPL-2.0-only" => { with: "Universal-FOSS-exception-1.0" }
-  revision 3
 
   livecheck do
     url "https://dev.mysql.com/downloads/mysql/8.0.html?tpl=files&os=src&version=8.0"
     regex(/href=.*?mysql[._-](?:boost[._-])?v?(8\.0(?:\.\d+)*)\.t/i)
   end
 
-  no_autobump! because: :incompatible_version_format
-
   bottle do
-    sha256 arm64_tahoe:   "a5eda877d8711b9ed607da5a517a47dac4163540c2b50cc0b054146381b95029"
-    sha256 arm64_sequoia: "55e76c8051d5bf6c4f64e3419a9d7634915941b777ef6a0c41b14f8dae603969"
-    sha256 arm64_sonoma:  "92d1cf5d3adeb1265aafc2c5be51787fb14e451c855e69d9e2e9f455ebdd6eeb"
-    sha256 sonoma:        "efab2da65918c07ab55c9ed18feb4c40c6762fb0d287ad8c6d904373ee123cfa"
-    sha256 arm64_linux:   "f683ee2eee3b49627dd7c8dd5866a9687b82ec87aeb7d83f405cb120fe9d0b2e"
-    sha256 x86_64_linux:  "b8149b1c06ca18651dfe1dd91417c52c86e530395dca19b2c7585f46d4bced00"
+    rebuild 1
+    sha256 arm64_tahoe:   "edd16fe9abb24ac5051fd540a42fa0c754c2045375855c87603004c706fae0ac"
+    sha256 arm64_sequoia: "1291c77d48d6aa2f15c84abb2b5abd3d236e6e72edf2612d456250cdecbe4855"
+    sha256 arm64_sonoma:  "4472f019b723694526a0f4dbfb3bfd8ccb497b253ce44a9f0904bbf4ef7486c2"
+    sha256 sonoma:        "9132e7ecf456e0ffb1da96c342ce8b9e232bb91b8d3d064f7495668148a57e58"
+    sha256 arm64_linux:   "1f5ec7fff5768dcfee97aac13919b4ad23e67725f868ff73ca4ba8565275fa30"
+    sha256 x86_64_linux:  "5966c19126e4ccf30c89fb3098bc6533a2f37ac6ffa98c6dc17460fd38cd85e3"
   end
 
   keg_only :versioned_formula
@@ -39,7 +37,7 @@ class MysqlAT80 < Formula
   depends_on "lz4"
   depends_on "openssl@3"
   depends_on "protobuf"
-  depends_on "zlib" # Zlib 1.2.13+
+  depends_on "zlib-ng-compat" # Zlib 1.2.13+
   depends_on "zstd"
 
   uses_from_macos "curl"

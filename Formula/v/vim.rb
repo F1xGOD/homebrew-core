@@ -2,10 +2,9 @@ class Vim < Formula
   desc "Vi 'workalike' with many additional features"
   homepage "https://www.vim.org/"
   # vim should only be updated every 50 releases on multiples of 50
-  url "https://github.com/vim/vim/archive/refs/tags/v9.1.2000.tar.gz"
-  sha256 "fce301c7d6b2fb703a5ecc891f1c1131e32b74f983a5825c69a3426a81ae8975"
+  url "https://github.com/vim/vim/archive/refs/tags/v9.2.0050.tar.gz"
+  sha256 "593ef4ea24c3a969628ab8ced197ee170ea27313fb7963a6ecf358c2d4121f5d"
   license "Vim"
-  revision 2
   head "https://github.com/vim/vim.git", branch: "master"
 
   # The Vim repository contains thousands of tags and the `Git` strategy isn't
@@ -26,15 +25,15 @@ class Vim < Formula
   end
 
   bottle do
-    sha256 arm64_tahoe:   "097bc3ee1ffdde4afcb9100585f2ca3814b3918dc4cf778ed9d49570a09f77e5"
-    sha256 arm64_sequoia: "3869dc555754cc495118f5f2b58aeddc08efbd6e8eb4a7bf2b373045b5f77e6f"
-    sha256 arm64_sonoma:  "e1e231825ddcba959af63838feac598af2e04dc018543c856e53ca80864da664"
-    sha256 sonoma:        "4acf35e3fc338f2118f03e84d5b0475ab85b63fad20c2766108e6a8d3c272c4e"
-    sha256 arm64_linux:   "aaa262e34b4cba4f14a4ce45f01a1f934f17ea52741f290c0f96b3a2fd92b74c"
-    sha256 x86_64_linux:  "7619bc6decbba4d6f600f2a99bb19987db2f1ecd3a8082bb28200ac1db71e47e"
+    sha256 arm64_tahoe:   "b025010b1c28a5ba965c50c1da5a15622c0095023379aed37d69752f32f4ac53"
+    sha256 arm64_sequoia: "e54a40c67f43dd19c4c787a098e8147dbb323a111ded0a73748786a795789564"
+    sha256 arm64_sonoma:  "e32fc351e4c5de4d42eea400eacf946cb30598f566be47889368a311b03f983d"
+    sha256 sonoma:        "1db4fe556cb295d173c9d7eb5c57d25f41edbd10f97974409d9c60a9750461ac"
+    sha256 arm64_linux:   "6866fce463aeacc37581b6440ec706d7755c5393d7b265fde9cfc41be5be2b25"
+    sha256 x86_64_linux:  "c30e9e0a099114d5b4bedf7d541817f4f4514dc4a6f4af21abd686adc63c6cde"
   end
 
-  depends_on "gettext"
+  depends_on "gettext" => :build
   depends_on "libsodium"
   depends_on "lua"
   depends_on "ncurses"
@@ -43,15 +42,16 @@ class Vim < Formula
 
   uses_from_macos "perl"
 
+  on_macos do
+    depends_on "gettext"
+  end
+
   on_linux do
     depends_on "acl"
   end
 
-  conflicts_with "ex-vi",
-    because: "vim and ex-vi both install bin/ex and bin/view"
-
-  conflicts_with "macvim",
-    because: "vim and macvim both install vi* binaries"
+  conflicts_with "ex-vi", because: "vim and ex-vi both install bin/ex and bin/view"
+  conflicts_with "macvim", because: "vim and macvim both install vi* binaries"
 
   def install
     ENV.prepend_path "PATH", Formula["python@3.14"].opt_libexec/"bin"

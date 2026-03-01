@@ -1,8 +1,8 @@
 class ChainloopCli < Formula
   desc "CLI for interacting with Chainloop"
   homepage "https://docs.chainloop.dev"
-  url "https://github.com/chainloop-dev/chainloop/archive/refs/tags/v1.66.0.tar.gz"
-  sha256 "3af241a8178c90c391e523332950645ecd3130caff63e6629187a644cb45bb8c"
+  url "https://github.com/chainloop-dev/chainloop/archive/refs/tags/v1.79.0.tar.gz"
+  sha256 "ae29f04e40855560d8e6fa6afd417eaf331dc622d9651cc0932b192df917dd28"
   license "Apache-2.0"
   head "https://github.com/chainloop-dev/chainloop.git", branch: "main"
 
@@ -12,12 +12,12 @@ class ChainloopCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "18e541057559b90eb1e0089271bf6a03e50c1411fa6f8ff84c4fdcc0755a0533"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6abbe800909fecf9427a52870a2b46422064418c1cae4b0ff3814319d07aa2ce"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "16a6881195c12fc1a7863e1edbaba67348666c5ea9f0475600e5c17edfc218dd"
-    sha256 cellar: :any_skip_relocation, sonoma:        "768ed98ee76aaff4a0d103e9a533dc685ae5eda8974f0a3da7a8b3d5a815b13b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "be5a9a8346fc4c0c8e9d60647033857eaf969f4161f2a2704b340f65bf039e6b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9076ec90aade23bba516af0b99554600d28e16511ac6fc434a1562afda71c376"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "600c7359fdf783528fb070e8baad2eac7b3fe1d2092a02cef6fcdf05b00e1ea5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c4835dd36e6f6255bc1c9caff1983b629893aa41e8ae8003f59c38f4f5140cb0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "224f1b560605bef2c52287ca61763977b4f075db6c883c34e9a701aaa6142a17"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f24eabd27c483b47519ccd863fc9723a39015b382ce4553bba0cfc8421d04f3b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "16117adfbef57be711c5cd053028b1818f5ad1c77f88f5d14eeab365730ecb9e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3e473e61eba66d520ee4317bd1e2821d73212c3464d9de70cbf070c78ccbb00f"
   end
 
   depends_on "go" => :build

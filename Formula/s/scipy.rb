@@ -1,18 +1,18 @@
 class Scipy < Formula
   desc "Software for mathematics, science, and engineering"
   homepage "https://www.scipy.org"
-  url "https://files.pythonhosted.org/packages/0a/ca/d8ace4f98322d01abcd52d381134344bf7b431eba7ed8b42bdea5a3c2ac9/scipy-1.16.3.tar.gz"
-  sha256 "01e87659402762f43bd2fee13370553a17ada367d42e7487800bf2916535aecb"
+  url "https://files.pythonhosted.org/packages/7a/97/5a3609c4f8d58b039179648e62dd220f89864f56f7357f5d4f45c29eb2cc/scipy-1.17.1.tar.gz"
+  sha256 "95d8e012d8cb8816c226aef832200b1d45109ed4464303e997c5b13122b297c0"
   license "BSD-3-Clause"
   head "https://github.com/scipy/scipy.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "15f20a5c8c7b898c7aef6f9661757a50bde0240b9895f58f7ad7b10389385257"
-    sha256 cellar: :any,                 arm64_sequoia: "ae4cdbadf3a897bd5f764392f544c1b89f2ba422bacc41aaff20dbbc3547b76c"
-    sha256 cellar: :any,                 arm64_sonoma:  "df5260adee8f5e6dc4aaa511b3a3422f0889ba72b736d01931bbc35c5d535684"
-    sha256 cellar: :any,                 sonoma:        "e03b0fbd145f6930ce815dc6886a43087d539b7a0c1158e5d65468bd28f7f0f1"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "fb4e76466670c3dd1215899c5d76903df16596d6d22b9a8a7fe28f1f61e977fc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "aaa8ea2b5d8886eb4a1ee66ff5f971bd21abb2bf0c8138bf2ccdac46528487c1"
+    sha256 cellar: :any,                 arm64_tahoe:   "78f1f5aed3d3b4f72f9df7ca3a12f9fbbe38b037eb3ed1f5267dd743c6ca8e7a"
+    sha256 cellar: :any,                 arm64_sequoia: "2f74aa1069b4f9705fef6f6542d5f9912e99b642a554dc5e00c9dd3fda71f875"
+    sha256 cellar: :any,                 arm64_sonoma:  "fba1a0ab3414bd57d0077ddf4e98ec75c983e745d3686dd4f9d6de08766d3e99"
+    sha256 cellar: :any,                 sonoma:        "c8783212ebe892ba6f7b7ffae47c3cee9e75d73e51b27ce5b2c729c07251c954"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "8fff82c03b8ddb88896760fc68f86badcf38520a93046082af1d6937dcb21ca3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e270d3de3e13788049162a7fd4b7d215fc3ddf08b4ae96d76cdec9d11e0ceea6"
   end
 
   depends_on "meson" => :build

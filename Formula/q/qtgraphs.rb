@@ -1,10 +1,10 @@
 class Qtgraphs < Formula
   desc "Provides functionality for 2D and 3D graphs"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.9/6.9.3/submodules/qtgraphs-everywhere-src-6.9.3.tar.xz"
-  mirror "https://qt.mirror.constant.com/archive/qt/6.9/6.9.3/submodules/qtgraphs-everywhere-src-6.9.3.tar.xz"
-  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.9/6.9.3/submodules/qtgraphs-everywhere-src-6.9.3.tar.xz"
-  sha256 "50dc63d055125c30c0bf3a15dd1f71363e474f2fdcb35f927e754042440e048c"
+  url "https://download.qt.io/official_releases/qt/6.10/6.10.2/submodules/qtgraphs-everywhere-src-6.10.2.tar.xz"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.10/6.10.2/submodules/qtgraphs-everywhere-src-6.10.2.tar.xz"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.10/6.10.2/submodules/qtgraphs-everywhere-src-6.10.2.tar.xz"
+  sha256 "f690fc6aa567d89a6e76ce370d684beb243dc0c2ed1187dd305433e278dd7aaf"
   license all_of: [
     "GPL-3.0-only",
     "BSD-3-Clause", # *.cmake
@@ -16,12 +16,12 @@ class Qtgraphs < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "842062cd5b5b9783204c54e38fc9dc0e946876bfe108a9ca87115212b8a47d97"
-    sha256 cellar: :any,                 arm64_sequoia: "00e182933e70c234a022d5a2afaf6550df39fd7a3b9a17af0b6cc06e6dad9d31"
-    sha256 cellar: :any,                 arm64_sonoma:  "b02ebfcc4f94c3ac10445b271b43fb36d31fc0dd93c7d8aa08862a2936727ada"
-    sha256 cellar: :any,                 sonoma:        "7d4b370a336415cf30358bad0baf6e6054497ed77c3860a85abdbb66f1679e45"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "180e3431696718ea0010ade945c930e16c1aa331027b6d3b9af4c36731cab5b8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8132f63315170949acea92ad6b5c39e6b593219f848455984ae5d7c33119e87b"
+    sha256 cellar: :any,                 arm64_tahoe:   "37bff1366be3ccc926450e6cd8fea4ad9f8228ae8defcb4b0509a1ec97ef5d2c"
+    sha256 cellar: :any,                 arm64_sequoia: "1b3b3d438c21799d3fc1a723bb0290e687ce2c0f6e567009ae0eaaacd336b3f6"
+    sha256 cellar: :any,                 arm64_sonoma:  "ec1dcc996416be18f018787c83de2458bf4893c95f64e6305c164490df4dc097"
+    sha256 cellar: :any,                 sonoma:        "35b440995dbd5a999fda2ae650b7f092ceaf325d6bf9b8e67736e465afb50a8d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "532d2fd7b91c139e83bbefb29904ebc2d1863971a967ead62d282808f17cd832"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4a319728401c293c0efc8425b88c08b3ea5c1b5b8e29128fdb7f332f1a45c195"
   end
 
   depends_on "cmake" => [:build, :test]

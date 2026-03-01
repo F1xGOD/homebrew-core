@@ -1,9 +1,10 @@
 class Protobuf < Formula
   desc "Protocol buffers (Google's data interchange format)"
   homepage "https://protobuf.dev/"
-  url "https://github.com/protocolbuffers/protobuf/releases/download/v33.2/protobuf-33.2.tar.gz"
-  sha256 "6b6599b54c88d75904b7471f5ca34a725fa0af92e134dd1a32d5b395aa4b4ca8"
+  url "https://github.com/protocolbuffers/protobuf/releases/download/v33.4/protobuf-33.4.tar.gz"
+  sha256 "bc670a4e34992c175137ddda24e76562bb928f849d712a0e3c2fb2e19249bea1"
   license "BSD-3-Clause"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,18 +12,21 @@ class Protobuf < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_tahoe:   "d455ee91bba7e47efb3089a0f9d4106c6e6363aac12418160507e07249bf3694"
-    sha256 cellar: :any, arm64_sequoia: "344b419c348ed0bbdc91d68e2d8e039eb4d6c247137afad860518e9b325bf4d0"
-    sha256 cellar: :any, arm64_sonoma:  "e194892d0ef67fb90ca480e00914c9da2021caa8449302c32b74f5473d2abc49"
-    sha256 cellar: :any, sonoma:        "51fc730101b20c50a6e8f7b848cdcfdd5b4002481dc46b7531cfadde5da93a2e"
-    sha256               arm64_linux:   "f7ec32aaac49071094c3a3d24f2a68b905aad3b527b062b7525f0bd7e9882dca"
-    sha256               x86_64_linux:  "71a0654071ff29797dff8dd1c79999e8322a4709e3ad1dec554d67122803bf4a"
+    sha256 cellar: :any, arm64_tahoe:   "4bff0639995cb00420302c64dda3ae9eed6de24632fb158100e3ea05827ed844"
+    sha256 cellar: :any, arm64_sequoia: "67aa3f9858e52ac658dc3c27091a6be275bb618aa94b3fbcc0e52a8e2b486744"
+    sha256 cellar: :any, arm64_sonoma:  "aa983aa28a537848aef4673b3d184f07ee970f9271cda474c31ab11be487756f"
+    sha256 cellar: :any, sonoma:        "0c4ed6e9a1c0e917d9d29bb0e391123541b2e2e7f1cee8acff7324bbe9ae47e0"
+    sha256               arm64_linux:   "9a71cdbdefb4ac6b2b7cdff448f48df64a8c2b4a41c274227c7e320e10bea0d4"
+    sha256               x86_64_linux:  "38502c5697b730a7643bf04a72d01198ae494d114f11af1f0446595e9440b3a3"
   end
 
   depends_on "cmake" => :build
   depends_on "googletest" => :build
   depends_on "abseil"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     # Keep `CMAKE_CXX_STANDARD` in sync with the same variable in `abseil.rb`.

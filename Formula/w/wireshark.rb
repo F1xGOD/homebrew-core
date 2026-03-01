@@ -1,9 +1,9 @@
 class Wireshark < Formula
   desc "Network analyzer and capture tool - without graphical user interface"
   homepage "https://www.wireshark.org"
-  url "https://www.wireshark.org/download/src/all-versions/wireshark-4.6.2.tar.xz"
-  mirror "https://1.eu.dl.wireshark.org/src/all-versions/wireshark-4.6.2.tar.xz"
-  sha256 "e218e3b3899e5d6e35a5fe95eeeabead587ed084cbf5fc330ac827f9a3137de8"
+  url "https://www.wireshark.org/download/src/all-versions/wireshark-4.6.4.tar.xz"
+  mirror "https://1.eu.dl.wireshark.org/src/all-versions/wireshark-4.6.4.tar.xz"
+  sha256 "fbeab3d85c6c8a5763c8d9b7fe20b5c69ca9f9e7f2b824bedc73135bdca332e2"
   license "GPL-2.0-or-later"
   head "https://gitlab.com/wireshark/wireshark.git", branch: "master"
 
@@ -15,12 +15,12 @@ class Wireshark < Formula
   end
 
   bottle do
-    sha256                               arm64_tahoe:   "f1c57cfcff8e28866bf2161773c39a0b622eb8fdda2edb8cf9badbcaf9a676c2"
-    sha256                               arm64_sequoia: "c07b8664fded4bab8eedc80ce6feadc88e043701d0f4adfe7a52037d436b407b"
-    sha256                               arm64_sonoma:  "e136afb70669f85f65a301733f24967679f28fb5e7c0a9ed6db0e6afef626874"
-    sha256                               sonoma:        "afc306a19328cef605903e076bff92fb72f9967fad010d1ba195881317723983"
-    sha256                               arm64_linux:   "fd9477bdf9dc7223e491f4623610bab76edd6282d5e148f45559cf0f3663ccd0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "65efa7ce93b490166771cf392e9149189b37156149d4093b6b22b26458fa41ab"
+    sha256                               arm64_tahoe:   "856feb0442323323f6c199eac422d2abef1affe792e485706e47e76a29da2c93"
+    sha256                               arm64_sequoia: "9d985723fc20fa9747b321367124e239a6d10f3b97aa9f4a82159722d2d16250"
+    sha256                               arm64_sonoma:  "cd2cc3714bd7e05f131a27f29171afd2cd455f780f24223ac770f24be79380e8"
+    sha256                               sonoma:        "2a5ece67e8ae1bf4aa4dfdee0cd5a6bbc562485700079b58231417ba7e31cdb8"
+    sha256                               arm64_linux:   "915bccc1accd9740258d76a999f4f543a7526fbb9f2835426c9165bbfc6f98ee"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "03f7cd7ed66bea5ac32d1a510f853a4c2c293280f3b1026025423b625daabdcb"
   end
 
   depends_on "cmake" => :build
@@ -45,10 +45,13 @@ class Wireshark < Formula
   uses_from_macos "krb5"
   uses_from_macos "libpcap"
   uses_from_macos "libxml2"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "libgpg-error"
+  end
+
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   conflicts_with cask: "wireshark-app"

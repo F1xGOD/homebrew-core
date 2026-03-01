@@ -1,11 +1,11 @@
 class Qt < Formula
   desc "Cross-platform application and UI framework"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.9/6.9.3/submodules/md5sums.txt"
-  mirror "https://qt.mirror.constant.com/archive/qt/6.9/6.9.3/submodules/md5sums.txt"
-  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.9/6.9.3/submodules/md5sums.txt"
-  version "6.9.3"
-  sha256 "6da59a97380cfb2dd7e93c8172e794f2cc2ccc6ab29620689932ee3b8169c964"
+  url "https://download.qt.io/official_releases/qt/6.10/6.10.2/submodules/md5sums.txt"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.10/6.10.2/submodules/md5sums.txt"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.10/6.10.2/submodules/md5sums.txt"
+  version "6.10.2"
+  sha256 "5e889d6d63de08abfa1b11d41370c2bb5d3818f68e5d8e8ed763ddc937116397"
   license all_of: [
     "BSD-3-Clause",
     "GFDL-1.3-no-invariants-only",
@@ -19,12 +19,12 @@ class Qt < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a7a8f4d26c4a05521c4710b9344bc4bdb1b7e17af9aecf865a7568c054d2828f"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a7a8f4d26c4a05521c4710b9344bc4bdb1b7e17af9aecf865a7568c054d2828f"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a7a8f4d26c4a05521c4710b9344bc4bdb1b7e17af9aecf865a7568c054d2828f"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a7a8f4d26c4a05521c4710b9344bc4bdb1b7e17af9aecf865a7568c054d2828f"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "99d36053c1ce8a9c612ccfb86dc14de602e8c52d5971a9cba72616409ebb94ba"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "871c7faf37bbad450a86c91ca3201123d152d8decc879041193f5b5af07633a5"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "2d3329fa20b8937612d7a46d53c8072d149a3b3647bd25ef2b50c034efab357d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2d3329fa20b8937612d7a46d53c8072d149a3b3647bd25ef2b50c034efab357d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2d3329fa20b8937612d7a46d53c8072d149a3b3647bd25ef2b50c034efab357d"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2d3329fa20b8937612d7a46d53c8072d149a3b3647bd25ef2b50c034efab357d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "7bdd7a873a7356ec9f51fac69ccb3c52ed7e4d69e4b379792497649895234e04"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3a5cde97696f618ef2c5d20f8b0557425aff7cc4ba68abf81c3c0e11f5bcebcd"
   end
 
   depends_on "cmake" => :test

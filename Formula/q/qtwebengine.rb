@@ -3,10 +3,10 @@ class Qtwebengine < Formula
 
   desc "Provides functionality for rendering regions of dynamic web content"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.9/6.9.3/submodules/qtwebengine-everywhere-src-6.9.3.tar.xz"
-  mirror "https://qt.mirror.constant.com/archive/qt/6.9/6.9.3/submodules/qtwebengine-everywhere-src-6.9.3.tar.xz"
-  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.9/6.9.3/submodules/qtwebengine-everywhere-src-6.9.3.tar.xz"
-  sha256 "d50b3b11d51dd876418cc36b4d6c96b4721e0aab773a3dd6beda606d46da8966"
+  url "https://download.qt.io/official_releases/qt/6.10/6.10.2/submodules/qtwebengine-everywhere-src-6.10.2.tar.xz"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.10/6.10.2/submodules/qtwebengine-everywhere-src-6.10.2.tar.xz"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.10/6.10.2/submodules/qtwebengine-everywhere-src-6.10.2.tar.xz"
+  sha256 "856eddf292a69a88618567deea67711b4ec720e69bcb575ed7bb539c9023961e"
   license all_of: [
     { any_of: ["LGPL-3.0-only", "GPL-2.0-only", "GPL-3.0-only"] },
     { "GPL-3.0-only" => { with: "Qt-GPL-exception-1.0" } }, # qwebengine_convert_dict; QtWebEngineProcess
@@ -28,7 +28,6 @@ class Qtwebengine < Formula
     :public_domain,      # sigslot; SPL-SQRT-FLOOR
     { all_of: ["ISC", "OpenSSL"] }, # boringssl, TODO: remove in Chromium 134+
   ]
-  revision 2
   head "https://code.qt.io/qt/qtwebengine.git", branch: "dev"
 
   livecheck do
@@ -36,11 +35,11 @@ class Qtwebengine < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "a2b33693880d5f39fdf14d0ae2fe7ec5c6323abbfafd87811835346721bb92f7"
-    sha256 cellar: :any,                 arm64_sequoia: "c070fc963c104f269dfb20f455cbd794c9d417f01bf97cecfd5851d6245f9fdc"
-    sha256 cellar: :any,                 arm64_sonoma:  "59a1fb591eb38483ae28745d55c44487aacddb7f72e6d07e9b52eeb4be1ec92e"
-    sha256 cellar: :any,                 sonoma:        "4e60080db2a07566af88221d4c6b5c3b3a8865150799428e7d1de2098f278901"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "603b05035c86c3d10b0e94f724e76e2dfd3cd3b33e227f1bd0061b21dd602f7b"
+    sha256 cellar: :any,                 arm64_tahoe:   "99dfde734b22c0064d6ed5168ba788470f16e2e6b94a5e2294bd473caa2dfcc7"
+    sha256 cellar: :any,                 arm64_sequoia: "1af3fda80d8e22716a7d6ae3ac5a3b498437c038c3f456953087dd442da6540d"
+    sha256 cellar: :any,                 arm64_sonoma:  "b166219239385c92766d08f7f868f62fb72264fa5f50df77882afdfada493869"
+    sha256 cellar: :any,                 sonoma:        "172e03a367cd18d35540c936dae17d3256afea431a49814044f55eb0ea2c91b8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "00d2b22e3ac0de9ac41fe7dec21b0b51b4d2d1d81d0debd2c33686fef9c5c1e3"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -64,7 +63,6 @@ class Qtwebengine < Formula
   uses_from_macos "gperf" => :build
 
   uses_from_macos "krb5" # dlopen-ed in http_auth_gssapi_posix.cc
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "qttools"
@@ -112,6 +110,7 @@ class Qtwebengine < Formula
     depends_on "snappy"
     depends_on "systemd"
     depends_on "webp"
+    depends_on "zlib-ng-compat"
   end
 
   pypi_packages package_name:   "",
@@ -127,6 +126,13 @@ class Qtwebengine < Formula
     patch do
       url "https://github.com/html5lib/html5lib-python/commit/379f9476c2a5ee370cd7ec856ee9092cace88499.patch?full_index=1"
       sha256 "97ae2474704eedf72dc5d5c46ad86e2144c10022ea950cb1c42a9ad894705014"
+    end
+
+    # Python 3.14 with setuptools 81+ compatibility (`pkg_resources` removal)
+    # upstream pr ref, https://github.com/html5lib/html5lib-python/pull/592
+    patch do
+      url "https://github.com/html5lib/html5lib-python/commit/1dbc19cd6db72cb919885827bc4883423e0cb647.patch?full_index=1"
+      sha256 "5951b823f353dd70806ad6e163ab8f46899496c1e8bb53970c99abe8d1df1a78"
     end
   end
 

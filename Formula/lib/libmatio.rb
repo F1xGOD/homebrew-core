@@ -1,22 +1,27 @@
 class Libmatio < Formula
   desc "C library for reading and writing MATLAB MAT files"
   homepage "https://matio.sourceforge.net/"
-  url "https://downloads.sourceforge.net/project/matio/matio/1.5.29/matio-1.5.29.tar.gz"
-  sha256 "d9e5f7a2f2c594eff15f550e34729b01991cdd5a028a558be8ce595b32233afb"
+  url "https://downloads.sourceforge.net/project/matio/matio/1.5.30/matio-1.5.30.tar.gz"
+  sha256 "8bd3b9477042ecc00dd71c04762fa58468e14cccc32fd8c6826c2da1e8bc3107"
   license "BSD-2-Clause"
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "ae99fcdca7044ba6a6bd70bcde020ce8d1cb40c928f29db562cba12660aca966"
-    sha256 cellar: :any,                 arm64_sequoia: "aa29ffa6b398dd0e5ad2fc176b795ec89d5563af21b332923674f86340ef00f6"
-    sha256 cellar: :any,                 arm64_sonoma:  "1977bb57f5fef8bcbb08be4a6d4c574a2e567b2d4fbcbc66b669b453c7092492"
-    sha256 cellar: :any,                 sonoma:        "5f2884e960b11e3243aed0262c3c1650141b340d657fe9bb2372164d5843e6de"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "2ec7706a6608b716870e9cc6cb8a228ad4fb0e223d66a0bf36d8eb58b5d75df3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "083925243e719c5d0c4f27c94fcebd14fe3717a7e8e25971364554f0dd0c1af4"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "9ca72d65bf5da29bddfbe606984e69151d6e26744783b2893a34e9318e7ae22c"
+    sha256 cellar: :any,                 arm64_sequoia: "7f5745b00f477b3aa6544162e3bb0ae280898c04041f3b1350bfc507638f040e"
+    sha256 cellar: :any,                 arm64_sonoma:  "047c7d990b169c3ba1215246b4db54cd8ff33b7a194c67e8060aa7ce62c66486"
+    sha256 cellar: :any,                 sonoma:        "83734b9696e4075b6bb93b5759a39f61195f01fa915879912d2622489813d2af"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "96ccac4352f0a05a8b17132ffd0ea5f0d6fa9fc26f0f7512c0e3b85616eaf8d1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "75875bd017f8e01b60e5bf97fc8140440e0dcaa018c4e2d7809f20b31cfd3071"
   end
 
   depends_on "pkgconf" => :test
   depends_on "hdf5"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   # fix pkg-config linkage for hdf5 and zlib
   patch :DATA
@@ -27,7 +32,7 @@ class Libmatio < Formula
       --enable-mat73=yes
       --with-hdf5=#{Formula["hdf5"].opt_prefix}
     ]
-    args << "--with-zlib=#{Formula["zlib"].opt_prefix}" unless OS.mac?
+    args << "--with-zlib=#{Formula["zlib-ng-compat"].opt_prefix}" unless OS.mac?
 
     system "./configure", *args, *std_configure_args
     system "make", "install"

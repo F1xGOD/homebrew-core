@@ -1,8 +1,8 @@
 class Dnstracer < Formula
   desc "Trace a chain of DNS servers to the source"
   homepage "http://www.mavetju.org/unix/dnstracer.php"
-  url "http://www.mavetju.org/download/dnstracer-1.9.tar.gz"
-  mirror "https://deb.debian.org/debian/pool/main/d/dnstracer/dnstracer_1.9.orig.tar.gz"
+  url "https://deb.debian.org/debian/pool/main/d/dnstracer/dnstracer_1.9.orig.tar.gz"
+  mirror "http://www.mavetju.org/download/dnstracer-1.9.tar.gz"
   sha256 "2ebc08af9693ba2d9fa0628416f2d8319ca1627e41d64553875d605b352afe9c"
   license "BSD-2-Clause"
 
@@ -14,8 +14,6 @@ class Dnstracer < Formula
     url "http://www.mavetju.org/unix/general.php"
     regex(/href=.*?dnstracer[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
-
-  no_autobump! because: :requires_manual_review
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "bf4002b2b3c7b6e94bfbd23130cae602e9e7c7d9e3145b7210cbc4fc574b5004"

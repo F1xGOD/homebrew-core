@@ -6,8 +6,6 @@ class Bluetoothconnector < Formula
   license "MIT"
   head "https://github.com/lapfelix/BluetoothConnector.git", branch: "master"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a09325ad64ca0a614f87d18aa6e54474d841d985a94bba2f7f7c15950a985c8e"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "8e8786893183eba145ea2282b69540bd3c5b331decd4587090e94ac8b828e050"
@@ -30,12 +28,13 @@ class Bluetoothconnector < Formula
       # We cannot test any useful command since Sonoma as OS privacy restrictions
       # will wait until Bluetooth permission is either accepted or rejected.
       # Since even `--help` needs permissions, we just check process is still running.
-      pid = fork { exec bin/"BluetoothConnector" }
+      pid = spawn bin/"BluetoothConnector"
       begin
         sleep 5
         Process.getpgid(pid)
       ensure
         Process.kill("TERM", pid)
+        Process.wait(pid)
       end
     else
       shell_output("#{bin}/BluetoothConnector", 64)

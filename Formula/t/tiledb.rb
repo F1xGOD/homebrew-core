@@ -4,6 +4,7 @@ class Tiledb < Formula
   url "https://github.com/TileDB-Inc/TileDB/archive/refs/tags/2.30.0.tar.gz"
   sha256 "c5f94da6de0e0f93925f7ad107bd80fef0615f9b3d111a5bae245f75b1fcc173"
   license "MIT"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,12 +12,13 @@ class Tiledb < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "d24643620924306af3314b92336a425196ee12ac582b5cf454aeb95918c82e34"
-    sha256 cellar: :any,                 arm64_sequoia: "447fb3b5eb102ae3ed47d77b6aa1f978c9b3d3e1b7a23090d3ef2886b685320f"
-    sha256 cellar: :any,                 arm64_sonoma:  "92da40d1dd7e7dfe082f95eeadceb9a8190d6db64d454a14820d1d4b68e7771e"
-    sha256 cellar: :any,                 sonoma:        "f38a90aa06777eaa085e4f92fb496dadb443db1de3c7ebf1f2d43b15def77776"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "2b521539ed19cbb3f04687298c61c2ebe9fd0cb6fb2cb845dc2915f543ecbbba"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e78c42be0f23e86e08deb5490473fbaee901d311aa8950fdd07b620ccb96066"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "54fd33027f3080b795d9bb20f7fa69bf04f569812d86fbfe87cf1ccb27c9d59f"
+    sha256 cellar: :any,                 arm64_sequoia: "9a296a2fc9496cf3a0a02ca911b8ddd00519889bd959c8e326bf1f30c43b1856"
+    sha256 cellar: :any,                 arm64_sonoma:  "d3d0f806307d8f777c41c035d59e2193d809e1915b7e35e27a271c596f6ae87c"
+    sha256 cellar: :any,                 sonoma:        "cbcbbdbfadddc8ad1db6f24856e3c7db00da6916da39e5db2860ce2a020ac501"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "42d8601468572ca286e43ebf0aba0ef95ed81448731819881ea538c04b25e975"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9dd9ab013c19d5bfdb2dab16580134e17fe4b80a378fc8e87fa2358cf7fab2d4"
   end
 
   depends_on "c-blosc2" => :build
@@ -31,7 +33,10 @@ class Tiledb < Formula
   depends_on "zstd"
 
   uses_from_macos "bzip2"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     args = %w[

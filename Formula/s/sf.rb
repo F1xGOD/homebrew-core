@@ -1,8 +1,8 @@
 class Sf < Formula
   desc "Command-line toolkit for Salesforce development"
   homepage "https://developer.salesforce.com/tools/salesforcecli"
-  url "https://registry.npmjs.org/@salesforce/cli/-/cli-2.116.6.tgz"
-  sha256 "0a87ab6168bbc924d172538dcb68d55f608e75d70da9694fa5495c364e373d95"
+  url "https://registry.npmjs.org/@salesforce/cli/-/cli-2.124.7.tgz"
+  sha256 "078eccd403f1212d03586be5aaf4b9e7e056ca58f7846bbc09b61af9f80faf20"
   license "BSD-3-Clause"
 
   livecheck do
@@ -13,7 +13,7 @@ class Sf < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "53b66da440cf96babc2ca6556ce7c8067a0cd270bd2eaf1ea97d892904205b48"
+    sha256 cellar: :any_skip_relocation, all: "366d9e3ccbc5713b83c43ac4eb852023e938e415618685091af7b43eba8ad2f9"
   end
 
   depends_on "node"

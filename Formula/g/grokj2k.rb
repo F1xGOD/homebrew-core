@@ -1,12 +1,9 @@
 class Grokj2k < Formula
   desc "JPEG 2000 Library"
   homepage "https://github.com/GrokImageCompression/grok"
-  # pull from git tag to get submodules
-  url "https://github.com/GrokImageCompression/grok.git",
-      tag:      "v20.0.4",
-      revision: "e5edba003dc28dc7e3a1e56dc42493dcdd81d2ce"
+  url "https://github.com/GrokImageCompression/grok/releases/download/v20.0.5/source-full.tar.gz"
+  sha256 "7c34c4cd2b545d3bbd05b13c8e57db6a27dfd301613932f26aac3b4bd5397a8b"
   license "AGPL-3.0-or-later"
-  revision 1
   head "https://github.com/GrokImageCompression/grok.git", branch: "master"
 
   livecheck do
@@ -15,12 +12,13 @@ class Grokj2k < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "456b0d1276d3c219a1992c5efe74c562ec42b4c3dfdef24fc42df7a5276ea64d"
-    sha256 cellar: :any,                 arm64_sequoia: "324832fc1a19a008e5b802abce65478ae4b79d8543f91c73abf3592aeba0cbc4"
-    sha256 cellar: :any,                 arm64_sonoma:  "3498013acabdf7dc96cb5c8307be1efb85d96db4a6a14f0f0842a2bb54486ec1"
-    sha256 cellar: :any,                 sonoma:        "aec2355095c0f581d3937ce74c440a9f1e3e4528499fe6fe290d062db5cd6656"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "ec5fd7569893d7428900783d56ce4f4edf4fc6b460695ad888258a4152de973e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8dd4df214538aadf95857191c39b667c03fa533ea7cec3a08030e902ddd539e9"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "f3b758457d20893413e27e63a88f2ba85d53d54272279e05726d47e903efada6"
+    sha256 cellar: :any,                 arm64_sequoia: "867670c1f290033b3e2d08345d5c0ef25f8a5450331403331001fe939a1d43e6"
+    sha256 cellar: :any,                 arm64_sonoma:  "5f12676b6ced0986a56e5ace8b8e3eec174fcf2878f0c123b7d2500a45667add"
+    sha256 cellar: :any,                 sonoma:        "ec278adc4c3d7d39aecf470d56510ef442f7ff2b5920b7584ce374ff7b133b48"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "a7b29c0eb02a278f0521617aac47a2f02c6f62291e2febbf064f605f18760cfc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d92e63e83ae6b91f7d7e6640a2e1abe6ee395b6bb245cb2460cab22289415d90"
   end
 
   depends_on "cmake" => :build
@@ -33,7 +31,6 @@ class Grokj2k < Formula
   depends_on "little-cms2"
 
   uses_from_macos "perl"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "llvm" => :build if DevelopmentTools.clang_build_version < 1700
@@ -41,8 +38,12 @@ class Grokj2k < Formula
     depends_on "zstd"
   end
 
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
+
   fails_with :clang do
-    build 1200
+    build 1699
     cause "Requires C++20"
   end
 
@@ -53,8 +54,6 @@ class Grokj2k < Formula
   end
 
   def install
-    ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version < 1700)
-
     # Fix: ExifTool Perl module not found
     ENV.prepend_path "PERL5LIB", Formula["exiftool"].opt_libexec/"lib/perl5"
 

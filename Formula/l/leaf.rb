@@ -6,8 +6,6 @@ class Leaf < Formula
   license "MIT"
   head "https://github.com/vrongmeal/leaf.git", branch: "master"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     rebuild 1
     sha256 cellar: :any_skip_relocation, arm64_tahoe:    "8cbde0f8834319b4253a75e409376afb5e5737fea3a54e8318e76c318fe92ead"
@@ -35,15 +33,13 @@ class Leaf < Formula
 
   test do
     (testpath/"a").write "foo"
-    fork do
-      exec bin/"leaf", "-f", "+ a", "-x", "cp a b"
-    end
+    spawn bin/"leaf", "-f", "+ a", "-x", "cp a b"
     sleep 1
 
-    assert_equal (testpath/"a").read, (testpath/"b").read
+    assert_equal "foo", (testpath/"b").read
     (testpath/"a").append_lines "bar"
     sleep 1
 
-    assert_equal (testpath/"a").read, (testpath/"b").read
+    assert_equal "foobar\n", (testpath/"b").read
   end
 end

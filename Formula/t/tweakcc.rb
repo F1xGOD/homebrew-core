@@ -1,17 +1,17 @@
 class Tweakcc < Formula
   desc "Customize your Claude Code themes, thinking verbs, and more"
   homepage "https://github.com/Piebald-AI/tweakcc"
-  url "https://registry.npmjs.org/tweakcc/-/tweakcc-3.2.2.tgz"
-  sha256 "4a07c4054b044e72561ffd7017b9f9c6e37e87d73c2444f5da31f0916afb73ad"
+  url "https://registry.npmjs.org/tweakcc/-/tweakcc-4.0.10.tgz"
+  sha256 "873cf2daa989e254b9d66c9f5808fe62de563dcb3c6d6ebf14b97fbdd9b3ff4d"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "da0c6bcc9be2c06c1a19441a0898e8654e2d2e41c0c45aeba2595b3a8f710208"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d7e52f82fa51a58c77cdf61d60e5d44111f07b63961d3c936e802d2357578d62"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d7e52f82fa51a58c77cdf61d60e5d44111f07b63961d3c936e802d2357578d62"
-    sha256 cellar: :any_skip_relocation, sonoma:        "6b512376e6f991881ab9f435240e53f6f963db1fa54b211fd360d30efec02899"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "0dad2a5c59af92d1a8c48f3b966847d9264ca63c5705020d8640e9516ac71bd1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ee7268b90403d96e09f82bf5caba19f6bb1447af2cad093abfcaee99d39fbd8c"
+    sha256 cellar: :any,                 arm64_tahoe:   "dbeb9f0ac2391720e07cf5f1f1ea724ffe84b61c3ed43f10127d65724104c69e"
+    sha256 cellar: :any,                 arm64_sequoia: "a62110c8380661a9e2a42eaf73833c916f61ff4f66bd45a6a1f9c608707ce0ae"
+    sha256 cellar: :any,                 arm64_sonoma:  "a62110c8380661a9e2a42eaf73833c916f61ff4f66bd45a6a1f9c608707ce0ae"
+    sha256 cellar: :any,                 sonoma:        "251c0532bbf8d27a05c3aef65e35d25981d9eac7a58673cb6547305a126b3cbe"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "ff1d895751f68240d17a242f7d760c09a602dcc6d2e68480a43907c47b12ce85"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "231377e19ff853251c18d82918a3ed32eafac5b5645778e839de97f7e7de6e55"
   end
 
   depends_on "node"
@@ -31,9 +31,6 @@ class Tweakcc < Formula
       rm_r d if d.basename.to_s != "#{os}-#{arch}"
     end
     rm prebuilds/"#{os}-#{arch}/node-lief.musl.node" if OS.linux?
-
-    # Replace universal binaries with their native slices
-    deuniversalize_machos node_modules/"app-path/main" if OS.mac?
   end
 
   test do

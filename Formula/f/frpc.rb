@@ -1,24 +1,29 @@
 class Frpc < Formula
   desc "Client app of fast reverse proxy to expose a local server to the internet"
   homepage "https://github.com/fatedier/frp"
-  url "https://github.com/fatedier/frp/archive/refs/tags/v0.65.0.tar.gz"
-  sha256 "bbec0d1855e66c96e3a79ff97b8c74d9b1b45ec560aa7132550254d48321f7de"
+  url "https://github.com/fatedier/frp/archive/refs/tags/v0.67.0.tar.gz"
+  sha256 "18d0a35b965fab7e348aafc7b587847dd04ef2ef84822ed8fd5b9fe46b7ff6d7"
   license "Apache-2.0"
   head "https://github.com/fatedier/frp.git", branch: "dev"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "de9d1c92a7d52f6eb21277ef474eaabf47a86ddb216cb070416e80d437dd96bd"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "de9d1c92a7d52f6eb21277ef474eaabf47a86ddb216cb070416e80d437dd96bd"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "de9d1c92a7d52f6eb21277ef474eaabf47a86ddb216cb070416e80d437dd96bd"
-    sha256 cellar: :any_skip_relocation, sonoma:        "118d30a66783cb6990cf3c5ec429920093d516c93cf928ebe3012c8f6dff9ee8"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "376bfeea2aeb168678cd41a776ff8dc00b06297116601135dc8a837f82a85849"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e970421ff11785b998f80966a826b6c4162a73157b6d820f6a6b2f94f4a4ec6c"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "7c72c0a6ccadeeefdd80d8af3b66d59bd7d3dfaeb59be326c388cac52991030f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7c72c0a6ccadeeefdd80d8af3b66d59bd7d3dfaeb59be326c388cac52991030f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7c72c0a6ccadeeefdd80d8af3b66d59bd7d3dfaeb59be326c388cac52991030f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "0fdc17eb89afa9728aee5943088f3201af2914c95e1c552c96c13b3a66181f66"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "4f0857fc63eef4ecaaaa9614c3819e526d79ab27652d932ddcf97be375b7f87a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b5b2e8d766c7a6bd39067c345a462dc75339e7f3fb020e90d709637936e780f4"
   end
 
   depends_on "go" => :build
+  depends_on "node" => :build
 
   def install
+    cd "web/frpc" do
+      system "npm", "install", *std_npm_args(prefix: false)
+      system "npm", "run", "build"
+    end
+
     ENV["CGO_ENABLED"] = "0"
     system "go", "build", *std_go_args(ldflags: "-s -w", tags: "frpc"), "./cmd/frpc"
     (etc/"frp").install "conf/frpc.toml"

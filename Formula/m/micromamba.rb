@@ -1,9 +1,10 @@
 class Micromamba < Formula
   desc "Fast Cross-Platform Package Manager"
   homepage "https://github.com/mamba-org/mamba"
-  url "https://github.com/mamba-org/mamba/archive/refs/tags/2.4.0.tar.gz"
-  sha256 "a49646eadb913d5c761e316dfcb9f277278c5fd99fc2851d06e4bcf00f1c1412"
+  url "https://github.com/mamba-org/mamba/archive/refs/tags/2.5.0.tar.gz"
+  sha256 "2d8761e423275b2e2b46352c99bdedc062ca22b98871ffa82e044d2be74b350f"
   license "BSD-3-Clause"
+  revision 2
   head "https://github.com/mamba-org/mamba.git", branch: "main"
 
   livecheck do
@@ -14,12 +15,12 @@ class Micromamba < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "ea114ed7a87ea39d8a7ec4581e9b87dc47d50af31098190fcba45aa81efcb60a"
-    sha256 cellar: :any,                 arm64_sequoia: "b7d7ae6a51ba2299e18a779e9e0e9fd7b0dd5a4f07eef5a5dd378cefd848266b"
-    sha256 cellar: :any,                 arm64_sonoma:  "b944f17c24c151c158bcf0f5d41b5d8b3edda3e58c06c0eca9e5b8f481f0e46b"
-    sha256 cellar: :any,                 sonoma:        "ddfc17d46b2ccf804717631e41ca9b00943c57fd05081cb7c4d2b3a572105109"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "684ca0889ab766be4d4cf0312590868e2c276edffdb8ef612a25cffbab2ff6fb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9a14e61df1f7ddfaa170bf0e5b165a9f4f63c55348d7c16bc68126c009d4430d"
+    sha256 cellar: :any,                 arm64_tahoe:   "30f343a91fdde9847dfb26f55ce65d0bae331865265f662e99ff67b3d3ab4336"
+    sha256 cellar: :any,                 arm64_sequoia: "5f826dfdf5dfb2ce1747642e9357554f03f1caa73d3711c537fab4e906df93c2"
+    sha256 cellar: :any,                 arm64_sonoma:  "141e9137b738fdfed8d9e84352b3ab8565f07c9ef51d3502f41b2f72adb4a403"
+    sha256 cellar: :any,                 sonoma:        "4163d97f45febba38ecf475e6809d829d244f1244537901f08cd071689ab8acf"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "c7fa0224be7bd8b246d441283ab6f4ca56d187df590c7a7041b971c53ee7688f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "98a97c5555f0d139863d82e15cf3d3427ad4e1287a2614ed4ef7f2eacce73dea"
   end
 
   depends_on "cli11" => :build
@@ -44,10 +45,13 @@ class Micromamba < Formula
   uses_from_macos "bzip2"
   uses_from_macos "curl", since: :ventura # uses curl_url_strerror, available since curl 7.80.0
   uses_from_macos "krb5"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "llvm" => :build if DevelopmentTools.clang_build_version <= 1600
+  end
+
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   fails_with :clang do
@@ -56,10 +60,9 @@ class Micromamba < Formula
   end
 
   def install
-    ENV.llvm_clang if OS.mac? && DevelopmentTools.clang_build_version <= 1600
-
     args = %W[
       -DBUILD_LIBMAMBA=ON
+      -DBUILD_LIBMAMBA_SPDLOG=ON
       -DBUILD_SHARED=ON
       -DBUILD_STATIC=OFF
       -DBUILD_MAMBA=ON

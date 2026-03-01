@@ -1,8 +1,8 @@
 class Hledger < Formula
   desc "Easy plain text accounting with command-line, terminal and web UIs"
   homepage "https://hledger.org/"
-  url "https://github.com/simonmichael/hledger/archive/refs/tags/1.51.1.tar.gz"
-  sha256 "2b41c9d43bd14a1a3851b0474e8ca0d0207cc78eb116665c49c0c215519c3c6b"
+  url "https://github.com/simonmichael/hledger/archive/refs/tags/1.51.2.tar.gz"
+  sha256 "0523c5b0a2014459364a997ad74aa8cad1a78d847c3ede6232d19636207aee48"
   license "GPL-3.0-or-later"
   head "https://github.com/simonmichael/hledger.git", branch: "master"
 
@@ -15,12 +15,13 @@ class Hledger < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "dcc93e37c19c06532669ce42f3828591d8f213f11a4a47a25ddc83f2d2f4ce51"
-    sha256 cellar: :any,                 arm64_sequoia: "2fbac02e787cecd3265c1f8144dc813fbd79d2e0c7a7bc10037c5051c906d6d2"
-    sha256 cellar: :any,                 arm64_sonoma:  "ee6fa414cd9d7a4f3fcbc10a64d9b6950b0eff8368a1b7f56b8e81d7bad20a8d"
-    sha256 cellar: :any,                 sonoma:        "da8d5e2c93f945fe465af86b9af48ac920f17c207661f5b5d5a74d9afa426cb1"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "682b0c75310f62fc1e936ef62b07f6d10c02ab5084dac92bc19757962102b6cd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a7eebfcd0a367c21aaac0f67c9fd11143496bfdeede95165b0266604f8bba8a2"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "e9e4a48a878f750c0c07ccc78dd0a69f45c487fc2cced59f2d994eaef667ed95"
+    sha256 cellar: :any,                 arm64_sequoia: "5adceee6935800db30e43c4d18f7d17a4756edf3863f97becd4a79143e3ff325"
+    sha256 cellar: :any,                 arm64_sonoma:  "cbc43c16daf43e39ce3d3cc697edea5a8bb61bd0ca18a45561bb03d716ac1a40"
+    sha256 cellar: :any,                 sonoma:        "6d0291a8eb31bc0cbad40e07ad635058537cb68ea08d68645013dcb0bf411c44"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "45868c81b64a86a9ff5145f1c65a80c17c1c4bf2f2f27cad99589dac947e6f0b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c83d020d0f12549ba2caa4a6f076b201acf3cc6c4ae046fde1f68661d0433d29"
   end
 
   depends_on "ghc" => :build
@@ -29,7 +30,10 @@ class Hledger < Formula
 
   uses_from_macos "libffi"
   uses_from_macos "ncurses"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     system "stack", "update"

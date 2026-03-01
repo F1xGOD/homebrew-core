@@ -1,7 +1,6 @@
 class AircrackNg < Formula
   desc "Next-generation aircrack with lots of new features"
   homepage "https://aircrack-ng.org/"
-  # TODO: Migrate to PCRE2 in the next release
   url "https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz"
   sha256 "05a704e3c8f7792a17315080a21214a4448fd2452c1b0dd5226a3a55f90b58c3"
   license all_of: [
@@ -16,16 +15,14 @@ class AircrackNg < Formula
     regex(/href=.*?aircrack-ng[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    rebuild 1
-    sha256                               arm64_tahoe:   "bd47fe70e67083f0734ca6a354153b77747cdba142667a57331d3b7858ba7644"
-    sha256                               arm64_sequoia: "281776f2660cd82671618dde4826445942dbebcb52ae0a36acaa1fe78ee55661"
-    sha256                               arm64_sonoma:  "d264d1232090cbd350f4080c57b8541e4c3b7fc9a397b217bf689a0de023fe91"
-    sha256                               sonoma:        "56b22a9406e0ec31495f70f2a693e69c0a9f9466912f5a1947bf85477f7b5f0f"
-    sha256                               arm64_linux:   "80d591bf71824b4effad6d1d3804e74b6e7fdc1228dafe4ce153c623b8529796"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "681e9f90551413b40165d371137ee3271866a761e31d467872dc582dfbe8821e"
+    rebuild 3
+    sha256                               arm64_tahoe:   "c1461024ee7d85a1f0024b7e79aee529a2ffc577b4e7f55df1b93bce01a4a9c0"
+    sha256                               arm64_sequoia: "240101a996380066deb81a5f2baa3df5c940231082f13bb5f6955ba815a760eb"
+    sha256                               arm64_sonoma:  "8e0f9fda43350ce0365407b05c02bbbe59edb719612e7522e431bfa12de6a83b"
+    sha256                               sonoma:        "e5e3a8ae160dcdca43edb6382efc2873748e6a02f537cbcb27003b2321e7c44d"
+    sha256                               arm64_linux:   "73fe80cec55d4e7058ed7d3bf9fc5a57e30d39941fd665714ed90d74c63d2ab5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4aa4f09ec6d620ea76c8a799abebea56382ed5c055b4a4aed414a6339a7a3591"
   end
 
   depends_on "autoconf" => :build
@@ -33,11 +30,28 @@ class AircrackNg < Formula
   depends_on "libtool" => :build
   depends_on "pkgconf" => :build
   depends_on "openssl@3"
-  depends_on "pcre"
+  depends_on "pcre2"
   depends_on "sqlite"
 
   uses_from_macos "libpcap"
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
+
+  # Backport support for PCRE2
+  patch do
+    url "https://github.com/aircrack-ng/aircrack-ng/commit/adbb91bbec99b8c12924966314714a26ec86f504.patch?full_index=1"
+    sha256 "b3b4eae6987f1a0a812f30426b7ceb77cd50da958c05415840291f69cbe005d6"
+  end
+  patch do
+    url "https://github.com/aircrack-ng/aircrack-ng/commit/88408f6441a1527b6e7e55ab5bccd113cfad4156.patch?full_index=1"
+    sha256 "fe162569841b0f101759e019ba2034e7370555c2bea7b2b9113c70910708b062"
+  end
+  patch do
+    url "https://github.com/aircrack-ng/aircrack-ng/commit/f7d65bdbdd83ba8ae4ea0f145939da7a5a2fb0d1.patch?full_index=1"
+    sha256 "98a675f0bca1fc7a8e85b8ac67f1a0e554aae824679b849b0e41f77d2d84a69f"
+  end
 
   # Remove root requirement from OUI update script. See:
   # https://github.com/Homebrew/homebrew/pull/12755

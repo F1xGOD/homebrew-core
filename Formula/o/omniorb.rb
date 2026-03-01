@@ -1,8 +1,8 @@
 class Omniorb < Formula
   desc "IOR and naming service utilities for omniORB"
   homepage "https://omniorb.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/omniorb/omniORB/omniORB-4.3.3/omniORB-4.3.3.tar.bz2"
-  sha256 "accd25e2cb70c4e33ed227b0d93e9669e38c46019637887c771398870ed45e7a"
+  url "https://downloads.sourceforge.net/project/omniorb/omniORB/omniORB-4.3.4/omniORB-4.3.4.tar.bz2"
+  sha256 "79720d415d23cd8da99287a4ef4da0aa1bd34d3e4c7b1530715600adc5ed3dc3"
   license all_of: ["GPL-2.0-or-later", "LGPL-2.1-or-later"]
 
   livecheck do
@@ -12,12 +12,12 @@ class Omniorb < Formula
 
   bottle do
     rebuild 1
-    sha256 cellar: :any,                 arm64_tahoe:   "d3e724bd8c66b8c85adde6ca4551f195147576384d7381e1fb23296a8d03c421"
-    sha256 cellar: :any,                 arm64_sequoia: "3de267638de92404fea8f73f7b093ffe1e1f24431c554638e6e452c7ac2adcee"
-    sha256 cellar: :any,                 arm64_sonoma:  "c1f622c04da99ede9d10731c823c7ba212a701d3e054fae614b16a36202d2849"
-    sha256 cellar: :any,                 sonoma:        "d2e8bc653769aef5203ef679b70e2b8cf6c571c11f668fe2b429c542d5144166"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "64c28b492eb0b7d70e9f95f1d63861bc94c2bd202d2a159be67a57b40939a1fa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b00950095cce6ed4ab5f7315da5f399e71eb8befa784afcd9e0876fc80f793d9"
+    sha256 cellar: :any,                 arm64_tahoe:   "69b171103aff52ec76b37157af9cafc619a8ab5f65daa0676ac03a39f94b3fcd"
+    sha256 cellar: :any,                 arm64_sequoia: "be7ed7887d18f0c634f0a9a0fcf50e3baad81ac4dc19485a380ccef79b39c60f"
+    sha256 cellar: :any,                 arm64_sonoma:  "b7e79d9bd6cf2c3146ad1aae8fda733fab5fcb6977c10b8bf1e1f82779fc4f0d"
+    sha256 cellar: :any,                 sonoma:        "4dd41368f4fde967adde35d8839e3e20078e32b13e41baa1fd852c8e3afffe36"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "6fb616f204dc7acf360397e4aeea7d145d6c5eb32c27f152de10c771a042ac2b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7a82a3a9f22891f7155ca75558b834b0465338da0c4a03875648428527b64dcd"
   end
 
   depends_on "pkgconf" => :build
@@ -25,11 +25,13 @@ class Omniorb < Formula
   depends_on "python@3.14"
   depends_on "zstd"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   resource "bindings" do
-    url "https://downloads.sourceforge.net/project/omniorb/omniORBpy/omniORBpy-4.3.3/omniORBpy-4.3.3.tar.bz2"
-    sha256 "385c14e7ccd8463a68a388f4f2be3edcdd3f25a86b839575326bd2dc00078c22"
+    url "https://downloads.sourceforge.net/project/omniorb/omniORBpy/omniORBpy-4.3.4/omniORBpy-4.3.4.tar.bz2"
+    sha256 "a709c3c77b9c6b08616e1c9e12a5a9b9d5ccc1f2dcf6f647f205018d77f819a7"
 
     livecheck do
       formula :parent
@@ -41,7 +43,7 @@ class Omniorb < Formula
 
     # Help old config scripts identify arm64 linux
     build_arg = []
-    build_arg << "--build=aarch64-unknown-linux-gnu" if OS.linux? && Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+    build_arg << "--build=aarch64-unknown-linux-gnu" if OS.linux? && Hardware::CPU.arm64?
 
     ENV["PYTHON"] = python3 = which("python3.14")
     xy = Language::Python.major_minor_version python3

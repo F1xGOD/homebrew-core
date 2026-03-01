@@ -1,19 +1,18 @@
 class Doggo < Formula
   desc "Command-line DNS Client for Humans"
   homepage "https://doggo.mrkaran.dev/"
-  url "https://github.com/mr-karan/doggo/archive/refs/tags/v1.1.3.tar.gz"
-  sha256 "d1bca6ecd8d245e940528b6dba645c5a2e5f6293a3901d5b9166834e0aff4da5"
+  url "https://github.com/mr-karan/doggo/archive/refs/tags/v1.1.5.tar.gz"
+  sha256 "0266fe51cd7c6001011c3424380ff0f48809dcaf631fa65f51bfcbe66e59face"
   license "GPL-3.0-or-later"
   head "https://github.com/mr-karan/doggo.git", branch: "main"
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "ee81094e37d53fbe7d1a5fc633c407ae823e1a39527cdc620b6945180b821f96"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ee81094e37d53fbe7d1a5fc633c407ae823e1a39527cdc620b6945180b821f96"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ee81094e37d53fbe7d1a5fc633c407ae823e1a39527cdc620b6945180b821f96"
-    sha256 cellar: :any_skip_relocation, sonoma:        "65f0cfaea518c041f9feafbc4ece8dc7c21e6ee245f913bc2813eb6004f25fec"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "8157ffe8259a6710f23941b4bc301ff2f910cea882b6314797735cd3edcc5520"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d67e9a4969775d536e5cecb3b6c03b469b75a3844d9441e8848514b432279c9c"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "48d0033ab3cbcb4c31351174c58afdac844219fec933f6cd2faae2075d1cd2a6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "48d0033ab3cbcb4c31351174c58afdac844219fec933f6cd2faae2075d1cd2a6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "48d0033ab3cbcb4c31351174c58afdac844219fec933f6cd2faae2075d1cd2a6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "de71149e98f29d79539c1e1400a25678a3d3f6fe769e4dac818acb0c82544a3b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "1e5b07a4d10836691161cc8db741759954d816276392de74b872802dd41074fb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6082e855c991757fa18b411a4bf269682a8ce74be7c730108916d827bcf4fc49"
   end
 
   depends_on "go" => :build

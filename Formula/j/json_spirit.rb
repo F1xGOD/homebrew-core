@@ -17,8 +17,6 @@ class JsonSpirit < Formula
     end
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     rebuild 1
     sha256 cellar: :any,                 arm64_tahoe:   "c9211705e246541e5540eab0704d64a67124566cda09695e26b7ed3966b0c61f"
@@ -49,5 +47,32 @@ class JsonSpirit < Formula
     system "cmake", "-S", ".", "-B", "build_shared", "-DBUILD_STATIC_LIBS=OFF", *args, *std_cmake_args
     system "cmake", "--build", "build_shared"
     system "cmake", "--install", "build_shared"
+  end
+
+  test do
+    # https://github.com/png85/json_spirit/blob/master/README.md#writing-json
+    (testpath/"test.cpp").write <<~CPP
+      #include <json_spirit.h>
+      #include <fstream>
+
+      int main(void) {
+        json_spirit::Object addr_obj;
+        addr_obj.push_back(json_spirit::Pair("house_number", 42));
+        addr_obj.push_back(json_spirit::Pair("road", "East Street"));
+        addr_obj.push_back(json_spirit::Pair("town", "Newtown"));
+
+        std::ofstream os("address.json");
+        write(addr_obj, os, json_spirit::pretty_print);
+        os.close();
+        return 0;
+      }
+    CPP
+
+    system ENV.cxx, "-std=c++17", "test.cpp", "-o", "test", "-I#{include}/json_spirit", "-L#{lib}", "-ljson_spirit"
+    system "./test"
+
+    expected = { "house_number" => 42, "road" => "East Street", "town" => "Newtown" }
+    assert_path_exists testpath/"address.json"
+    assert_equal expected, JSON.parse(File.read("address.json"))
   end
 end

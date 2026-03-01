@@ -36,12 +36,13 @@ class Texlive < Formula
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256 arm64_tahoe:   "471f7e5214e3ab4c76acd78d2590fa138b7e1a2371e732501783a5fa7f864ee9"
-    sha256 arm64_sequoia: "55c883a3c91d1f4f78e296797b03b92e8014e2be22381e0fc56d1635c37006f2"
-    sha256 arm64_sonoma:  "7167dd978f68302473502f115d92cae0e5a90a3b3a384b58b2b5cfcf14b1dade"
-    sha256 sonoma:        "ea49145d420909cea69d40c39c1c163467755baa718f14943e3d28f91659e48c"
-    sha256 arm64_linux:   "55905476b8ff7ca098788bd7e52dd3385604703332c155caede4aed94eddb479"
-    sha256 x86_64_linux:  "5246ba8db60933f761a9a803359fe9a406f5287fc9c5304b9ecfd51c501d7b27"
+    rebuild 2
+    sha256 arm64_tahoe:   "d0ad6bc34d84ca11795276559347a0b92ebdb7d33e42f57ccb97ad3b9060361b"
+    sha256 arm64_sequoia: "7f34330943ebd6aaa522e772a7b1e87fbade3ae9662f32b007f703d611dcd29b"
+    sha256 arm64_sonoma:  "be5cc9f7bf8f2134b684c171a38014e0695f957740c4fda9c3134e2278a7ecbd"
+    sha256 sonoma:        "39aec60054738dd02926bc7c08c25d66dd2a8c17af189836a5c8903ee8d315ad"
+    sha256 arm64_linux:   "510e7240a0ba84889e07ede347521d5bc768dfbb889e999a041f8e3a50c75de0"
+    sha256 x86_64_linux:  "1b030005fb8201d6de3356092fed482f7c8a049e88bb2e32351767a100dabc86"
   end
 
   depends_on "pkgconf" => :build
@@ -69,11 +70,10 @@ class Texlive < Formula
   depends_on "potrace"
   depends_on "pstoedit"
   depends_on "python@3.14"
+  depends_on "tcl-tk"
 
   uses_from_macos "ncurses"
   uses_from_macos "ruby"
-  uses_from_macos "tcl-tk"
-  uses_from_macos "zlib"
 
   on_linux do
     depends_on "libice"
@@ -86,6 +86,7 @@ class Texlive < Formula
     depends_on "libxpm"
     depends_on "libxt"
     depends_on "mesa"
+    depends_on "zlib-ng-compat"
   end
 
   conflicts_with "cweb", because: "both install `cweb` binaries"

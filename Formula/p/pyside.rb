@@ -1,9 +1,9 @@
 class Pyside < Formula
   desc "Official Python bindings for Qt"
   homepage "https://wiki.qt.io/Qt_for_Python"
-  url "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.9.3-src/pyside-setup-everywhere-src-6.9.3.tar.xz"
-  mirror "https://cdimage.debian.org/mirror/qt.io/qtproject/official_releases/QtForPython/pyside6/PySide6-6.9.3-src/pyside-setup-everywhere-src-6.9.3.tar.xz"
-  sha256 "7cd2d5abb98f2e6f442b0e41f5fcf930e7312ae4b17f681316b1adc7b63bb172"
+  url "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.10.2-src/pyside-setup-everywhere-src-6.10.2.tar.xz"
+  mirror "https://cdimage.debian.org/mirror/qt.io/qtproject/official_releases/QtForPython/pyside6/PySide6-6.10.2-src/pyside-setup-everywhere-src-6.10.2.tar.xz"
+  sha256 "05eec38bb71bffff8860786e3c0766cc4b86affc72439bd246c54889bdcb7400"
   # NOTE: We omit some licenses even though they are in SPDX-License-Identifier or LICENSES/ directory:
   # 1. LicenseRef-Qt-Commercial is removed from "OR" options as non-free
   # 2. GFDL-1.3-no-invariants-only is only used by not installed docs, e.g. sources/{pyside6,shiboken6}/doc
@@ -13,7 +13,7 @@ class Pyside < Formula
     { "GPL-3.0-only" => { with: "Qt-GPL-exception-1.0" } },
     { any_of: ["LGPL-3.0-only", "GPL-2.0-only", "GPL-3.0-only"] },
   ]
-  revision 1
+  revision 2
 
   livecheck do
     url "https://download.qt.io/official_releases/QtForPython/pyside6/"
@@ -21,12 +21,12 @@ class Pyside < Formula
   end
 
   bottle do
-    sha256                               arm64_tahoe:   "5c2a5e8a649e37dfab0a2641368e572ac5b97363a5e12ab5d8a49431227deb53"
-    sha256                               arm64_sequoia: "4a48df6b8cc88ebb6fb258702ec55a0994e87d61feb178b246488f89b8813959"
-    sha256                               arm64_sonoma:  "b21cd20cbc695a1a63e8a538b46bf3c114f855d2c5e6ba0e432b55dddfaf8fa6"
-    sha256 cellar: :any,                 sonoma:        "c820e8348a2a56622a2d75df62ac14216194d4038cb7e6ea646659c0ed4eab99"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "465cd5bc3c6a59e84bf83eb48f276f5ca4cf2ce17d7b2f28a6e51faf2536f689"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fd2885c335c6f909626fbbba0e5904ecca66c1e9d83d6dd646aae4aa5765a827"
+    sha256                               arm64_tahoe:   "1d31e4d4410de481977b89ba7fc1c57dece74cd4064bbc35486cac7e40c7957b"
+    sha256                               arm64_sequoia: "14b5da211c69305c1494aedba826d2237a3f85c4fa605c07c3dcd248079d18b3"
+    sha256                               arm64_sonoma:  "0d52dd47d88606f1ce919d446bb9f4790347e6a420fc93795daebd8567f30d30"
+    sha256 cellar: :any,                 sonoma:        "1e3394704be6e83f8d192f5d082e640d590a72bb32f55056f81b49ca672d0670"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "6c68c71db54c96b7d1aad68214b422b5a14b0faf71847152a8c6b74896e339d3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9850022e3918536a2fb7896ff48db57e704cab0d8bd5e92017853105ce11000c"
   end
 
   depends_on "cmake" => :build
@@ -37,7 +37,7 @@ class Pyside < Formula
   depends_on "pkgconf" => :test
 
   depends_on "llvm"
-  depends_on "python@3.13" # not yet support for Python 3.14, https://wiki.qt.io/Qt_for_Python#Python_compatibility_matrix
+  depends_on "python@3.14"
   depends_on "qt3d"
   depends_on "qtbase"
   depends_on "qtcharts"
@@ -84,12 +84,8 @@ class Pyside < Formula
     end
   end
 
-  # Fix .../sources/pyside6/qtexampleicons/module.c:4:10: fatal error: 'Python.h' file not found
-  # Upstream issue: https://bugreports.qt.io/browse/PYSIDE-2491
-  patch :DATA
-
   def python3
-    "python3.13"
+    "python3.14"
   end
 
   def install
@@ -165,18 +161,3 @@ class Pyside < Formula
     system "./test"
   end
 end
-
-__END__
-diff --git a/sources/pyside6/qtexampleicons/CMakeLists.txt b/sources/pyside6/qtexampleicons/CMakeLists.txt
-index 1562f7b..0611399 100644
---- a/sources/pyside6/qtexampleicons/CMakeLists.txt
-+++ b/sources/pyside6/qtexampleicons/CMakeLists.txt
-@@ -32,6 +32,8 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-     target_compile_definitions(QtExampleIcons PRIVATE "-DNDEBUG")
- endif()
-
-+get_property(SHIBOKEN_PYTHON_INCLUDE_DIRS GLOBAL PROPERTY shiboken_python_include_dirs)
-+
- target_include_directories(QtExampleIcons PRIVATE ${SHIBOKEN_PYTHON_INCLUDE_DIRS})
-
- get_property(SHIBOKEN_PYTHON_LIBRARIES GLOBAL PROPERTY shiboken_python_libraries)

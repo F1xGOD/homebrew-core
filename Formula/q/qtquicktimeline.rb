@@ -1,10 +1,10 @@
 class Qtquicktimeline < Formula
   desc "Enables keyframe-based animations and parameterization"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.9/6.9.3/submodules/qtquicktimeline-everywhere-src-6.9.3.tar.xz"
-  mirror "https://qt.mirror.constant.com/archive/qt/6.9/6.9.3/submodules/qtquicktimeline-everywhere-src-6.9.3.tar.xz"
-  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.9/6.9.3/submodules/qtquicktimeline-everywhere-src-6.9.3.tar.xz"
-  sha256 "284f4ba65ea71fa32751525c845f540c99d2f86fed88387e8c3d5869cf6c11f7"
+  url "https://download.qt.io/official_releases/qt/6.10/6.10.2/submodules/qtquicktimeline-everywhere-src-6.10.2.tar.xz"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.10/6.10.2/submodules/qtquicktimeline-everywhere-src-6.10.2.tar.xz"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.10/6.10.2/submodules/qtquicktimeline-everywhere-src-6.10.2.tar.xz"
+  sha256 "7032d8b758d21fdf790dde0d070e1c82819abcf5ee7194dbf21589dbdfd36324"
   license all_of: [
     "GPL-3.0-only",
     "BSD-3-Clause", # *.cmake
@@ -16,12 +16,12 @@ class Qtquicktimeline < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "8e5ab96426a4d5bc5380466047a012c132a84a1728a77e6b27c19a16ab86fdc4"
-    sha256 cellar: :any,                 arm64_sequoia: "b88713278fbdd593b1e7039f6a10d58dcad1e60f8052cb3cb778edfdf5db3aa2"
-    sha256 cellar: :any,                 arm64_sonoma:  "c709c762e9bfdf072debaca4350e3a771dca1f938e34105a6c69851d907a334f"
-    sha256 cellar: :any,                 sonoma:        "c7359b758c5a20e3246b652739f688937f3a29e4846b4ba42d1b54144181881a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b109e589563914d9675744a0a7fa23c5b08517708d7a8ba69f739af1eb9ab5b9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ef59c4ebf0c10f60ddf24312cea5bbcd8eef955df2a5f702fc3c890dc8470ec"
+    sha256 cellar: :any,                 arm64_tahoe:   "4e40930972c0553f87aefc2d91be2d1c96c029cb96f094569197cb41fcb36066"
+    sha256 cellar: :any,                 arm64_sequoia: "07c1e52fa0917eb5c540b0777dbaec877770ab3dddb1419116bce4c476562af3"
+    sha256 cellar: :any,                 arm64_sonoma:  "38af513e73f59fa33bc426dcdc8f6677f8d5a0463b8a68190944cc550cb4c150"
+    sha256 cellar: :any,                 sonoma:        "71dcfdde1ce922b39bb1f0c4940d06bc53f0827bd5cb8c43d7b092336ed51f9b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "2c2913c3baa203bc706ecd73b4d2eddc05d578a40ae423333dd475e6c261fbca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "36ad9e57ccf09a13f8da9d6a2ee786a7d91fc62523447951b9c5065fc617b1ba"
   end
 
   depends_on "cmake" => :build

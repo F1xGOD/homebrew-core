@@ -1,18 +1,18 @@
 class Evtx < Formula
   desc "Windows XML Event Log parser"
   homepage "https://github.com/omerbenamram/evtx"
-  url "https://github.com/omerbenamram/evtx/archive/refs/tags/v0.10.0.tar.gz"
-  sha256 "c5c88de46921325a2f32abc8f621be115959a589823d881f9ad2c4ba4391811a"
+  url "https://github.com/omerbenamram/evtx/archive/refs/tags/v0.11.1.tar.gz"
+  sha256 "ff852ba0d469acc77630db41f0d3c76bbc4fce01e037b07770da3b9a9472d73b"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/omerbenamram/evtx.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "1f1f211053bb3593a3504c63c59d8c3c3a7eedfce5c1477c8413ecbbe7b107c8"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "80322e242f6d56c23a0bd393f2dde5f036399c9d841505301bf368e0d34f4d01"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3dad7c33a0da5b12d84979caf83cbd1884fb46e5484d2629c5eb632f727a8b65"
-    sha256 cellar: :any_skip_relocation, sonoma:        "0ce5bd9d0b20ccbfbdb0b7f5e5b1f4acdd98df2022be9e6d86a5789a99e57b46"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "1362f6279ff38a9296009dc863351dde6bb43c5b0acc485fbdc866eccd6b60aa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fb6f8e0979a1e121b66874596d19ae2997f82fb823713981b6cbf254f25ecc1b"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "7ad2a98dbb129359b978ee095ee6e9004cf723841d0b7001288e326d1e79f896"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "30add89f3974b06020b0ac73251a07f7bca36389f11786765ecff0758fd99fa2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2e0b8f9c26c5c60c21032e680e6dc0114f863db82af8b97ce092a78680de15c7"
+    sha256 cellar: :any_skip_relocation, sonoma:        "5e99b685ee246720c41d180c960085172b9bb9eba8300441e47e22b098dfb0f3"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d9c6beb8eafb842fd973785b96d9f906a37107168aab459f82e44e8406c6d84a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1121bd8b48bcbe67e5954045d7231f2cec10bb67d0ede6f15021214ff990ee01"
   end
 
   depends_on "rust" => :build

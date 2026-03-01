@@ -1,35 +1,29 @@
 class FreshEditor < Formula
   desc "Text editor for your terminal: easy, powerful and fast"
   homepage "https://sinelaw.github.io/fresh/"
-  url "https://github.com/sinelaw/fresh/archive/refs/tags/v0.1.67.tar.gz"
-  sha256 "bf667d15f76a13ba2f04fa93bfd3aa6d14f01e5a936dbf98f6c741f4748ca201"
+  url "https://github.com/sinelaw/fresh/archive/refs/tags/v0.2.10.tar.gz"
+  sha256 "25d46e7209ca731d42661b3be68c25e42e4ebff06a156d15ddf5ddaf4a510bc5"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a0623f418e791d48bbb2b18f7689f34627cd79a93637f6a82174b9cc6e3e9568"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "99eb69a1a42e7fd58b9658a0d1ed9d955e9d9a49174e3ba52a0f134e35856401"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3b01b95957ce526c231ae24a6b27e0db6f3525a75915c3fc7952264c671cb77a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "19281d784540eea99a7f07c1f85959d672c791f0bb94c82d82baaba18910353a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "63a5ca7a7138df4df8e546dd29a2f2f7ed31627cb985518e132e959f79a99eca"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e4e2ee772e0ba80cf57c03ff0ad846446eaaddfad5ff8dddd48c42445adefbc1"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "9d8e15a98ad6104fd714405f6b29bfa27f5961be8eb97c54aadf24c75df37aa0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8ea7933fc497355aabe07fda89f114a903889e06c96025041f507628d4b306ae"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6342baf7438f67a2bad7e6d32f3faa46e1cad15e7562f0bc00041e218e7a424f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "25f9c27c44d5282dfffbe097a2e027241da5905dcfec9b08dbaf3aa7a332e22c"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b8074d70295ae339f5b7c6b37b7ed52a567950a9600a59df2b9d0f4f3682306c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a0854133848c4dfe4f30dbb417cc752e96284b72af7db80ccd1cefee3e906804"
   end
 
   depends_on "rust" => :build
 
+  uses_from_macos "llvm" => :build # for libclang to build rquickjs-sys
+
   def install
-    system "cargo", "install", *std_cargo_args(path: ".")
+    system "cargo", "install", *std_cargo_args(path: "crates/fresh-editor")
   end
 
   test do
-    # Test script mode: type text, save, and quit
-    commands = <<~JSON
-      {"type":"type_text","text":"Hello from Homebrew"}
-      {"type":"key","code":"s","modifiers":["ctrl"]}
-      {"type":"quit"}
-    JSON
-
-    pipe_output("#{bin}/fresh --no-session test.txt --log-file fresh.log", commands)
-    log_output = (testpath/"fresh.log").read.gsub(/\e\[\d+(;\d+)?m/, "")
-    assert_match "INFO fresh: Editor starting", log_output
+    assert_match version.to_s, shell_output("#{bin}/fresh --version")
+    assert_equal "high-contrast", JSON.parse(shell_output("#{bin}/fresh --dump-config"))["theme"]
   end
 end

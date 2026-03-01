@@ -1,23 +1,23 @@
 class Statesmith < Formula
   desc "State machine code generation tool suitable for bare metal, embedded and more"
   homepage "https://github.com/StateSmith/StateSmith"
-  url "https://github.com/StateSmith/StateSmith/archive/refs/tags/cli-v0.19.0.tar.gz"
-  sha256 "62eb44d15a978c82f1ad8a54506f750b76c3dd30ebd1087384366a939a118749"
+  # Try upgrade to latest `dotnet` on version bump
+  url "https://github.com/StateSmith/StateSmith/archive/refs/tags/cli-v0.20.0.tar.gz"
+  sha256 "be187b4063734694137a95b77928980ad0f61e44e6a4887d07dc7e3387ccfa0f"
   license "Apache-2.0"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "7e93f4b8a25969a81b59a0eeb374fc6c062f8a8af3276f721926d117519438f5"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "16da18559d959ead7b6e22c1af0d1424338c11619ed347d145ff4a151dad0252"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "bbd75a3a2d138a6448dd30b22e02603d58f0cb15a5a22f5d50ea686205c9dd39"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "5ee04a000fea7bfc26bf67fe5ee3d4d66b68c82b53a75fc087733aea8bdee6f7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7fb6e2df6189fddea319ff63410c71874a3f599fb06e0cac9b42247ff520409d"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "0cf4441be541137a58c29cb73f53c5baee5b8908a5f1e91f9b179597702afbf3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d3c18aa8b4649ede0a69ada9ee81a353b5309602ffd7b6fde815498cfa2c8668"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "721a893ada168de7cd35a1149cc86fae301ef46c550c850ce1235871a4b26a11"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d366e58e1954728a52fb5ad6ed2af0d5f185e0677d4d3af3a15f0535cff05067"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c62691a1e4d14ba928be3c68fd6f3b8b4b68753ccf0c7fb5b248b66804c76837"
   end
 
-  depends_on "dotnet"
+  depends_on "dotnet@9"
 
   def install
-    dotnet = Formula["dotnet"]
+    dotnet = Formula["dotnet@9"]
     args = %W[
       -c Release
       --framework net#{dotnet.version.major_minor}

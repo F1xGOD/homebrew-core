@@ -6,15 +6,17 @@ class RobotFramework < Formula
   url "https://files.pythonhosted.org/packages/93/0e/08078c015d564d6a587e10e0b285620781c1a91b27230ec5b582994e421b/robotframework-7.4.1.tar.gz"
   sha256 "d645487248a86db1e1a865ce792502792edf5342873f4e4f35d333219cd246c5"
   license "Apache-2.0"
+  revision 2
   head "https://github.com/robotframework/robotframework.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "41013753d0d9d1b21bf3840d1ade5576bf2ed4a0110d02f0fb75a60ce492450c"
-    sha256 cellar: :any,                 arm64_sequoia: "c2d408db151e4ebbce078be5a1825dec943f3fb61a2acd12b86f67ee9ac5c7a1"
-    sha256 cellar: :any,                 arm64_sonoma:  "8473aa24fa0ed12f0ac280072a0b0de053ebde280cafec8432cd47c1cb5ba874"
-    sha256 cellar: :any,                 sonoma:        "fd9308b626b3d36c323663d81ab48d28a2e52e4ad8ebec0575e01f211fc2877b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "90da96fa8c9febed2be0ceded5ca86964997cbf5f9484881d213a104ee9e1b6f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3d566c5d935acc7971e43dd9e561e31767a54c87254c94cb34101c7bc12ed12c"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "10e0e034c5688c2809cfd08e66f20918182b86e5a5bbef4b4a22f0cf2b8e6aa2"
+    sha256 cellar: :any,                 arm64_sequoia: "b468e43cb558d7c2063d7f5abd8b64fd699ee925f9bc4fb5c84e5ee53faea896"
+    sha256 cellar: :any,                 arm64_sonoma:  "9c0a57f9bdcb68eca26bac122d40e866b1058cdfb0ac830a54344eda3c0fbd92"
+    sha256 cellar: :any,                 sonoma:        "8863851eee752a5eef3a643339e8a3021bb2b5040bf8d009413e06f6c67d8aa4"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "23deef0f7e9464419e49c9bbbc63c587154b64030a285800c4637f9aa850f62e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f834e3683e90a9b885c31b9171e20006af6cd02750da0e37ccabb5094821e3af"
   end
 
   depends_on "rust" => :build # for bcrypt
@@ -23,7 +25,9 @@ class RobotFramework < Formula
   depends_on "libsodium" # for pynacl
   depends_on "python@3.14"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   pypi_packages extra_packages:   %w[robotframework-archivelibrary
                                      robotframework-selenium2library
@@ -71,8 +75,8 @@ class RobotFramework < Formula
   end
 
   resource "pynacl" do
-    url "https://files.pythonhosted.org/packages/b2/46/aeca065d227e2265125aea590c9c47fbf5786128c9400ee0eb7c88931f06/pynacl-1.6.1.tar.gz"
-    sha256 "8d361dac0309f2b6ad33b349a56cd163c98430d409fa503b10b70b3ad66eaa1d"
+    url "https://files.pythonhosted.org/packages/d9/9a/4019b524b03a13438637b11538c82781a5eda427394380381af8f04f467a/pynacl-1.6.2.tar.gz"
+    sha256 "018494d6d696ae03c7e656e5e74cdfd8ea1326962cc401bcf018f1ed8436811c"
   end
 
   resource "pysocks" do
@@ -141,8 +145,8 @@ class RobotFramework < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   resource "websocket-client" do

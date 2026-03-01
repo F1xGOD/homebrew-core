@@ -1,18 +1,20 @@
 class Proxygen < Formula
   desc "Collection of C++ HTTP libraries"
   homepage "https://github.com/facebook/proxygen"
-  url "https://github.com/facebook/proxygen/releases/download/v2025.12.29.00/proxygen-v2025.12.29.00.tar.gz"
-  sha256 "979a716893f5747569a650f0bfa9da71e807d64b979f930b319d10e0166ecd55"
+  url "https://github.com/facebook/proxygen/releases/download/v2026.01.12.00/proxygen-v2026.01.12.00.tar.gz"
+  sha256 "66364e2119618a98f5c3ad62765b53d8bc2c34a9e51e0e861345aa7a5e87414f"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/facebook/proxygen.git", branch: "main"
 
   bottle do
-    sha256                               arm64_tahoe:   "a9890ab6c3b91b00ad24b070f46d0dd717df8442baf06a441aef31b1e07e4820"
-    sha256                               arm64_sequoia: "95a83aa26ef1dc0c2e84bd9e65ed47e74eda81e8766c00ce6e937d2f81a6f013"
-    sha256                               arm64_sonoma:  "387a26c0b545c6321352cf4cd4e0b2619cb11a87b54f6e8c9737e5ca51cabbb1"
-    sha256 cellar: :any,                 sonoma:        "e244e1b7244651ca423517bd3659d1d26909444e2c07046b18af6bf2cdc6f7e4"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c42f470964f114515a7b0b1c366021105516bcc569419ce1eea2529e3071fc43"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cfcd25011e47a3531b45319407d32e2c943a7f263820bfafc962f219d64b402e"
+    rebuild 1
+    sha256                               arm64_tahoe:   "c795501b553107f1119136850f2637d4a73766a1335cb027afe21753eeae8aca"
+    sha256                               arm64_sequoia: "42756f17eadc76638812f064948122a4929fa439ebe3b2c88c1ee2857b7ee788"
+    sha256                               arm64_sonoma:  "d923df709994fa94e8af6ffc042690f3cfe872ccc1fe237a7fcd5c10f104dc3c"
+    sha256 cellar: :any,                 sonoma:        "af5664751e313c72bbfa6c91d53386acb2769551239cd18428a8cdf739ba6c3a"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "0fd50ecf74c1dfe45f735951779d4d5a7533ab58dbbe48a0b46dd21706c41e8f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d0e659f828f8cd2c4a1007dedd088e6d9cbc28eb1106f64ce7664be2b65d127a"
   end
 
   depends_on "cmake" => :build
@@ -31,7 +33,10 @@ class Proxygen < Formula
 
   uses_from_macos "gperf" => :build
   uses_from_macos "python" => :build
-  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   conflicts_with "hq", because: "both install `hq` binaries"
 

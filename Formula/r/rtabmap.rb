@@ -4,7 +4,7 @@ class Rtabmap < Formula
   url "https://github.com/introlab/rtabmap/archive/refs/tags/0.23.1.tar.gz"
   sha256 "8f0463d0b46418921da0503d5f991c7d0b8308b4926a069d9fe4ec811113502f"
   license "BSD-3-Clause"
-  revision 1
+  revision 3
   head "https://github.com/introlab/rtabmap.git", branch: "master"
 
   # Upstream doesn't create releases for all tagged versions, so we use the
@@ -14,15 +14,13 @@ class Rtabmap < Formula
     strategy :github_latest
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256                               arm64_tahoe:   "5ebbaa690b10a9328fd2105a2c6976e6b2bcdad67033a67d23796ca540d41548"
-    sha256                               arm64_sequoia: "14b6a3d6bb2c561baaa6fb48dc7aa6bdbc8b55f7a71d7b758499a54877c2b480"
-    sha256                               arm64_sonoma:  "ea14957ba981c1a07ccea57f2e6cec1821f2e4a77124f374377b6ba56ae1dd0c"
-    sha256                               sonoma:        "b738c14b384cb483224f4edcf52158768b5214b56a7dd5e04fb3cac2337e42d9"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "055175bc683c10abdc66ee3b0d7a851203592e46b7e0396cb9366a2d946b52b6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "436485b18123458c34fb5583df95dfdc9df23aa0c804293a5b0d2c68a22de875"
+    sha256                               arm64_tahoe:   "fb8ac77b86a442fb36bb09a2d95c578f7ae0bfc7c3fa62536aaefabb18c86998"
+    sha256                               arm64_sequoia: "8b57ef782d1422d657f4228f1cd1fdd5aa2a1a0e15a6821c504d04c749938ced"
+    sha256                               arm64_sonoma:  "5c46061dd9375888994bb4750be9e8da4d47d3ef1ebddb1b0fda3f8b395b396c"
+    sha256                               sonoma:        "0bfcfde8fab19a643afcd9a6937da6dfe46fe4a2acf02135f475990ed25eea4a"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "6ae741f4341e2ac209b7766acf95481d814c1c6ee340211b60669a099fb535ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d239e486ed15db1b5170667fcf06d8365d39de3c577aafef60bc4a4a4b345fe2"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -37,8 +35,6 @@ class Rtabmap < Formula
   depends_on "sqlite"
   depends_on "vtk"
 
-  uses_from_macos "zlib"
-
   on_macos do
     depends_on "boost"
     depends_on "flann"
@@ -50,6 +46,10 @@ class Rtabmap < Formula
     depends_on "libpng"
     depends_on "lz4"
     depends_on "qhull"
+  end
+
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   def install

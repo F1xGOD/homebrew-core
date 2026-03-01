@@ -1,18 +1,18 @@
 class AutoEditor < Formula
-  desc "Efficient media analysis and rendering"
+  desc "Effort free video editing!"
   homepage "https://auto-editor.com"
-  url "https://github.com/WyattBlue/auto-editor/archive/refs/tags/29.5.0.tar.gz"
-  sha256 "f4298cd4759de8da0e1123c058aa9785bee32f25f12e7b6f0616b2ccc95c841c"
+  url "https://github.com/WyattBlue/auto-editor/archive/refs/tags/29.8.1.tar.gz"
+  sha256 "88daf3bbb52fb7f4818e56b52d86b3e4690bf87320875426d0acf068c7e6151e"
   license "Unlicense"
   head "https://github.com/WyattBlue/auto-editor.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "88e512d1b4ecae3e816cda074ad211126f6466f50ba8be187044ca2480cab3a6"
-    sha256 cellar: :any,                 arm64_sequoia: "024ff554b046c699776c26fddfd6ad4d8377e208ff714891c9c02019c4c5e963"
-    sha256 cellar: :any,                 arm64_sonoma:  "7408bb07452d7ec7a56991d0025909f233d65090ca76be4ca6067dffbb8da94c"
-    sha256 cellar: :any,                 sonoma:        "74f4eaab1a2feee8b8219851659a8152dad5d997f041090ddf5b7a2a4d89b57a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "4cfb31c8c548e3743af323fd85d3838f69d15718a48ffa76c7a075c050d56950"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b1ce758b579948e962ee2eb4f053961c3d8a42ef3723fce97a0b79e1835cdaec"
+    sha256 cellar: :any,                 arm64_tahoe:   "032aabbf6e27fd086013ac6c0d0b42adf4490a70ea1e203f3165e13611710925"
+    sha256 cellar: :any,                 arm64_sequoia: "0fb1af744497233d520486ed30759d770bf000cb74089079a51aed89e48191f1"
+    sha256 cellar: :any,                 arm64_sonoma:  "091fc43f1efeae0d0f0c0d3dbae846316347849c634ba92f541521237e2d5c60"
+    sha256 cellar: :any,                 sonoma:        "5bbe46232fc51431524dad28e90d100a27b17b68a5c065658f91c9ebbd19f7ed"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "99862bbf08c9f533c3ebf494d22535fa03f6ab33b89a0140c2edc6c1c47415ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "aa37e5a16cedad636279a1af680f28ac0b753da85d1e088e09fcc1553f09531e"
   end
 
   depends_on "nim" => :build
@@ -21,24 +21,17 @@ class AutoEditor < Formula
   depends_on "ffmpeg"
   depends_on "lame"
   depends_on "libvpx"
-  depends_on "llama.cpp"
   depends_on "opus"
   depends_on "svt-av1"
-  depends_on "whisper-cpp"
   depends_on "x264"
   depends_on "x265"
 
-  on_intel do
-    depends_on "nasm" => :build
-  end
-
   def install
-    # Install Nim dependencies
-    system "nimble", "install", "-y"
-
-    # Build auto-editor
+    ENV["DISABLE_VPL"] = "1"
+    ENV["DISABLE_WHISPER"] = "1"
     system "nimble", "make"
     bin.install "auto-editor"
+    generate_completions_from_executable(bin/"auto-editor", "completion", "-s", shells: [:zsh])
   end
 
   test do

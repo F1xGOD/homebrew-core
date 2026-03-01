@@ -3,18 +3,18 @@ class LinodeCli < Formula
 
   desc "CLI for the Linode API"
   homepage "https://github.com/linode/linode-cli"
-  url "https://files.pythonhosted.org/packages/0d/d1/0b26fcfb93890e3a6277e1ffdb999a4a1cf1127e5d007256a7e83dd63d6e/linode_cli-5.65.0.tar.gz"
-  sha256 "1f690964136a32fad0baeb3691ed4335da6c27c46d2b17e4003a06c1f9a5e453"
+  url "https://files.pythonhosted.org/packages/d5/b5/0d0b3157e331325ebc353b5e439424bc9b27c8dd0cf4b19316cb308ec065/linode_cli-5.65.1.tar.gz"
+  sha256 "bdb8c48cf62798657a5804b9af98af9f96bf8ab389c8e67fc8a87bc33e36211d"
   license "BSD-3-Clause"
   head "https://github.com/linode/linode-cli.git", branch: "dev"
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "39d45f37926cf2fb44b80d72ae537b75c6731a074c3c3845769da97ce2e0e86a"
-    sha256 cellar: :any,                 arm64_sequoia: "a7dd254e334b59bfdb7bd085e51fc0134393a08dc7336f787c130d2b28ee5e87"
-    sha256 cellar: :any,                 arm64_sonoma:  "b43b76ebd85345759c24cbc7a757642007cd7a8e44c318aeff205a445cb1cb89"
-    sha256 cellar: :any,                 sonoma:        "fb477465341ed6fcc6d18761cb68af15a1bcd0723d4227271e5ac9bd3848a2f6"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cc1d82928ff103949cd5c0928aa8f3ec1481f5942098e7c09d982a3ba3208549"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e58a3c7a387b6331f896089fa0c1fcda7437ecff97335ecc96e90fb8d177421e"
+    sha256 cellar: :any,                 arm64_tahoe:   "f7845aabaa0b4f6f8caa256251ee02d3320d33acf9605581a3a189d7f2c58a93"
+    sha256 cellar: :any,                 arm64_sequoia: "e578c5db01d3baa874d21157ac4623dbdd0c121adc2ee62e3f76830a1d474a25"
+    sha256 cellar: :any,                 arm64_sonoma:  "2ec174c1eb1a2363849e02d2a15a5fed658540b77922ae0abdd8a0aca741a0ef"
+    sha256 cellar: :any,                 sonoma:        "62ebf8205639d68c4a28faf50f6f9a5fc6aee8b48694e2a392637e0ca117748d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "1a0bc8505ef6bb9312b00a60946320e0104b7a94420bb0936ddea36cfdfa9b78"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "335b9c099b2412832c1733ed0533cf065511de4cf2c6010541e0a069726e6352"
   end
 
   depends_on "certifi" => :no_linkage
@@ -24,8 +24,8 @@ class LinodeCli < Formula
   pypi_packages exclude_packages: "certifi"
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/16/ce/8a777047513153587e5434fd752e89334ac33e379aa3497db860eeb60377/anyio-4.12.0.tar.gz"
-    sha256 "73c693b567b0c55130c104d0b43a9baf3aa6a31fc6110116509f27bf75e21ec0"
+    url "https://files.pythonhosted.org/packages/96/f0/5eb65b2bb0d09ac6776f2eb54adee6abe8228ea05b20a5ad0e4945de8aac/anyio-4.12.1.tar.gz"
+    sha256 "41cfcc3a4c85d3f05c932da7c26d0201ac36f72abd4435ba90d0464a3ffed703"
   end
 
   resource "charset-normalizer" do
@@ -54,8 +54,8 @@ class LinodeCli < Formula
   end
 
   resource "linode-metadata" do
-    url "https://files.pythonhosted.org/packages/72/30/0707067f33ca0af20ca96bcfbc7bf699faa9e6cfbccfc3e0d8d9bdd36b19/linode_metadata-0.3.2.tar.gz"
-    sha256 "e7fb476303ff69c21dc825b5beefb32923f2c1ab475b0c5c50d6c2e7d4c87017"
+    url "https://files.pythonhosted.org/packages/bb/b4/870c06f401a2a3d04021518fb7c1a13bb7d4841a397ad0da1a27ec1408ee/linode_metadata-0.3.3.tar.gz"
+    sha256 "138a8e03bc4db9ec5ffe7bd363ca86a1d2ed943d681b3f35792b00de8207986b"
   end
 
   resource "markdown-it-py" do
@@ -74,8 +74,8 @@ class LinodeCli < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
-    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+    url "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz"
+    sha256 "00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"
   end
 
   resource "pygments" do
@@ -99,13 +99,13 @@ class LinodeCli < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/fb/d2/8920e102050a0de7bfabeb4c4614a49248cf8d5d7a8d01885fbb24dc767a/rich-14.2.0.tar.gz"
-    sha256 "73ff50c7c0c1c77c8243079283f4edb376f0f6442433aecb8ce7e6d0b92d1fe4"
+    url "https://files.pythonhosted.org/packages/b3/c6/f3b320c27991c46f43ee9d856302c70dc2d0fb2dba4842ff739d5f46b393/rich-14.3.3.tar.gz"
+    sha256 "b8daa0b9e4eef54dd8cf7c86c03713f53241884e814f4e2f5fb342fe520f639b"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
 
   def install

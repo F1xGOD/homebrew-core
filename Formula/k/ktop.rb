@@ -1,18 +1,18 @@
 class Ktop < Formula
   desc "Top-like tool for your Kubernetes clusters"
   homepage "https://github.com/vladimirvivien/ktop"
-  url "https://github.com/vladimirvivien/ktop/archive/refs/tags/v0.5.0.tar.gz"
-  sha256 "205f022f7560bb4196e2045ba8834f35225773e9e8136b4b5c4e85b87b2371a6"
+  url "https://github.com/vladimirvivien/ktop/archive/refs/tags/v0.5.3.tar.gz"
+  sha256 "f255733a56ce292cdf6ca543cf5ef85969814de8ccf60431d70b85dfe38f720f"
   license "Apache-2.0"
   head "https://github.com/vladimirvivien/ktop.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "e2c359f0b9b35a3bbb677678b2f3e9204386f8dd61a726cdb1ef959b62c631e8"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "da393aaf97ecdbaa18423ef532ae109e1f4633a7f10a6703af45bccf66708d00"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "39928fb081cddd631526ce67531b92ddbce18cb23d2c543f4a99393628401ef6"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7a43a288f7b6a6f49a121c31c5edfd519c4613ad02e965e5eee58c68c27d389a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "26c75d56ff17411d448200bd0a301b9b34815f868587f2493ecc93adbcfb6249"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "19e98fd0776a5c4c9f58a7d728a52a8762623f2f94438864a7368eeb73319bec"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "a5cb8ea39afa823108619ccd20c35d86121c5a3e7cf02d368a9fb28cd1e4b21c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d1c84e3f69f42af91645d317fe073db0d79bfa678afc96d9b73b94e62dd70e9f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d4f2abf9e19563771d903c3fbda6e8920f9948c914a59ced575594f340dd8ea9"
+    sha256 cellar: :any_skip_relocation, sonoma:        "33107e3156c832d1306a9f10363ff6f88ebc9b75e7d8811cb80c35a596074f9f"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "353cead1dca60cc99e4cfe75ca7121b7a889748b8333d28910e8abf0201bb4c1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7a601cb39d5c9b5625d6e444a73886ca58ad180d764a95ba4ad18a0dc739ba52"
   end
 
   depends_on "go" => :build

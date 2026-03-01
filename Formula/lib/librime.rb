@@ -2,18 +2,18 @@ class Librime < Formula
   desc "Rime Input Method Engine"
   homepage "https://rime.im"
   url "https://github.com/rime/librime.git",
-      tag:      "1.15.0",
-      revision: "75bc43ae9acdd2042d150a8c446e9ac8b6d77c84"
+      tag:      "1.16.1",
+      revision: "de4700e9f6b75b109910613df907965e3cbe0567"
   license "BSD-3-Clause"
-  revision 2
+  revision 3
 
   bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "e9ac3d0096903a7c93752b927f6a827189cb8b922564a2eab8cf3715cd68e239"
-    sha256 cellar: :any,                 arm64_sequoia: "9f8dc11482f6a3aed9884d939a70e4ab259ab4aaee6118c3447e50f61de59faf"
-    sha256 cellar: :any,                 arm64_sonoma:  "cf5028b839271e12231caef38b943f9ae715136f78b01c5ec7e4ad9764c06676"
-    sha256 cellar: :any,                 sonoma:        "1975705ba31371e312941ae3f7360e6cb24d0fe8c9ccbd427cd4bca0718050fa"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "966948bbcfa84ad0c66afbdf506eab7dc46da0a4fab15dc12c5741c1d4a9077d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b369c5893f6a3f48f64612719ba8418e808e5167debfbb433f800c8917c7bb2a"
+    sha256 cellar: :any,                 arm64_tahoe:   "6feb455e7b6bbb32323888c00cd899c1b342195a52c54818a1d086c60a3acc62"
+    sha256 cellar: :any,                 arm64_sequoia: "8be1cb169d731ed4f8f32a1903031d6fb564ae2d4bce8ba479d863ab7e7614ce"
+    sha256 cellar: :any,                 arm64_sonoma:  "23f67cd725caa6f8b5fce1f82be575e256568d487ccf66014f9c9d386f5b6943"
+    sha256 cellar: :any,                 sonoma:        "e59fc1bf550177eb6b079f43cc9367fed029168f30180c989699414431b1be8b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "5cb43ddd71738756956d2880b4182c8258bf9973d1dce60f4de2861a21bc4098"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "78c7b484f2a4e0c5ba239d8803a7e46448ccc6aded2efafa80e9aa33e32148b0"
   end
 
   depends_on "boost" => :build
@@ -31,23 +31,23 @@ class Librime < Formula
   depends_on "yaml-cpp"
 
   resource "lua" do
-    url "https://github.com/hchunhui/librime-lua.git",
-        revision: "68f9c364a2d25a04c7d4794981d7c796b05ab627"
+    url "https://github.com/hchunhui/librime-lua/archive/68f9c364a2d25a04c7d4794981d7c796b05ab627.tar.gz"
+    sha256 "3c4a60bacf8dd6389ca1b4b4889207b8f6c0c6a43e7b848cdac570d592a640b5"
   end
 
   resource "octagram" do
-    url "https://github.com/lotem/librime-octagram.git",
-        revision: "dfcc15115788c828d9dd7b4bff68067d3ce2ffb8"
+    url "https://github.com/lotem/librime-octagram/archive/dfcc15115788c828d9dd7b4bff68067d3ce2ffb8.tar.gz"
+    sha256 "7da3df7a5dae82557f7a4842b94dfe81dd21ef7e036b132df0f462f2dae18393"
   end
 
   resource "predict" do
-    url "https://github.com/rime/librime-predict.git",
-        revision: "920bd41ebf6f9bf6855d14fbe80212e54e749791"
+    url "https://github.com/rime/librime-predict/archive/920bd41ebf6f9bf6855d14fbe80212e54e749791.tar.gz"
+    sha256 "38b2f32254e1a35ac04dba376bc8999915c8fbdb35be489bffdf09079983400c"
   end
 
   resource "proto" do
-    url "https://github.com/lotem/librime-proto.git",
-        revision: "657a923cd4c333e681dc943e6894e6f6d42d25b4"
+    url "https://github.com/lotem/librime-proto/archive/657a923cd4c333e681dc943e6894e6f6d42d25b4.tar.gz"
+    sha256 "69af91b1941781be6eeceb2dbdc6c0860e279c4cf8ab76509802abbc5c0eb7b3"
   end
 
   def install
@@ -57,7 +57,7 @@ class Librime < Formula
 
     args = %W[
       -DBUILD_MERGED_PLUGINS=OFF
-      -DCMAKE_INSTALL_RPATH=#{rpath}
+      -DCMAKE_INSTALL_RPATH=#{rpath};#{rpath(source: lib/"rime-plugins")}
       -DENABLE_EXTERNAL_PLUGINS=ON
       -DBUILD_TEST=OFF
     ]

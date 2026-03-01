@@ -3,18 +3,18 @@ class Fwupd < Formula
 
   desc "Firmware update daemon"
   homepage "https://github.com/fwupd/fwupd"
-  url "https://github.com/fwupd/fwupd/releases/download/2.0.19/fwupd-2.0.19.tar.xz"
-  sha256 "3bb7a4a1e2d00f0ab513e4c667d7bf5a3ff34a9802757849d3fedf07dd40ddbb"
+  url "https://github.com/fwupd/fwupd/releases/download/2.0.20/fwupd-2.0.20.tar.xz"
+  sha256 "431fb30fb27500ca55ae515d2fbda69878b58247cd4031d5c79f88b166db70c9"
   license "LGPL-2.1-or-later"
   head "https://github.com/fwupd/fwupd.git", branch: "main"
 
   bottle do
-    sha256 arm64_tahoe:   "2fa5b73d90474196fc4c078ef381628c55047831cdff94c57d7ff4f4416c99c9"
-    sha256 arm64_sequoia: "7d44c4946e051921de152f991b466e3d5de1005b3a4d8b6960012498a658a676"
-    sha256 arm64_sonoma:  "36de29b6636c587053425b12fafa8405e01001041a451bc6da2dbc16c8e596d5"
-    sha256 sonoma:        "575239e884179f1ef9a1384d1637bb9b42decf4769a423ce3467ca781807a737"
-    sha256 arm64_linux:   "2c608dd2dc0c8d735145a76baa9cc7c45c5d03897e5d1cabeb03681fc9ee2f36"
-    sha256 x86_64_linux:  "4d217c35f0ab6ed08b01646301856026e20d8da0548387368ad4c8bd255b7773"
+    sha256 arm64_tahoe:   "f02db25fe25e03c3caf97cfcc8464c5495b143e96c7d6b808e476618478e5063"
+    sha256 arm64_sequoia: "72bf0ebf0b79d6291e29597c1dcac1d9a6b50a5ab766fe4588418faf1058fe45"
+    sha256 arm64_sonoma:  "d201c12b7e58a4da0ceaf681946fb53e436c4f87213f277262852e5642f02bc2"
+    sha256 sonoma:        "6e14d639902116b5eb0ff6981dd20acd8c7dd15e1f3fb26388b7638aeb5e9949"
+    sha256 arm64_linux:   "16cba80279645f7f0eeb0c082aebe0e9b7a49bdfdf059c11225a27f4095164df"
+    sha256 x86_64_linux:  "140928bd8985ee49e3d470de4545ad797d363b1ebd296a5b072247d0c65310ae"
   end
 
   depends_on "gettext" => :build # for msgfmt
@@ -40,7 +40,6 @@ class Fwupd < Formula
   depends_on "xz"
 
   uses_from_macos "curl"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "gettext"
@@ -48,6 +47,7 @@ class Fwupd < Formula
 
   on_linux do
     depends_on "util-linux"
+    depends_on "zlib-ng-compat"
   end
 
   pypi_packages package_name:   "",
@@ -70,7 +70,7 @@ class Fwupd < Formula
   def install
     venv = virtualenv_create(buildpath/"venv", python3)
     venv.pip_install resources
-    ENV.prepend_path "PYTHONPATH", buildpath/"venv"/Language::Python.site_packages(python3)
+    ENV.prepend_path "PYTHONPATH", venv.root/Language::Python.site_packages(python3)
 
     system "meson", "setup", "build",
                     "-Dbuild=standalone", # this is used as PolicyKit is not available on macOS

@@ -1,18 +1,20 @@
 class Neomutt < Formula
   desc "E-mail reader with support for Notmuch, NNTP and much more"
   homepage "https://neomutt.org/"
-  url "https://github.com/neomutt/neomutt/archive/refs/tags/20251211.tar.gz"
-  sha256 "2dcb88c939514e15a55ac24f29dcb23f55754100e74df98558fd5c4b1347e542"
+  url "https://github.com/neomutt/neomutt/archive/refs/tags/20260105.tar.gz"
+  sha256 "a78e55a0df62b7f98566676d0ab9041aad89b2384bb5c6f3a96302a5cf49968d"
   license "GPL-2.0-or-later"
+  version_scheme 1
   head "https://github.com/neomutt/neomutt.git", branch: "main"
 
   bottle do
-    sha256 arm64_tahoe:   "2c9d7eba7ffee51a5c3e82700187bc2d642e7e20c6f98122ffb02417fd9dd366"
-    sha256 arm64_sequoia: "bc89b3df79a86a0ad64ad364637947ec454bebfc6fef12e82713f680afdae0fc"
-    sha256 arm64_sonoma:  "5e028735fda85b4d65c7426dad5f89d4df7e7525da43703cdf86803eeb41cef0"
-    sha256 sonoma:        "fc1c6273c07d157ed507c861a7acb2bf9b6630ac0c60df0ffcebafb4a36eccc9"
-    sha256 arm64_linux:   "e96a147e2b729a1724b09f547c9cafa3ea55188e4c4fc856934fba64b21b9bfd"
-    sha256 x86_64_linux:  "08e6875dac97939c550e31a091443a9fef504ac40a7b69ade02cf8e0cbdd749f"
+    rebuild 1
+    sha256 arm64_tahoe:   "fe95b1debd202453fdca5017ff4cd9305f3fb5703f719f83606b5146088dca5b"
+    sha256 arm64_sequoia: "5534c6ec2c7394e76020fdfbe22576fbabd5ed1f2e2963786c3742b778530c16"
+    sha256 arm64_sonoma:  "1983d5d12514db0559f68b71b473b7c91f390e4a97c199f9cd21c97e82e6d41b"
+    sha256 sonoma:        "0fc4334fb2b32898ffd9f77d2616b322d747f719a934804050273de3d9953838"
+    sha256 arm64_linux:   "ce956ce94db77838e334a175968b5298cee9512bcb7905d8570ff46cda033dc6"
+    sha256 x86_64_linux:  "3a2b4dfed12a64e42e2cfb250feed693c2afb7fd96688fff6aebf19b723d49c6"
   end
 
   depends_on "docbook-xsl" => :build
@@ -34,13 +36,16 @@ class Neomutt < Formula
   uses_from_macos "libxslt" => :build # for xsltproc
   uses_from_macos "cyrus-sasl"
   uses_from_macos "krb5"
-  uses_from_macos "zlib"
 
   on_macos do
     depends_on "libgpg-error"
     # Build again libiconv for now on,
     # but reconsider when macOS 14.2 is released
     depends_on "libiconv"
+  end
+
+  on_linux do
+    depends_on "zlib-ng-compat"
   end
 
   def install

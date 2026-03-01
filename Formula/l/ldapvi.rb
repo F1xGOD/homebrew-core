@@ -1,8 +1,8 @@
 class Ldapvi < Formula
   desc "Update LDAP entries with a text editor"
   homepage "http://www.lichteblau.com/ldapvi/"
-  url "http://www.lichteblau.com/download/ldapvi-1.7.tar.gz"
-  mirror "https://deb.debian.org/debian/pool/main/l/ldapvi/ldapvi_1.7.orig.tar.gz"
+  url "https://deb.debian.org/debian/pool/main/l/ldapvi/ldapvi_1.7.orig.tar.gz"
+  mirror "http://www.lichteblau.com/download/ldapvi-1.7.tar.gz"
   sha256 "6f62e92d20ff2ac0d06125024a914b8622e5b8a0a0c2d390bf3e7990cbd2e153"
   license "GPL-2.0-or-later"
   revision 9
@@ -30,9 +30,7 @@ class Ldapvi < Formula
   end
 
   depends_on "pkgconf" => :build
-  depends_on "xz" => :build # Homebrew bug. Shouldn't need declaring explicitly.
 
-  depends_on "gettext"
   depends_on "glib"
   depends_on "openssl@3"
   depends_on "popt"
@@ -41,6 +39,10 @@ class Ldapvi < Formula
   uses_from_macos "libxcrypt"
   uses_from_macos "ncurses"
   uses_from_macos "openldap"
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   # These patches are applied upstream but release process seems to be dead.
   # http://www.lichteblau.com/git/?p=ldapvi.git;a=commit;h=256ced029c235687bfafdffd07be7d47bf7af39b

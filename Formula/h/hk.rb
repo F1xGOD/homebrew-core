@@ -3,27 +3,38 @@ class Hk < Formula
   homepage "https://hk.jdx.dev"
   # pull from git tag to get submodules
   url "https://github.com/jdx/hk.git",
-      tag:      "v1.28.0",
-      revision: "6bfc78ad514959e5c111faecedf876d9739d986c"
+      tag:      "v1.36.0",
+      revision: "51a60d96a30f3ee3f252eebc8b01bb744739d235"
   license "MIT"
   head "https://github.com/jdx/hk.git", branch: "main"
 
-  bottle do
-    sha256 cellar: :any,                 arm64_tahoe:   "c0ce098bbafab57dbc6ae5ead132111b658f391260d0aa18170b6b4d2fcf8b83"
-    sha256 cellar: :any,                 arm64_sequoia: "7c819ae5d0229308da389e59f370c87ec8ce959cc44957d8996f1821e4c6a786"
-    sha256 cellar: :any,                 arm64_sonoma:  "9d1f4a71bf675b69bb69be8e3976c97e2ee5c2f09c6b6905ffce39e16e370001"
-    sha256 cellar: :any,                 sonoma:        "8709830fb73a79c33375cf9e081c6486d5f4edea898d388357554e8cf12cfbf5"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "7f21392a6f57dd656c676c7629dfa34a0863775b2a23a610e712af2bc74ca110"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fd6fe83ade850cf416094cf7b182fc2dc2e55507ba078ab41dd207e7cdb87bdc"
+  livecheck do
+    url :stable
+    strategy :github_latest
   end
 
+  bottle do
+    rebuild 1
+    sha256 cellar: :any,                 arm64_tahoe:   "2ce00cfd16c9eba147547e08f1a602566c507ec18fc78ade4e8cc9cd2ecba9e2"
+    sha256 cellar: :any,                 arm64_sequoia: "ef8581c0a5e3575fe5b1fd88a2a1ba97287573003f630f4f1584c00f473d2316"
+    sha256 cellar: :any,                 arm64_sonoma:  "2a38bf7fca0f199b510b0354c7d353a1107d488a555875badd9394f1692413ec"
+    sha256 cellar: :any,                 sonoma:        "4a88da1138957d4e414de865e42cc32055d15c6091d1cc0bf705dba318228311"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b199f1610e2d7b7f3cd34cc8a9b9d8c9952dd7e0490d2797d9b51dd4b63d9710"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "39c31e78d58abe8caf4d2cbaafee6b503b390386d846d821e830bcf68f387e7f"
+  end
+
+  depends_on "mise" => :build
   depends_on "rust" => [:build, :test]
 
   depends_on "openssl@3"
   depends_on "pkl"
   depends_on "usage"
 
-  uses_from_macos "zlib"
+  uses_from_macos "python" => :build
+
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     # Ensure the correct `openssl` will be picked up.
@@ -34,6 +45,8 @@ class Hk < Formula
 
     generate_completions_from_executable(bin/"hk", "completion")
 
+    system "mise", "trust"
+    system "mise", "run", "pkl:gen"
     pkgshare.install "pkl"
   end
 

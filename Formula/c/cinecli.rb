@@ -6,11 +6,11 @@ class Cinecli < Formula
   url "https://files.pythonhosted.org/packages/df/c6/bc46bf8f30ce881a8822ce7b4ead93f9cfaee466852c78cab3f8931f5639/cinecli-0.1.2.tar.gz"
   sha256 "5e2e053a6b0f71070b8e7028dab69be47b8def42639b90f805f28da5a040a141"
   license "MIT"
+  revision 2
   head "https://github.com/eyeblech/cinecli.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, all: "76ea5574fbf64de54361efcf07115cabfe29f2005bae3dc4e48f215efa486712"
+    sha256 cellar: :any_skip_relocation, all: "c7df47db8726a05fa464365431d941c3b1006ab349057ed416ea2cb6e66744f6"
   end
 
   depends_on "certifi" => :no_linkage
@@ -64,8 +64,8 @@ class Cinecli < Formula
   end
 
   resource "typer" do
-    url "https://files.pythonhosted.org/packages/6d/c1/933d30fd7a123ed981e2a1eedafceab63cb379db0402e438a13bc51bbb15/typer-0.20.1.tar.gz"
-    sha256 "68585eb1b01203689c4199bc440d6be616f0851e9f0eb41e4a778845c5a0fd5b"
+    url "https://files.pythonhosted.org/packages/36/bf/8825b5929afd84d0dabd606c67cd57b8388cb3ec385f7ef19c5cc2202069/typer-0.21.1.tar.gz"
+    sha256 "ea835607cd752343b6b2b7ce676893e5a0324082268b48f27aa058bdb7d2145d"
   end
 
   resource "typing-extensions" do
@@ -74,9 +74,12 @@ class Cinecli < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1e/24/a2a2ed9addd907787d7aa0355ba36a6cadf1768b934c652ea78acbd59dcd/urllib3-2.6.2.tar.gz"
-    sha256 "016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"
+    url "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz"
+    sha256 "1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"
   end
+
+  # Fix breaking change in yts.bz API: https://github.com/eyeblech/cinecli/pull/7
+  patch :DATA
 
   def install
     virtualenv_install_with_resources
@@ -89,3 +92,45 @@ class Cinecli < Formula
     assert_match "The Matrix", output
   end
 end
+
+__END__
+diff --git a/cinecli/cli.py b/cinecli/cli.py
+index 6245772..a7ffbdf 100644
+--- a/cinecli/cli.py
++++ b/cinecli/cli.py
+@@ -127,7 +127,6 @@ def interactive():
+         console.print(
+             f"[cyan][{idx}][/cyan] "
+             f"{movie['title']} ({movie['year']}) "
+-            f"⭐ {movie['rating']}"
+         )
+
+     movie_index = Prompt.ask(
+diff --git a/cinecli/ui.py b/cinecli/ui.py
+index 3439d3b..207b095 100644
+--- a/cinecli/ui.py
++++ b/cinecli/ui.py
+@@ -11,14 +11,12 @@ def show_movies(movies):
+     table.add_column("ID", style="cyan", justify="right")
+     table.add_column("Title", style="bold")
+     table.add_column("Year", justify="center")
+-    table.add_column("Rating", justify="center")
+
+     for movie in movies:
+         table.add_row(
+             str(movie["id"]),
+             movie["title"],
+             str(movie["year"]),
+-            str(movie["rating"]),
+         )
+
+     console.print(table)
+@@ -34,8 +32,6 @@ def show_movie_details(movie):
+
+     text = (
+         f"[bold]{movie['title']} ({movie['year']})[/bold]\n\n"
+-        f"⭐ Rating: {movie['rating']}\n"
+-        f"⏱ Runtime: {movie['runtime']} min\n"
+         f"🎭 Genres: {', '.join(movie.get('genres', []))}\n\n"
+         f"{description}"
+     )
